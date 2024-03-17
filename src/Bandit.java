@@ -15,7 +15,7 @@ class Input{
 
 
 public class Bandit extends Personnage{
-    Random rnd = new Random();
+    private Random rnd = new Random();
     private Stack<Input> buffer = new Stack<>();
     private ArrayList<Objet> loot = new ArrayList<>(0);
 
@@ -25,6 +25,12 @@ public class Bandit extends Personnage{
             result += i.getValeur();
         }
         return result;
+    }
+
+    public Bandit(int x, int y, String t){
+        this.coordX = x;
+        this.etage = y;
+        this.tag = t;
     }
 
     public void braqueButin(){
