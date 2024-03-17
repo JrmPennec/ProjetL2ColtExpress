@@ -114,10 +114,6 @@ public class Bandit extends Personnage{
     }
 
     public void putAction(Input action){
-        if(action.size() > 2){
-            System.out.println("Erreur : putAction(), action ne doit pas dépasser la taille de 2, skip phase");
-            return;
-        }
         if(this.buffer.size() > 3){
             System.out.println("Erreur : putAction(), buffer déjà taille maximale (3), skip phase");
             return;
