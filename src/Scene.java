@@ -27,7 +27,8 @@ public class Scene extends Observable {
     public  ArrayList<Objet> getTresor(){ return tresor;}
     public ArrayList<Personnage> getPersos(){return persos;}
 
-
-    }
-
+public static void main(String[] args){
 }
+}
+
+

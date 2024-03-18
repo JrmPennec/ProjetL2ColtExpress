@@ -6,7 +6,9 @@ public class Vue extends JFrame implements Observer {
     JPanel affichageInteraction;
     public Vue(){
         super("Colt Express");
-        affichageTrain= new JPanel(new GridLayout(2,NB_WAGON));
+        affichageTrain= new JPanel(new GridLayout(2,4));
+
+
 
 
 
@@ -14,6 +16,7 @@ public class Vue extends JFrame implements Observer {
     }
     @Override
     public void update() {
+        repaint();
 
     }
 }
