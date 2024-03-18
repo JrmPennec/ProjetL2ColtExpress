@@ -8,10 +8,10 @@ public class Plateau extends Observable{
 
     public Plateau(ArrayList<ArrayList<Scene>> completeMap, ArrayList<Personnage> basedWarcriminal, ArrayList<Objet> initTresors, Marshall m){
         if(completeMap.size() > 2){
-            throw new Error("Train mal définit : il y a plus de 2 étages en argument");
+            throw new Error("Train mal défini : il y a plus de 2 étages en argument");
         }
         if(!completeMap.get(0).get(completeMap.get(0).size() - 1).estLocomotive()){
-            throw new Error("Train mal définit : pas de locomotive définit à l'extrémité");
+            throw new Error("Train mal défini : pas de locomotive définit à l'extrémité");
         }
         this.NB_WAGON = completeMap.size();
         this.epicGamers = basedWarcriminal;
