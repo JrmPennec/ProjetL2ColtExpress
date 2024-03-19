@@ -15,25 +15,28 @@ class Input{
 
 
 public class Bandit extends Personnage{
-    private Random rnd = new Random();
-    private Stack<Input> buffer = new Stack<>();
-    private ArrayList<Objet> loot = new ArrayList<>(0);
+    private Random rnd ;
+    private Stack<Input> buffer ;
+    private ArrayList<Objet> loot ;
 
-    public int getTotalValeur(){
+    /*public int getTotalValeur(){
         int result = 0;
         for(Objet i : loot){
             result += i.getValeur();
         }
         return result;
-    }
+    }*/
 
     public Bandit(int x, int y, String t){
         this.coordX = x;
-        this.etage = y;
+        this.coordY = y;
         this.tag = t;
+        this.rnd= new Random();
+        this.buffer = new Stack<>();
+        this.loot = new ArrayList<>();
     }
 
-    public void braqueButin(){
+   /* public void braqueButin(){
         ArrayList<Objet> lootTrouve = new ArrayList<>();
         lootTrouve = this.plateau.getScene(coordX, etage).getButin();
         if(!lootTrouve.isEmpty()){
@@ -43,9 +46,10 @@ public class Bandit extends Personnage{
             System.out.println(this.tag + " braque et trouve " + premierLoot.tag);
             return;
         }
-    }
+    }*/
 
-    public void dropButin(){
+
+    /*public void dropButin(){
         loot.get(loot.size()-1).estLache();
         loot.remove(loot.size()-1);
     }
@@ -55,7 +59,7 @@ public class Bandit extends Personnage{
         if(this.etage == 0) {etage = 1; return;}
         this.etage = 0; return;
     }
-
+/*
     public void tir(DIRECTION dir){
         switch(dir){
             case HAUT :
@@ -111,7 +115,7 @@ public class Bandit extends Personnage{
                 break;
         }
         return;
-    }
+    }*/
 
     public void putAction(Input action){
         if(this.buffer.size() > 3){
@@ -129,7 +133,7 @@ public class Bandit extends Personnage{
         return result;
     }
 
-    public void executeAction(){
+   /* public void executeAction(){
         Input nextAction = this.popAction();
         switch(nextAction.action){
             case TIR :
@@ -147,7 +151,7 @@ public class Bandit extends Personnage{
 
         }
         return;
-    }
+    }*/
 
 
 
