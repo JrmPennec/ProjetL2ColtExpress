@@ -7,12 +7,12 @@ public class Marshall extends Personnage{
 
     public Marshall(int x, String t){
         this.coordX = x;
-        this.etage = 0; //Le maréchal ne monte pas sur les toits.
+        this.coordY = 0; //Le maréchal ne monte pas sur les toits.
         this.tag = t;
 
     }
 
-    public void expulse(){
+    /*public void expulse(){
         ArrayList<Bandit> cibleSet = this.plateau.getScene(this.coordX, this.etage).getBandits();
         if(cibleSet.isEmpty()) return; //Aucun bandit à taper
         System.out.println("Le maréchal " +this.tag + " fait fuir des bandits");
@@ -40,5 +40,5 @@ public class Marshall extends Personnage{
         expulse(); //Expulse le bandit de toute manière
         return;
     }
-
+*/
 }

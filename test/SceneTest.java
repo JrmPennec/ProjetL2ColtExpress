@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +8,7 @@ class SceneTest {
     private Scene scene;
     @BeforeEach
     public void init() {
-        scene = new Scene(true,true,true);
+        scene = new Scene(true,true,false);
     }
 
     @Test
@@ -24,14 +23,21 @@ class SceneTest {
 
     @Test
     void estLocomotive() {
-        assertTrue(scene.estLocomotive());
+        assertFalse(scene.estLocomotive());
     }
 
     @Test
-    void getTresor() {
-    }
+    void putPerso(){
+        Bandit b=new Bandit(0,0,"toto");
+        scene.putPerso(b);
+        assertSame(scene.getPersos().get(b.tag),b);
 
+    }
     @Test
-    void getPersos() {
+    void removePerso(){
+        Bandit b=new Bandit(0,0,"toto");
+        scene.putPerso(b);
+        assertSame(scene.removePerso("toto"),b);
+        assertTrue(scene.getPersos().isEmpty());
     }
 }

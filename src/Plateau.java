@@ -68,6 +68,7 @@ import java.util.ArrayList;
     }
     void deplacePerso(Personnage p,int x,int y){
         //X et y verifiés dans Personnage
+
          train.get(p.getCoordY()).get(p.getCoordX()).removePerso(p.getTag());
          train.get(y).get(x).putPerso(p);
     }

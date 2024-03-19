@@ -59,7 +59,7 @@ public class Bandit extends Personnage{
         if(this.etage == 0) {etage = 1; return;}
         this.etage = 0; return;
     }
-/*
+
     public void tir(DIRECTION dir){
         switch(dir){
             case HAUT :
@@ -115,7 +115,7 @@ public class Bandit extends Personnage{
                 break;
         }
         return;
-    }*/
+    }
 
     public void putAction(Input action){
         if(this.buffer.size() > 3){
