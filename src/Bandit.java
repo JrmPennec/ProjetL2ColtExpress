@@ -14,7 +14,7 @@ class Input{
 }
 
 
-public class Bandit extends Personnage{
+ class Bandit extends Personnage{
     private Random rnd ;
     private Stack<Input> buffer ;
     private ArrayList<Objet> loot ;
@@ -27,10 +27,8 @@ public class Bandit extends Personnage{
         return result;
     }*/
 
-    public Bandit(int x, int y, String t){
-        this.coordX = x;
-        this.coordY = y;
-        this.tag = t;
+    public Bandit(int x, int y, String t,Plateau p){
+        super(x,y,t,p);
         this.rnd= new Random();
         this.buffer = new Stack<>();
         this.loot = new ArrayList<>();

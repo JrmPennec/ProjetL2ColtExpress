@@ -1,4 +1,4 @@
-public abstract class Entite extends Observable {
+ abstract class Entite extends Observable {
 
 
     protected String tag;
@@ -7,14 +7,21 @@ public abstract class Entite extends Observable {
 
     protected Plateau plateau;
 
+    public Entite(int x,int y,String tag,Plateau p){
+        this.coordX = x;
+        this.coordY = y;
+        this.tag = tag;
+        this.plateau = p;
+    }
+
 
 
     public int getCoordX(){
-        return this.coordX;
+        return coordX;
     }
 
     public int getCoordY(){
-        return this.coordY;
+        return coordY;
     }
     public String getTag() {
         return tag;

@@ -61,16 +61,17 @@ import java.util.ArrayList;
     private void initBandits(int nbJoueurs){
 
         for (int i=0; i<nbJoueurs;i++){
-            train.get(1).get(0).putPerso(new Bandit(0,0,"b0"+i));
-
+            Bandit b=new Bandit(0,1,"b0"+i,this);
+            Jeu.persos.add(b);
+            train.get(1).get(0).putPerso(b);
         }
 
     }
     void deplacePerso(Personnage p,int x,int y){
         //X et y verifiés dans Personnage
+        getScene(x,y).putPerso(p);
+        getScene(p.getCoordX(),p.getCoordY()).removePerso(p.getTag());
 
-         train.get(p.getCoordY()).get(p.getCoordX()).removePerso(p.getTag());
-         train.get(y).get(x).putPerso(p);
     }
     static public void main(String[] args){
         System.out.println("Test Constructeur :");

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Marshall extends Personnage{
+ /*class Marshall extends Personnage{
     public int nervosite = 30;
     private Random rnd = new Random();
 
@@ -12,7 +12,7 @@ public class Marshall extends Personnage{
 
     }
 
-    /*public void expulse(){
+    public void expulse(){
         ArrayList<Bandit> cibleSet = this.plateau.getScene(this.coordX, this.etage).getBandits();
         if(cibleSet.isEmpty()) return; //Aucun bandit à taper
         System.out.println("Le maréchal " +this.tag + " fait fuir des bandits");
@@ -40,5 +40,5 @@ public class Marshall extends Personnage{
         expulse(); //Expulse le bandit de toute manière
         return;
     }
-*/
-}
+
+}*/
