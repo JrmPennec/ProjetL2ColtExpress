@@ -1,9 +1,11 @@
 import java.util.ArrayList;
 
  class Plateau extends Observable {
-    private ArrayList<ArrayList<Scene>> train; //Y, puis X coordonnées
-    private ArrayList<Personnage> epicGamers; //Non necessaire a mon avis
-    private ArrayList<Objet> tresors; //non necessaire
+     private Jeu jeu;
+     private ArrayList<ArrayList<Scene>> train; //Y, puis X coordonnées
+     private ArrayList<Personnage> epicGamers; //Non necessaire a mon avis
+     private ArrayList<Objet> tresors; //non necessaire
+
 
     /*public Plateau(ArrayList<ArrayList<Scene>> completeMap, ArrayList<Personnage> basedWarcriminal, ArrayList<Objet> initTresors, Marshall m) {
         if (completeMap.size() > 2) {
@@ -26,8 +28,6 @@ import java.util.ArrayList;
         train.add(new ArrayList<Scene>());
         initScenes(false);
         initScenes(true);
-        //Mise en place des bandits
-        initBandits(Jeu.NB_JOUEURS);
 
     }
 
@@ -58,15 +58,7 @@ import java.util.ArrayList;
 
     }
 
-    private void initBandits(int nbJoueurs){
 
-        for (int i=0; i<nbJoueurs;i++){
-            Bandit b=new Bandit(0,1,"b0"+i,this);
-            Jeu.persos.add(b);
-            train.get(1).get(0).putPerso(b);
-        }
-
-    }
     void deplacePerso(Personnage p,int x,int y){
         //X et y verifiés dans Personnage
         getScene(x,y).putPerso(p);
