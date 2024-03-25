@@ -198,7 +198,7 @@ public class Bandit extends Personnage{
         else fail("initBandit mal fait");
     }
 
-    @Test //Test du buffer : putAction / executionStack avec mouvement
+    @Test //Test du buffer : Mouvement générale (executionStack, deplacer, popAction, putAction, deplacePerso, putPerso, enlevePerso). Seulement avec Bandit
     void testExecutionStack_putAction_deplacer(){
         Jeu testGame = new Jeu();
         Personnage testSubject = testGame.getPersos().get(0);
