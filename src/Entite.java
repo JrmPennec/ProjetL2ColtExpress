@@ -1,4 +1,6 @@
- abstract class Entite extends Observable {
+import org.junit.jupiter.api.*;
+
+abstract class Entite extends Observable {
 
 
     protected String tag;
@@ -26,4 +28,6 @@
     public String getTag() {
         return tag;
     }
+
+
 }

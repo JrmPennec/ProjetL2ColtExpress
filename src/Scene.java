@@ -28,6 +28,17 @@ public class Scene extends Observable {
 
     public boolean estLocomotive(){ return locomotive;}
     public  ArrayList<Objet> getTresor(){ return tresor;}
+
+    public void retireObjet(Objet obj){
+        for(Objet i : this.tresor){
+            if(i.getTag() == obj.getTag()){
+                tresor.remove(i);
+                return;
+            }
+        }
+        throw new Error("retireObjet : L'objet n'existe pas dans la scène !");
+    }
+
     public HashMap<String,Personnage> getPersos(){return persos;}
 
     public void putPerso(Personnage p){

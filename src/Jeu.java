@@ -8,8 +8,7 @@ public class Jeu {
     private ArrayList<Personnage> persos;
     private Plateau plateau;
 
-    public ArrayList<Personnage> getPersos() {
-        return persos;
+    public ArrayList<Personnage> getPersos() {return persos;
     }
 
     public Plateau getPlateau() {
@@ -28,8 +27,33 @@ public class Jeu {
             persos.add(b);
             plateau.getScene(0, 1).putPerso(b);
 
+        }
+    }
+
+    public void executionStack(Bandit id){
+        Input input = id.popAction();
+        switch(input.action){
+            case ACTION.DEPLACE :{
+                int lastX= id.getCoordX();
+                int lastY = id.getCoordY();
+                if(id.deplace(input.direction)){
+                    //Si déplacement autorisé
+                    this.plateau.deplacePerso(id, lastX, lastY, input.direction);
+                    break;
+                }
+                else {
+                    System.out.println("Erreur de déplacement");
+                    break;
+                }
+            }
+
+            case ACTION.BRAQUE : id.braqueButin(); break;
+            case ACTION.TIR : id.tir(input.direction); break;
+            case default : return;
 
         }
+
+        System.out.println(id.getTag() + " exécution");
     }
 
 

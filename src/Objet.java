@@ -1,2 +1,2 @@
-public class Objet {
+public class Objet extends Entite{
 }
