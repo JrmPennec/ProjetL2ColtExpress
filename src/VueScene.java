@@ -8,11 +8,15 @@ public class VueScene extends JPanel {
     VueScene(Scene s) {
         //on doit utiliser html pour les jlabel
         String textP = "<html> Personnages : <br/>";
-        for (Personnage p : s.getPersos().values())
-            textP +=p.getTag() + "<br/";
-            textP+= "<html>";
+        if (!s.getPersos().isEmpty()) {
+            for (Personnage p : s.getPersos().values())
+                textP += p.getTag() + "<br/";
+            textP += "<html>";
+
+        }
         PersosList = new JLabel(textP);
         this.add(PersosList);
+        //Pas encore implementée la  suite
         String textO = " Objet(s) : ";
 
     }
@@ -21,7 +25,9 @@ public class VueScene extends JPanel {
         Jeu test= new Jeu();
         JFrame j = new JFrame("test");
         VueScene v = new VueScene(test.getPlateau().getScene(0, 1));
+        VueScene v2 = new VueScene(test.getPlateau().getScene(1, 1));
         j.add(v);
+        j.add(v2);
         j.pack();
         j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         j.setVisible(true);

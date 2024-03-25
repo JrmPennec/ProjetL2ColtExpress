@@ -72,6 +72,7 @@ import java.util.ArrayList;
         }
         getScene(x,y).putPerso(p);
         getScene(xLast, yLast).removePerso(p.getTag());
+        notifyObservers();
 
     }
     static public void main(String[] args){
