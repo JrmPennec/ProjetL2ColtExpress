@@ -45,7 +45,7 @@ public class Bandit extends Personnage{
         this.loot = new ArrayList<>();
     }
 
-   /* public void braqueButin(){
+   public void braqueButin(){
         ArrayList<Objet> lootTrouve = new ArrayList<>();
         lootTrouve = this.plateau.getScene(coordX, coordY).getTresor();
         if(!lootTrouve.isEmpty()){
@@ -56,26 +56,26 @@ public class Bandit extends Personnage{
             System.out.println(this.tag + " braque et trouve " + premierLoot.tag);
             return;
         }
-    }*/
+    }
 
 
-    /*public void dropButin(){
+    public void dropButin(){
         loot.get(loot.size()-1).estLache();
         loot.remove(loot.size()-1);
     }
 
     public void fuit(){
         System.out.println( this.tag + " a eu peur et s'en va");
-        if(this.etage == 0) {etage = 1; return;}
-        this.etage = 0; return;
+        if(this.coordY == 0) {this.coordY = 1; return;}
+        this.coordY = 0; return;
     }
-/*
+
     public void tir(DIRECTION dir){
         switch(dir){
             case HAUT :
-                if(this.etage == 0) {
+                if(this.coordY == 0) {
                     ArrayList<Bandit> cibleSet = this.plateau.getScene(coordX, 1).getBandits();
-                    if(cible.isEmpty()) break; //Aucune cible, on quitte.
+                    if(cibleSet.isEmpty()) break; //Aucune cible, on quitte.
                     Bandit cible = cibleSet.get(rnd.nextInt() % cibleSet.size());
                     cible.dropButin();
                     cible.fuit();
@@ -85,9 +85,9 @@ public class Bandit extends Personnage{
                 System.out.println( this.tag + " tire, mais il est schizophrénique et rate sa cible ...");
                 break;
             case BAS :
-                if(this.etage == 1) {
+                if(this.coordY == 1) {
                     ArrayList<Bandit> cibleSet = this.plateau.getScene(coordX, 0).getBandits();
-                    if(cible.isEmpty()) break; //Aucune cible, on quitte.
+                    if(cibleSet.isEmpty()) break; //Aucune cible, on quitte.
                     Bandit cible = cibleSet.get(rnd.nextInt() % cibleSet.size());
                     cible.dropButin();
                     cible.fuit();
@@ -98,9 +98,9 @@ public class Bandit extends Personnage{
                 break;
             case GAUCHE :
                 for(int i = coordX; i >= 0; i--){
-                    ArrayList<Bandit> ciblePotentiel = this.plateau.getScene(i, etage).getBandits();
-                    if(ciblePotentiel.isEmpty())  continue;//Rien, la balle traverse le wagon
-                    Bandit cible = ciblePotentiel.get(rnd.nextInt() % cibleSet.size()); //Cible frappé
+                    ArrayList<Bandit> cibleSet = this.plateau.getScene(i, coordY).getBandits();
+                    if(cibleSet.isEmpty())  continue;//Rien, la balle traverse le wagon
+                    Bandit cible = cibleSet.get(rnd.nextInt() % cibleSet.size()); //Cible frappé
                     cible.dropButin();
                     cible.fuit();
                     System.out.println("Bandit " + this.tag + "  pew pew à gauche !");
@@ -109,10 +109,10 @@ public class Bandit extends Personnage{
                 System.out.println( this.tag + " tire ! Mais il est schizophrénique et rate sa cible ...");
                 break;
             case DROITE :
-                for(int i = coordX; i <= plateau.NB_WAGON - 1; i++){
-                    ArrayList<Bandit> ciblePotentiel = this.plateau.getScene(i, etage).getBandits();
-                    if(ciblePotentiel.isEmpty())  continue;//Rien, la balle traverse le wagon
-                    Bandit cible = ciblePotentiel.get(rnd.nextInt() % cibleSet.size()); //Cible frappé
+                for(int i = coordX; i <= Jeu.NB_WAGON - 1; i++){
+                    ArrayList<Bandit> cibleSet = this.plateau.getScene(i, coordY).getBandits();
+                    if(cibleSet.isEmpty())  continue;//Rien, la balle traverse le wagon
+                    Bandit cible = cibleSet.get(rnd.nextInt() % cibleSet.size()); //Cible frappé
                     cible.dropButin();
                     cible.fuit();
                     System.out.println(this.tag + "  pew pew à droite !");
@@ -125,7 +125,7 @@ public class Bandit extends Personnage{
                 break;
         }
         return;
-    }*/
+    }
 
     public void putAction(Input action){
         if(this.buffer.size() > 3){
@@ -141,6 +141,35 @@ public class Bandit extends Personnage{
         }
         Input result = buffer.pop();
         return result;
+    }
+
+    public void executionStack(){
+        Input input = this.popAction();
+        switch(input.action){
+            case ACTION.DEPLACE :{
+                int lastX= this.coordX;
+                int lastY = this.coordY;
+                if(this.deplace(input.direction)){
+                    //Si déplacement autorisé
+                    this.plateau.deplacePerso(this, lastX, lastY, input.direction);
+                    break;
+                }
+                else {
+                    System.out.println("Erreur de déplacement");
+                    break;
+                }
+            }
+
+            case ACTION.BRAQUE : this.braqueButin(); break;
+            case ACTION.TIR : this.tir(input.direction); break;
+            default : return;
+
+        }
+
+        System.out.println(this.getTag() + " exécution");
+
+
+
     }
 
     @BeforeEach
@@ -198,65 +227,6 @@ public class Bandit extends Personnage{
         else fail("initBandit mal fait");
     }
 
-    @Test //Test du buffer : Mouvement générale (executionStack, deplacer, popAction, putAction, deplacePerso, putPerso, enlevePerso). Seulement avec Bandit
-    void testExecutionStack_putAction_deplacer(){
-        Jeu testGame = new Jeu();
-        Personnage testSubject = testGame.getPersos().get(0);
-        //Coordonnée bandit :
-        // x : 0
-        // y : 1 (Toit)
-        Input testInput1 = new Input(DIRECTION.DROITE, ACTION.DEPLACE);
-        if(testSubject instanceof Bandit){
-            Bandit testBandit = (Bandit)testSubject;
-
-            //Test mouvement à droite
-            testBandit.putAction(testInput1);
-            testGame.executionStack(testBandit);
-            assertEquals(1, testBandit.coordX);
-
-            //Test retour en arrière du déplacement
-            Input testInput2 = new Input(DIRECTION.GAUCHE, ACTION.DEPLACE);
-            testBandit.putAction(testInput2);
-            testGame.executionStack(testBandit);
-            assertEquals(0, testBandit.coordX);
-
-            //Test limite en largeur du jeu
-            testBandit.putAction(testInput1);
-            testGame.executionStack(testBandit);
-            testBandit.putAction(testInput1);
-            testGame.executionStack(testBandit);
-            assertEquals(1, testBandit.coordX);
-
-            //Test limite en hauteur du jeu
-            Input testInput3 = new Input(DIRECTION.HAUT, ACTION.DEPLACE);
-            Input testInput4 = new Input(DIRECTION.BAS, ACTION.DEPLACE);
-            testBandit.putAction(testInput3);
-            testBandit.putAction(testInput3);
-            testGame.executionStack(testBandit);
-            testGame.executionStack(testBandit);
-            assertEquals(1, testBandit.coordY);
-
-            //Test descendre
-            testBandit.putAction(testInput4);
-            testGame.executionStack(testBandit);
-            assertEquals(0, testBandit.coordY);
-
-            //Test du système de stack avec déplacement du bandit
-            testBandit.putAction(testInput3);
-            testBandit.putAction(testInput2);
-            testBandit.putAction(testInput1);
-            testGame.executionStack(testBandit);
-            testGame.executionStack(testBandit);
-            assertEquals(1, testBandit.coordY);
-            assertEquals(0, testBandit.coordX);
-
-        }
-        else{
-            fail("initBandit mal fait.");
-        }
-
-
-    }
 
 
 

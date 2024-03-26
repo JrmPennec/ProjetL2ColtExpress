@@ -30,30 +30,24 @@ public class Jeu {
         }
     }
 
-    public void executionStack(Bandit id){
-        Input input = id.popAction();
-        switch(input.action){
-            case ACTION.DEPLACE :{
-                int lastX= id.getCoordX();
-                int lastY = id.getCoordY();
-                if(id.deplace(input.direction)){
-                    //Si déplacement autorisé
-                    this.plateau.deplacePerso(id, lastX, lastY, input.direction);
-                    break;
-                }
-                else {
-                    System.out.println("Erreur de déplacement");
-                    break;
-                }
+    public void actionPhase(){ //Dépile 1 par 1.
+        ArrayList<Bandit> players = new ArrayList<>(0);
+        for(Personnage p : persos){
+            if(p instanceof Bandit) players.add((Bandit)p);
+        }
+        for(Bandit gamers : players){
+            try{
+                gamers.executionStack();
+                //1 action dépilé, on quitte la fonction.
+                break;
+            }catch (Error e){
+                //Le stack est vide, on passe au joueur suivant.
+                continue;
             }
 
-            case ACTION.BRAQUE : id.braqueButin(); break;
-            case ACTION.TIR : id.tir(input.direction); break;
-            case default : return;
 
         }
-
-        System.out.println(id.getTag() + " exécution");
+        return;
     }
 
 
