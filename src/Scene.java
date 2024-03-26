@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Scene extends Observable {
     private boolean toit;
@@ -31,7 +32,7 @@ public class Scene extends Observable {
 
     public void retireObjet(Objet obj){
         for(Objet i : this.tresor){
-            if(i.getTag() == obj.getTag()){
+            if(i.getTag().equals(obj.getTag())){
                 tresor.remove(i);
                 return;
             }
@@ -40,6 +41,14 @@ public class Scene extends Observable {
     }
 
     public HashMap<String,Personnage> getPersos(){return persos;}
+
+    public ArrayList<Bandit> getBandits(){
+        ArrayList<Bandit> banditList = new ArrayList<>(0);
+        for(Map.Entry<String, Personnage> subject : this.persos.entrySet()){
+            if(subject.getValue() instanceof Bandit) banditList.add((Bandit)subject.getValue());
+        }
+        return banditList;
+    }
 
     public void putPerso(Personnage p){
         persos.put(p.getTag(),p);

@@ -1,4 +1,4 @@
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+//import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ public class Jeu {
         }
     }
 
-    public void actionPhase(){ //Dépile 1 par 1.
+    public void actionPhase(){ //Dépile 1 fois chaque joueur.
         ArrayList<Bandit> players = new ArrayList<>(0);
         for(Personnage p : persos){
             if(p instanceof Bandit) players.add((Bandit)p);
@@ -39,9 +39,10 @@ public class Jeu {
             try{
                 gamers.executionStack();
                 //1 action dépilé, on quitte la fonction.
-                break;
+                continue;
             }catch (Error e){
                 //Le stack est vide, on passe au joueur suivant.
+                System.out.println(gamers.tag + " a un stack vide");
                 continue;
             }
 

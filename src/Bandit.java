@@ -30,13 +30,13 @@ public class Bandit extends Personnage{
     private Stack<Input> buffer ;
     private ArrayList<Objet> loot ;
 
-    /*public int getTotalValeur(){
+    public int getTotalValeur(){
         int result = 0;
         for(Objet i : loot){
             result += i.getValeur();
         }
         return result;
-    }*/
+    }
 
     public Bandit(int x, int y, String t, Plateau p){
         super( x,  y,  t, p);
@@ -70,7 +70,7 @@ public class Bandit extends Personnage{
         this.coordY = 0; return;
     }
 
-    public void tir(DIRECTION dir){
+    public boolean tir(DIRECTION dir){
         switch(dir){
             case HAUT :
                 if(this.coordY == 0) {
@@ -80,7 +80,7 @@ public class Bandit extends Personnage{
                     cible.dropButin();
                     cible.fuit();
                     System.out.println(this.tag + " pew pew en haut !");
-                    return;
+                    return true;
                 }
                 System.out.println( this.tag + " tire, mais il est schizophrénique et rate sa cible ...");
                 break;
@@ -92,7 +92,7 @@ public class Bandit extends Personnage{
                     cible.dropButin();
                     cible.fuit();
                     System.out.println(this.tag + " pew pew en bas !");
-                    return;
+                    return true;
                 }
                 System.out.println( this.tag + " tire, mais il est schizophrénique et rate sa cible ...");
                 break;
@@ -104,7 +104,7 @@ public class Bandit extends Personnage{
                     cible.dropButin();
                     cible.fuit();
                     System.out.println("Bandit " + this.tag + "  pew pew à gauche !");
-                    return;
+                    return true;
                 }
                 System.out.println( this.tag + " tire ! Mais il est schizophrénique et rate sa cible ...");
                 break;
@@ -116,7 +116,7 @@ public class Bandit extends Personnage{
                     cible.dropButin();
                     cible.fuit();
                     System.out.println(this.tag + "  pew pew à droite !");
-                    return;
+                    return true;
                 }
                 System.out.println( this.tag + " tire, mais il est schizophrénique et rate sa cible ...");
                 break;
@@ -124,7 +124,7 @@ public class Bandit extends Personnage{
                 System.out.println("Erreur : Tir() direction=neutral est impossible, skip la phase");
                 break;
         }
-        return;
+        return false;
     }
 
     public void putAction(Input action){
@@ -147,17 +147,11 @@ public class Bandit extends Personnage{
         Input input = this.popAction();
         switch(input.action){
             case ACTION.DEPLACE :{
-                int lastX= this.coordX;
-                int lastY = this.coordY;
-                if(this.deplace(input.direction)){
-                    //Si déplacement autorisé
-                    this.plateau.deplacePerso(this, lastX, lastY, input.direction);
-                    break;
+                if(!this.deplace(input.direction)){
+                    //Si déplacement échoué
+                    System.out.println("Déplacement invalide.");
                 }
-                else {
-                    System.out.println("Erreur de déplacement");
-                    break;
-                }
+                break;
             }
 
             case ACTION.BRAQUE : this.braqueButin(); break;
@@ -167,9 +161,6 @@ public class Bandit extends Personnage{
         }
 
         System.out.println(this.getTag() + " exécution");
-
-
-
     }
 
     @BeforeEach
@@ -178,7 +169,8 @@ public class Bandit extends Personnage{
     }
 
     @Test
-    void testPopAction_PutAction(){
+    void testStack(){
+        System.out.println(" TEST : STACK");
         Input testInput1 = new Input(DIRECTION.DROITE, ACTION.DEPLACE);
         Input testInput2 = new Input(DIRECTION.DROITE, ACTION.TIR);
         Input testInput3 = new Input(DIRECTION.HAUT, ACTION.DEPLACE);
@@ -186,47 +178,106 @@ public class Bandit extends Personnage{
         Input inputReceiver;
         Jeu testGame = new Jeu();
         Personnage testSubject = testGame.getPersos().get(0);
-        if(testSubject instanceof Bandit) {
-            Bandit testBandit = (Bandit) testSubject;
-
-            //Test de popAction de base
-            testBandit.putAction(testInput1);
-            inputReceiver = testBandit.popAction();
-            assertEquals(inputReceiver, testInput1);
-
-            //Test de popAction après 2 enpile.
-            testBandit.putAction(testInput1);
-            testBandit.putAction(testInput2);
-            inputReceiver = testBandit.popAction();
-            assertEquals(inputReceiver, testInput2);
-            inputReceiver = testBandit.popAction();
-            assertEquals(inputReceiver, testInput1);
-
-            //Test de limite de stack
-            testBandit.putAction(testInput4);
-            testBandit.putAction(testInput4);
-            testBandit.putAction(testInput1);
-            testBandit.putAction(testInput3);
-            inputReceiver = testBandit.popAction();
-            assertEquals(inputReceiver, testInput1);
-
-            //Test final
-            inputReceiver = testBandit.popAction();
-            assertEquals(inputReceiver, testInput4);
-
-            //Test empty
-            inputReceiver = testBandit.popAction();
-            try{
-                inputReceiver = testBandit.popAction();
-                fail("Erreur pas attrapé");
-            }catch(Error a){
-                assertTrue(true);
-            }
-
+        if(!(testSubject instanceof Bandit)) {
+            fail("initBandit mal fait");
         }
-        else fail("initBandit mal fait");
+
+        Bandit testBandit = (Bandit) testSubject;
+
+        //Test de popAction de base
+        testBandit.putAction(testInput1);
+        inputReceiver = testBandit.popAction();
+        assertEquals(inputReceiver, testInput1);
+
+        //Test de popAction après 2 enpile.
+        testBandit.putAction(testInput1);
+        testBandit.putAction(testInput2);
+        inputReceiver = testBandit.popAction();
+        assertEquals(inputReceiver, testInput2);
+        inputReceiver = testBandit.popAction();
+        assertEquals(inputReceiver, testInput1);
+
+        //Test de limite de stack
+        testBandit.putAction(testInput4);
+        testBandit.putAction(testInput4);
+        testBandit.putAction(testInput1);
+        testBandit.putAction(testInput3);
+        inputReceiver = testBandit.popAction();
+        assertEquals(inputReceiver, testInput1);
+
+        //Test final
+        inputReceiver = testBandit.popAction();
+        assertEquals(inputReceiver, testInput4);
+
+        //Test empty
+        inputReceiver = testBandit.popAction();
+        try{
+            inputReceiver = testBandit.popAction();
+            fail("Erreur pas attrapé");
+        }catch(Error a){
+            assertTrue(true);
+        }
+
+
     }
 
+    //Présupposé : déplacement qui fonctionne (Personne.java)
+    @Test
+    void testTir(){
+        System.out.println(" TEST : TIR");
+        Jeu testGame = new Jeu();
+        Bandit testSubject1 = (Bandit)testGame.getPersos().get(0); //x , y = 0 , 0
+        Bandit testSubject2 = (Bandit)testGame.getPersos().get(1); //x , y = 0 , 0
+        Bandit testSubject3 = (Bandit)testGame.getPersos().get(2); //x , y = 0 , 0
+        Bandit testSubject4 = (Bandit)testGame.getPersos().get(3); //x , y = 0 , 0
+        boolean receptor; //Existe juste pour attraper les returns des deplacements, dont le résultat de l'opération ne nous intéresse pas.
+
+        //Test tir simple dans la salle
+        //Convention : on ne peut tirer sur un bandit dans la même salle. (For now)
+        assertFalse(testSubject1.tir(DIRECTION.HAUT));
+        assertFalse(testSubject1.tir(DIRECTION.BAS));
+        assertFalse(testSubject1.tir(DIRECTION.DROITE));
+        assertFalse(testSubject1.tir(DIRECTION.GAUCHE));
+
+        //Test : 1 case plus loin
+        receptor = testSubject2.deplace(DIRECTION.HAUT); //x , y = 0 , 1
+        receptor = testSubject3.deplace(DIRECTION.GAUCHE); //x , y = 1 , 0
+        assertTrue(testSubject1.tir(DIRECTION.HAUT));
+        assertTrue(testSubject1.tir(DIRECTION.GAUCHE));
+
+        //Test de fuite dû au dégat, étape 1
+        assertFalse(testSubject1.tir(DIRECTION.HAUT));
+        assertFalse(testSubject1.tir(DIRECTION.GAUCHE));
+
+        //Test : fuite dû au dégat. étape 2
+        receptor = testSubject1.deplace(DIRECTION.HAUT);
+        assertTrue(testSubject1.tir(DIRECTION.GAUCHE)); // x , y = 1 , 1
+
+        //Test : Tir après déplacement abscisse
+        receptor = testSubject1.deplace(DIRECTION.GAUCHE);
+        receptor = testSubject1.deplace(DIRECTION.BAS);
+        receptor = testSubject2.deplace(DIRECTION.DROITE);
+        assertEquals(testSubject2.getCoordX(), 0);
+        assertEquals(testSubject2.getCoordY(), 0);
+        assertEquals(testSubject3.getCoordX(), 0);
+        assertEquals(testSubject3.getCoordY(), 0);
+        receptor = testSubject1.deplace(DIRECTION.DROITE);
+        assertEquals(testSubject1.getCoordX(), 2);
+        assertEquals(testSubject2.getCoordY(), 0);
+        assertTrue(testSubject1.tir(DIRECTION.GAUCHE)); // vers 0, 0
+        assertTrue(testSubject1.tir(DIRECTION.GAUCHE));
+        assertTrue(testSubject1.tir(DIRECTION.GAUCHE));
+        assertFalse(testSubject1.tir(DIRECTION.GAUCHE)); //Les 3 bandits ont fuit en haut.
+    }
+
+    void testButin(){
+        System.out.println(" TEST : BUTIN");
+        Jeu testGame = new Jeu();
+        Bandit testSubject1 = (Bandit)testGame.getPersos().get(0); //x , y = 0 , 0
+        Bandit testSubject2 = (Bandit)testGame.getPersos().get(1); //x , y = 0 , 0
+
+
+    }
 
 
 

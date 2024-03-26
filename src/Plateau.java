@@ -38,10 +38,6 @@ import java.util.ArrayList;
         return train.get(y).get(x);
     }
 
-    /*public void updateScene(int x, int y) {
-        train.get(y).get(x).update();
-    }*/
-
     private void initScenes(boolean estToit) {
         int y;
         if (estToit)
