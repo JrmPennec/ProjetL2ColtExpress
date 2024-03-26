@@ -23,7 +23,8 @@ import java.util.Random;
         return;
     }
 
-    public void tenteAction(){
+
+    public void faitAction(){
         int testNerveux = rnd.nextInt() % 100;
         if(testNerveux < nervosite) return; //Test échoué, le maréchal fait rien.
         int closestX = this.plateau.NB_WAGON;

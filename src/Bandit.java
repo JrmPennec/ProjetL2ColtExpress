@@ -9,34 +9,19 @@ import java.util.Stack;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-enum ACTION{
-    TIR, DEPLACE, BRAQUE,
-
-}
-class Input{
-    public Personnage.DIRECTION direction;
-    public ACTION action;
-
-    public Input(Personnage.DIRECTION d, ACTION a){
-        this.direction = d;
-        this.action = a;
-    }
-
-}
-
 
 public class Bandit extends Personnage{
     private Random rnd ;
     private Stack<Input> buffer ;
     private ArrayList<Objet> loot ;
 
-    public int getTotalValeur(){
+   /* public int getTotalValeur(){
         int result = 0;
         for(Objet i : loot){
             result += i.getValeur();
         }
         return result;
-    }
+    }*/
 
     public Bandit(int x, int y, String t, Plateau p){
         super( x,  y,  t, p);
@@ -45,7 +30,7 @@ public class Bandit extends Personnage{
         this.loot = new ArrayList<>();
     }
 
-   public void braqueButin(){
+   /*public void braqueButin(){
         ArrayList<Objet> lootTrouve = new ArrayList<>();
         lootTrouve = this.plateau.getScene(coordX, coordY).getTresor();
         if(!lootTrouve.isEmpty()){
@@ -56,13 +41,13 @@ public class Bandit extends Personnage{
             System.out.println(this.tag + " braque et trouve " + premierLoot.tag);
             return;
         }
-    }
+    }*/
 
-
+/*
     public void dropButin(){
         loot.get(loot.size()-1).estLache();
         loot.remove(loot.size()-1);
-    }
+    }*/
 
     public void fuit(){
         System.out.println( this.tag + " a eu peur et s'en va");
@@ -146,22 +131,20 @@ public class Bandit extends Personnage{
     public void executionStack(){
         Input input = this.popAction();
         switch(input.action){
-            case ACTION.DEPLACE :{
-                if(!this.deplace(input.direction)){
-                    //Si déplacement échoué
-                    System.out.println("Déplacement invalide.");
-                }
+            case DEPLACE :
+               this.deplace(input.direction);
                 break;
-            }
 
-            case ACTION.BRAQUE : this.braqueButin(); break;
-            case ACTION.TIR : this.tir(input.direction); break;
+
+            //case ACTION.BRAQUE : this.braqueButin(); break;
+            //case ACTION.TIR : this.tir(input.direction); break;
             default : return;
 
         }
 
         System.out.println(this.getTag() + " exécution");
     }
+    public void dropButin(){}
 
     @BeforeEach
     void testPersonnage(){

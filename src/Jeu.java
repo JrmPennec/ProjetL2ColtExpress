@@ -30,6 +30,10 @@ public class Jeu {
         }
     }
 
+    public void ajouteAction(Bandit b,Input p){
+        b.putAction(p);
+    }
+
     public void actionPhase(){ //Dépile 1 fois chaque joueur.
         ArrayList<Bandit> players = new ArrayList<>(0);
         for(Personnage p : persos){
@@ -54,9 +58,9 @@ public class Jeu {
 
     public static void main(String[] args) {
         Jeu test = new Jeu();
-        test.persos.get(0).deplace(Personnage.DIRECTION.GAUCHE);
-        test.persos.get(0).deplace(Personnage.DIRECTION.HAUT);
-        test.persos.get(0).deplace(Personnage.DIRECTION.BAS);
+        test.persos.get(0).deplace(DIRECTION.GAUCHE);
+        test.persos.get(0).deplace(DIRECTION.HAUT);
+        test.persos.get(0).deplace(DIRECTION.BAS);
 
     }
 }

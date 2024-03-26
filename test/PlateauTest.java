@@ -21,8 +21,7 @@ class PlateauTest {
     @Test
     void deplacePerso() {
         Personnage b = p.getScene(0,1).getPersos().get("b00");
-        p.getScene(b.getCoordX(),b.getCoordY()).removePerso(b.getTag());
-        p.deplacePerso(b,0,0);
+        p.deplacePerso(b,0,1);
         assertTrue(p.getScene(0,1).getPersos().isEmpty());
         assertEquals(p.getScene(0,0).getPersos().get("b00"),b);
     }

@@ -55,9 +55,9 @@ import java.util.ArrayList;
     }
 
 
-    void deplacePerso(Personnage p, int xLast, int yLast ,Personnage.DIRECTION d){
+    void deplacePerso(Personnage p,int xTarget, int yTarget){
         //x et y verifiés dans Personnage
-        int x = xLast;
+        /*int x = xLast;
         int y = yLast;
         switch(d){
             case HAUT : y++; break;
@@ -65,9 +65,10 @@ import java.util.ArrayList;
             case DROITE : x++; break;
             case GAUCHE : x--; break;
             default : throw new Error ("deplacePerso : DIRECTION 'd' mal définit");
-        }
-        getScene(x,y).putPerso(p);
-        getScene(xLast, yLast).removePerso(p.getTag());
+        }*/
+        getScene(xTarget,yTarget).putPerso(p);
+        getScene(p.getCoordX(),p.getCoordY()).removePerso(p.getTag());
+        System.out.println("plateau deplace ");
         notifyObservers();
 
     }

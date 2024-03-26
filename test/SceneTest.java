@@ -6,9 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class SceneTest {
 
     private Scene scene;
+    private Plateau plateau;
     @BeforeEach
     public void init() {
         scene = new Scene(true,true,false);
+        plateau = new Plateau();
     }
 
     @Test
@@ -28,14 +30,15 @@ class SceneTest {
 
     @Test
     void putPerso(){
-        Bandit b=new Bandit(0,0,"toto");
+
+        Bandit b=new Bandit(0,0,"toto",plateau);
         scene.putPerso(b);
         assertSame(scene.getPersos().get(b.tag),b);
 
     }
     @Test
     void removePerso(){
-        Bandit b=new Bandit(0,0,"toto");
+        Bandit b=new Bandit(0,0,"toto",plateau);
         scene.putPerso(b);
         assertSame(scene.removePerso("toto"),b);
         assertTrue(scene.getPersos().isEmpty());
