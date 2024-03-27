@@ -20,12 +20,12 @@ class SceneTest {
 
     @Test
     void estArriere() {
-        assertTrue(scene.estArriere());
+        assertFalse(scene.estArriere());
     }
 
     @Test
     void estLocomotive() {
-        assertFalse(scene.estLocomotive());
+        assertTrue(scene.estLocomotive());
     }
 
     @Test
@@ -33,7 +33,7 @@ class SceneTest {
 
         Bandit b=new Bandit(0,0,"toto",plateau);
         scene.putPerso(b);
-        assertSame(scene.getPersos().get(b.tag),b);
+        assertSame(scene.getBandits().get(b.tag),b);
 
     }
     @Test
@@ -41,6 +41,11 @@ class SceneTest {
         Bandit b=new Bandit(0,0,"toto",plateau);
         scene.putPerso(b);
         assertSame(scene.removePerso("toto"),b);
-        assertTrue(scene.getPersos().isEmpty());
+        assertTrue(scene.getBandits().isEmpty());
+    }
+    @Test
+    void MarshallTtest(){
+        assertFalse(scene.isMarshallHere());
+
     }
 }

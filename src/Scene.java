@@ -7,7 +7,9 @@ public class Scene extends Observable {
     private boolean locomotive;
     private  boolean arriere;
 
-    private HashMap<String,Personnage> persos;
+    private HashMap<String,Bandit> bandits;
+
+    private Marshall marshall;
 
     private ArrayList<Objet> tresor;
 
@@ -20,7 +22,8 @@ public class Scene extends Observable {
         this.toit = toit;
         this.locomotive = locomotive;
         this.arriere = arriere;
-        this.persos = new HashMap<>();
+        this.bandits = new HashMap<>();
+        this.marshall = null;
         this.tresor = new ArrayList<>();
     }
     public boolean estArriere(){
@@ -28,6 +31,12 @@ public class Scene extends Observable {
     }
 
     public boolean estLocomotive(){ return locomotive;}
+    public boolean isMarshallHere(){
+        return(marshall!=null);
+    }
+    public Marshall getMarshall(){
+        return marshall;
+    }
     public  ArrayList<Objet> getTresor(){ return tresor;}
 
     public void retireObjet(Objet obj){
@@ -40,22 +49,42 @@ public class Scene extends Observable {
         throw new Error("retireObjet : L'objet n'existe pas dans la scène !");
     }
 
-    public HashMap<String,Personnage> getPersos(){return persos;}
+    public HashMap<String,Bandit> getBandits(){return bandits;}
 
-    public ArrayList<Bandit> getBandits(){
+    public ArrayList<Bandit> getArrayBandits(){
         ArrayList<Bandit> banditList = new ArrayList<>(0);
-        for(Map.Entry<String, Personnage> subject : this.persos.entrySet()){
-            if(subject.getValue() instanceof Bandit) banditList.add((Bandit)subject.getValue());
+        for(Map.Entry<String, Bandit> subject : this.bandits.entrySet()){
+             banditList.add((Bandit)subject.getValue());
         }
         return banditList;
     }
 
     public void putPerso(Personnage p){
-        persos.put(p.getTag(),p);
+        if (p instanceof Marshall)
+            marshall=(Marshall)p;
+        else if (p instanceof Bandit)
+                bandits.put(p.getTag(),(Bandit)p);
+        else
+            throw  new IllegalArgumentException("Argument invalide");
+    }
+    public Bandit removeBandit(String tag){
+        return bandits.remove(tag);
+    }
+    public Marshall removeMarshall(){
+        Marshall m =marshall;
+        marshall = null;
+        return m;
     }
     public Personnage removePerso(String tag){
-        return persos.remove(tag);
+        //cas particulier
+        if (isMarshallHere()) {
+            if (tag.equals(marshall.getTag()))
+                return removeMarshall();
+        }
+
+        return removeBandit(tag);
     }
+
 
 
 

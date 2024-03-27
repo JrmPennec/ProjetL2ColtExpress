@@ -12,23 +12,22 @@ class VueJeuTest {
     }
     @Test
     void ViewTest()throws InterruptedException{
-        test.jeu.getPersos().get(0).deplace(DIRECTION.GAUCHE);
+        test.jeu.getBandits().get(0).deplace(DIRECTION.GAUCHE);
         Thread.sleep(2000);
-        test.jeu.getPersos().get(0).deplace(DIRECTION.HAUT);
+        test.jeu.getBandits().get(0).deplace(DIRECTION.HAUT);
         Thread.sleep(2000);
-        test.jeu.getPersos().get(0).deplace(DIRECTION.BAS);
+        test.jeu.getBandits().get(0).deplace(DIRECTION.BAS);
         Thread.sleep(2000);
-        test.jeu.getPersos().get(0).deplace(DIRECTION.BAS);
+        test.jeu.getBandits().get(0).deplace(DIRECTION.BAS);
         Thread.sleep(2000);
-        test.jeu.getPersos().get(0).deplace(DIRECTION.DROITE);
+        test.jeu.getBandits().get(0).deplace(DIRECTION.DROITE);
         Thread.sleep(2000);
-        test.jeu.getPersos().get(0).deplace(DIRECTION.GAUCHE);
+        test.jeu.getBandits().get(0).deplace(DIRECTION.GAUCHE);
 
     }
     @Test
     void ActionTest(){
-        Personnage p =test.jeu.getPersos().get(0);
-        Bandit b=(Bandit)p;
+        Bandit b =test.jeu.getBandits().get(0);
         test.jeu.ajouteAction(b,new Input(DIRECTION.DROITE,ACTION.DEPLACE));
     }
 

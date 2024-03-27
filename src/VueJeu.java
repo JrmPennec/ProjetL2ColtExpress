@@ -53,8 +53,8 @@ public class VueJeu extends JFrame implements Observer {
     }
     static public void main(String[] args){
         VueJeu test= new VueJeu(new Jeu());
-        Personnage p =test.jeu.getPersos().get(0);
-        Bandit b=(Bandit)p;
+        Bandit b =test.jeu.getBandits().get(0);
+
         test.jeu.ajouteAction(b,new Input(DIRECTION.DROITE,ACTION.DEPLACE));
     }
 

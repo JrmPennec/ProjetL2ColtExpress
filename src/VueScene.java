@@ -6,11 +6,14 @@ public class VueScene extends JPanel {
 
 
     VueScene(Scene s) {
+        super();
         //on doit utiliser html pour les jlabel
         String textP = "<html> Personnages : <br/>";
-        if (!s.getPersos().isEmpty()) {
-            for (Personnage p : s.getPersos().values())
+        if (!s.getBandits().isEmpty()) {
+            for (Personnage p : s.getBandits().values())
                 textP += p.getTag() + "<br/";
+            if(s.isMarshallHere())
+                textP+=s.getMarshall().getTag() + "<br/>";
             textP += "<html>";
 
         }

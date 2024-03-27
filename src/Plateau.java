@@ -3,8 +3,6 @@ import java.util.ArrayList;
  class Plateau extends Observable {
      private Jeu jeu;
      private ArrayList<ArrayList<Scene>> train; //Y, puis X coordonnées
-     private ArrayList<Personnage> epicGamers; //Non necessaire a mon avis
-     private ArrayList<Objet> tresors; //non necessaire
 
 
     /*public Plateau(ArrayList<ArrayList<Scene>> completeMap, ArrayList<Personnage> basedWarcriminal, ArrayList<Objet> initTresors, Marshall m) {
@@ -56,16 +54,6 @@ import java.util.ArrayList;
 
 
     void deplacePerso(Personnage p,int xTarget, int yTarget){
-        //x et y verifiés dans Personnage
-        /*int x = xLast;
-        int y = yLast;
-        switch(d){
-            case HAUT : y++; break;
-            case BAS : y--; break;
-            case DROITE : x++; break;
-            case GAUCHE : x--; break;
-            default : throw new Error ("deplacePerso : DIRECTION 'd' mal définit");
-        }*/
         getScene(xTarget,yTarget).putPerso(p);
         getScene(p.getCoordX(),p.getCoordY()).removePerso(p.getTag());
         System.out.println("plateau deplace ");
@@ -77,12 +65,12 @@ import java.util.ArrayList;
         Plateau p = new Plateau();
         for (Scene s : p.train.get(1)) {
             System.out.print("Toit : ");
-            s.getPersos().forEach((k,v)-> System.out.print(k +" "));
+            s.getBandits().forEach((k,v)-> System.out.print(k +" "));
         }
         System.out.println("");
         for (Scene s : p.train.get(0)) {
             System.out.print("Interieur : ");
-            s.getPersos().forEach((k, v) -> System.out.print(k + " "));
+            s.getBandits().forEach((k, v) -> System.out.print(k + " "));
         }
 
 

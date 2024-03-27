@@ -1,19 +1,17 @@
 import java.util.ArrayList;
 import java.util.Random;
 
- /*class Marshall extends Personnage{
+ public class Marshall extends Personnage{
     public int nervosite = 30;
     private Random rnd = new Random();
 
-    public Marshall(int x, String t){
-        this.coordX = x;
-        this.coordY = 0; //Le maréchal ne monte pas sur les toits.
-        this.tag = t;
+    public Marshall(int x, String t,Plateau p){
+        super(x,0,t,p);
 
     }
 
     public void expulse(){
-        ArrayList<Bandit> cibleSet = this.plateau.getScene(this.coordX, this.etage).getBandits();
+        ArrayList<Bandit> cibleSet = this.plateau.getScene(this.coordX, this.coordY).getArrayBandits();
         if(cibleSet.isEmpty()) return; //Aucun bandit à taper
         System.out.println("Le maréchal " +this.tag + " fait fuir des bandits");
         for(Bandit cible : cibleSet){
@@ -24,7 +22,7 @@ import java.util.Random;
     }
 
 
-    public void faitAction(){
+   /* public void faitAction(){
         int testNerveux = rnd.nextInt() % 100;
         if(testNerveux < nervosite) return; //Test échoué, le maréchal fait rien.
         int closestX = this.plateau.NB_WAGON;
@@ -41,5 +39,5 @@ import java.util.Random;
         expulse(); //Expulse le bandit de toute manière
         return;
     }
-
-}*/
+*/
+}
