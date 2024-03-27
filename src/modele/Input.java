@@ -1,3 +1,5 @@
+package modele;
+
 public class Input{
     final public DIRECTION direction;
     final public ACTION action;

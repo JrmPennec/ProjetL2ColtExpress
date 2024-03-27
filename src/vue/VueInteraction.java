@@ -1,7 +1,8 @@
+package vue;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class VueInteraction  extends JPanel {
     VueJeu InterfaceJeu;
@@ -21,7 +22,7 @@ public class VueInteraction  extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            InterfaceJeu.jeu.actionPhase();
+            InterfaceJeu.getJeu().actionPhase();
         }
     }
 

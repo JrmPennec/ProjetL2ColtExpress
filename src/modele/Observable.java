@@ -1,6 +1,8 @@
+package modele;
+import vue.Observer;
 import java.util.ArrayList;
 
-abstract class Observable {
+public abstract class Observable {
     private ArrayList<Observer> observers;
     public Observable(){
         this.observers= new ArrayList<Observer>();

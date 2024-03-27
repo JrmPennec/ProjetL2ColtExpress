@@ -1,11 +1,13 @@
+package modele;
+
 import java.util.ArrayList;
 
- class Plateau extends Observable {
+ public class Plateau extends Observable {
      private Jeu jeu;
      private ArrayList<ArrayList<Scene>> train; //Y, puis X coordonnées
 
 
-    /*public Plateau(ArrayList<ArrayList<Scene>> completeMap, ArrayList<Personnage> basedWarcriminal, ArrayList<Objet> initTresors, Marshall m) {
+    /*public modele.Plateau(ArrayList<ArrayList<modele.Scene>> completeMap, ArrayList<modele.Personnage> basedWarcriminal, ArrayList<modele.Objet> initTresors, modele.Marshall m) {
         if (completeMap.size() > 2) {
             throw new Error("Train mal défini : il y a plus de 2 étages en argument");
         }
@@ -53,10 +55,10 @@ import java.util.ArrayList;
     }
 
 
-    void deplacePerso(Personnage p,int xTarget, int yTarget){
+    public void deplacePerso(Personnage p, int xTarget, int yTarget){
         getScene(xTarget,yTarget).putPerso(p);
         getScene(p.getCoordX(),p.getCoordY()).removePerso(p.getTag());
-        System.out.println("plateau deplace ");
+        System.out.println("plateau déplace ");
         notifyObservers();
 
     }

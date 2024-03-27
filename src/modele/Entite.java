@@ -1,4 +1,4 @@
-import org.junit.jupiter.api.*;
+package modele;
 
 abstract class Entite extends Observable {
 

@@ -1,11 +1,8 @@
+package modele;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.Stack;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 
 public class Bandit extends Personnage{
@@ -15,7 +12,7 @@ public class Bandit extends Personnage{
 
    /* public int getTotalValeur(){
         int result = 0;
-        for(Objet i : loot){
+        for(modele.Objet i : loot){
             result += i.getValeur();
         }
         return result;
@@ -29,10 +26,10 @@ public class Bandit extends Personnage{
     }
 
    /*public void braqueButin(){
-        ArrayList<Objet> lootTrouve = new ArrayList<>();
+        ArrayList<modele.Objet> lootTrouve = new ArrayList<>();
         lootTrouve = this.plateau.getScene(coordX, coordY).getTresor();
         if(!lootTrouve.isEmpty()){
-            Objet premierLoot = lootTrouve.get(rnd.nextInt() % lootTrouve.size());
+            modele.Objet premierLoot = lootTrouve.get(rnd.nextInt() % lootTrouve.size());
             premierLoot.estPris(this);
             this.plateau.getScene(coordX,coordY).retireObjet(premierLoot);
             loot.add(premierLoot);
@@ -86,7 +83,7 @@ public class Bandit extends Personnage{
                     Bandit cible = cibleSet.get(rnd.nextInt() % cibleSet.size()); //Cible frappé
                     cible.dropButin();
                     cible.fuit();
-                    System.out.println("Bandit " + this.tag + "  pew pew à gauche !");
+                    System.out.println("modele.Bandit " + this.tag + "  pew pew à gauche !");
                     return true;
                 }
                 System.out.println( this.tag + " tire ! Mais il est schizophrénique et rate sa cible ...");
@@ -134,8 +131,8 @@ public class Bandit extends Personnage{
                 break;
 
 
-            //case ACTION.BRAQUE : this.braqueButin(); break;
-            //case ACTION.TIR : this.tir(input.direction); break;
+            //case modele.ACTION.BRAQUE : this.braqueButin(); break;
+            //case modele.ACTION.TIR : this.tir(input.direction); break;
             default : return;
 
         }

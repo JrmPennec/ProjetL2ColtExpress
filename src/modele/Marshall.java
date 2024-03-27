@@ -1,3 +1,5 @@
+package modele;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -33,9 +35,9 @@ import java.util.Random;
             int oper = this.plateau.getScene(i, 0).getBandits().get(0).getCoordX() - this.coordX;
             if(Math.abs(oper) < Math.abs(closestX)) closestX = oper;
         }
-        if(closestX < 0) deplace(DIRECTION.GAUCHE);
+        if(closestX < 0) deplace(modele.DIRECTION.GAUCHE);
         //Si il y a aucun bandit en bas, se déplace à droite par défaut
-        if(closestX > 0) deplace(DIRECTION.DROITE);
+        if(closestX > 0) deplace(modele.DIRECTION.DROITE);
         expulse(); //Expulse le bandit de toute manière
         return;
     }

@@ -1,5 +1,8 @@
-import javax.swing.*;
+package vue;
+import modele.*;
 
+import javax.swing.*;
+import modele.*;
 public class VueScene extends JPanel {
     JLabel PersosList;
     JLabel Objets;
@@ -20,7 +23,7 @@ public class VueScene extends JPanel {
         PersosList = new JLabel(textP);
         this.add(PersosList);
         //Pas encore implementée la  suite
-        String textO = " Objet(s) : ";
+        String textO = " modele.Objet(s) : ";
 
     }
 

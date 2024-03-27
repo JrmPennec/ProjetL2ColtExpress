@@ -1,3 +1,4 @@
+import modele.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ class BanditTest {
         Input inputReceiver;
 
 
-       // if(!(testSubject instanceof Bandit)) {
+       // if(!(testSubject instanceof modele.Bandit)) {
         //    fail("initBandit mal fait");
 
 

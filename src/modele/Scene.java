@@ -1,3 +1,5 @@
+package modele;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,10 +15,10 @@ public class Scene extends Observable {
 
     private ArrayList<Objet> tresor;
 
-    boolean estToit(){
+    public boolean estToit(){
         return toit;
     }
-    Scene(boolean toit,boolean locomotive,boolean arriere){
+    public Scene(boolean toit,boolean locomotive,boolean arriere){
         if (locomotive && arriere)
             throw new Error("Locomotive ne peut être l'arriere du train ");
         this.toit = toit;

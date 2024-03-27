@@ -1,3 +1,6 @@
+import modele.Bandit;
+import modele.Personnage;
+import modele.Plateau;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +23,7 @@ class PlateauTest {
 
     @Test
     void deplacePerso() {
-        Personnage b = p.getScene(0,1).getBandits().get("b00");
+        Bandit b = p.getScene(0,1).getBandits().get("b00");
         p.deplacePerso(b,0,0);
         assertTrue(p.getScene(0,1).getBandits().isEmpty());
         assertEquals(p.getScene(0,0).getBandits().get("b00"),b);

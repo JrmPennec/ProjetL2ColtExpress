@@ -1,4 +1,0 @@
-enum ACTION{
-    TIR, DEPLACE, BRAQUE
-}
-

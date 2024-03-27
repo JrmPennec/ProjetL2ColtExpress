@@ -1,3 +1,6 @@
+import modele.Bandit;
+import modele.Plateau;
+import modele.Scene;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +36,7 @@ class SceneTest {
 
         Bandit b=new Bandit(0,0,"toto",plateau);
         scene.putPerso(b);
-        assertSame(scene.getBandits().get(b.tag),b);
+        assertSame(scene.getBandits().get(b.getTag()),b);
 
     }
     @Test

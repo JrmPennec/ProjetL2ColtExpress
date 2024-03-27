@@ -1,7 +1,8 @@
+import modele.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import vue.VueJeu;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class VueJeuTest {
 
@@ -12,23 +13,23 @@ class VueJeuTest {
     }
     @Test
     void ViewTest()throws InterruptedException{
-        test.jeu.getBandits().get(0).deplace(DIRECTION.GAUCHE);
+        test.getJeu().getBandits().get(0).deplace(DIRECTION.GAUCHE);
         Thread.sleep(2000);
-        test.jeu.getBandits().get(0).deplace(DIRECTION.HAUT);
+        test.getJeu().getBandits().get(0).deplace(DIRECTION.HAUT);
         Thread.sleep(2000);
-        test.jeu.getBandits().get(0).deplace(DIRECTION.BAS);
+        test.getJeu().getBandits().get(0).deplace(DIRECTION.BAS);
         Thread.sleep(2000);
-        test.jeu.getBandits().get(0).deplace(DIRECTION.BAS);
+        test.getJeu().getBandits().get(0).deplace(DIRECTION.BAS);
         Thread.sleep(2000);
-        test.jeu.getBandits().get(0).deplace(DIRECTION.DROITE);
+        test.getJeu().getBandits().get(0).deplace(DIRECTION.DROITE);
         Thread.sleep(2000);
-        test.jeu.getBandits().get(0).deplace(DIRECTION.GAUCHE);
+        test.getJeu().getBandits().get(0).deplace(DIRECTION.GAUCHE);
 
     }
     @Test
     void ActionTest(){
-        Bandit b =test.jeu.getBandits().get(0);
-        test.jeu.ajouteAction(b,new Input(DIRECTION.DROITE,ACTION.DEPLACE));
+        Bandit b =test.getJeu().getBandits().get(0);
+        test.getJeu().ajouteAction(b,new Input(DIRECTION.DROITE, ACTION.DEPLACE));
     }
 
 

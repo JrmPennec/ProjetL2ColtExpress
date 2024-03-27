@@ -1,10 +1,10 @@
-//import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+package modele;//import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import java.util.ArrayList;
 
 public class Jeu {
-    static final int NB_WAGON = 4;
-    static final int NB_JOUEURS = 1;
+    public static final int NB_WAGON = 4;
+    public static final int NB_JOUEURS = 1;
     private ArrayList<Bandit> bandits;
 
 

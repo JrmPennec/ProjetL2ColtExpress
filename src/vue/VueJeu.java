@@ -1,11 +1,17 @@
+package vue;
+
+import modele.*;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
 public class VueJeu extends JFrame implements Observer {
-    JPanel affichageTrain;
-    VueInteraction affichageInteraction;
-    Jeu jeu;
+    private JPanel affichageTrain;
+    private VueInteraction affichageInteraction;
+    private Jeu jeu;
+
+
 
     public VueJeu(Jeu j) {
         super("Colt Express");
@@ -45,7 +51,9 @@ public class VueJeu extends JFrame implements Observer {
 
 
     }
-
+    public Jeu getJeu() {
+        return jeu;
+    }
     @Override
     public void update() {
         afficheTrain();
@@ -55,7 +63,7 @@ public class VueJeu extends JFrame implements Observer {
         VueJeu test= new VueJeu(new Jeu());
         Bandit b =test.jeu.getBandits().get(0);
 
-        test.jeu.ajouteAction(b,new Input(DIRECTION.DROITE,ACTION.DEPLACE));
+        test.jeu.ajouteAction(b,new Input(DIRECTION.DROITE, ACTION.DEPLACE));
     }
 
 }
