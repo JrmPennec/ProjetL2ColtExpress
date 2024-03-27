@@ -3,12 +3,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-abstract class Personnage extends Entite{
+public  abstract class Personnage extends Entite{
 
     public Personnage(int x,int y,String tag,Plateau p){
         super( x, y, tag, p);
     }
-
 
     public boolean deplace(DIRECTION dir){ //renvoie un booléan confirmant le succès ou non de l'opération.
 
@@ -67,46 +66,41 @@ abstract class Personnage extends Entite{
     }
 
 
-
-
     @BeforeEach
     void testPersonnage(){
         System.out.println("TEST PERSONNAGE : MOVEMENT");
     }
-/*
-   @Test
+
+    @Test
     public void testMoveIsolated(){
         Jeu testGame = new Jeu();
-        System.out.println("1");
         Personnage testSubject = testGame.getPersos().get(0);
-        //Mouvement à droite
-        //testSubject.deplace(DIRECTION.DROITE));
-        System.out.println(testSubject.deplace(DIRECTION.DROITE));
-        assertEquals(1, testSubject.coordX);
-        System.out.println("2");
-
-        //Mouvement bloqué
-        //assertFalse(testSubject.deplace(DIRECTION.DROITE));
-        System.out.println("3");
-        assertEquals(1, testSubject.coordX);
-        System.out.println("4");
-        //Mouvement aller-retour
-        //assertTrue(testSubject.deplace(DIRECTION.GAUCHE));
-        assertEquals(0, testSubject.coordX);
-        //assertTrue(testSubject.deplace(DIRECTION.DROITE));
+        System.out.println("Mouvement à droite");
+        assertTrue(testSubject.deplace(DIRECTION.DROITE));
         assertEquals(1, testSubject.coordX);
 
-        //Mouvement complex
-        assertEquals(0, testSubject.coordY);
-        //assertTrue(testSubject.deplace(DIRECTION.HAUT));
+        System.out.println("Mouvement bloqué");
+        assertTrue(testSubject.deplace(DIRECTION.DROITE));
+        assertTrue(testSubject.deplace(DIRECTION.DROITE));
+        assertFalse(testSubject.deplace(DIRECTION.DROITE));
+        assertEquals(3, testSubject.coordX);
+
+        System.out.println("Mouvement aller-retour");
+        assertTrue(testSubject.deplace(DIRECTION.GAUCHE));
+        assertEquals(2, testSubject.coordX);
+        assertTrue(testSubject.deplace(DIRECTION.DROITE));
+        assertEquals(3, testSubject.coordX);
+
+        System.out.println("Mouvement complex");
         assertEquals(1, testSubject.coordY);
-        //assertTrue(testSubject.deplace(DIRECTION.GAUCHE));
-        //assertTrue(testSubject.deplace(DIRECTION.BAS));
-        //assertTrue(testSubject.deplace(DIRECTION.DROITE));
-        assertEquals(1, testSubject.coordX);
+        assertFalse(testSubject.deplace(DIRECTION.HAUT));
+        assertEquals(1, testSubject.coordY);
+        assertTrue(testSubject.deplace(DIRECTION.GAUCHE));
+        assertTrue(testSubject.deplace(DIRECTION.BAS));
+        assertTrue(testSubject.deplace(DIRECTION.DROITE));
+        assertEquals(3, testSubject.coordX);
 
-    }*/
-
+    }
 
 
 
