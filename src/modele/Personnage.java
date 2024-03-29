@@ -66,13 +66,11 @@ public abstract class Personnage extends Entite{
     }
 
 
-
-
-    @BeforeEach
+    /*@BeforeEach
     void testPersonnage(){
         System.out.println("TEST PERSONNAGE : MOVEMENT");
     }
-/*
+
    @Test
     public void testMoveIsolated(){
         modele.Jeu testGame = new modele.Jeu();

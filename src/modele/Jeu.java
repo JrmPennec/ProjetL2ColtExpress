@@ -1,10 +1,13 @@
 package modele;//import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Jeu {
     public static final int NB_WAGON = 4;
     public static final int NB_JOUEURS = 1;
+
+    public static Random rnd = new Random();
     private ArrayList<Bandit> bandits;
 
 
@@ -25,7 +28,7 @@ public class Jeu {
     public Jeu() {
         bandits = new ArrayList<>();
         plateau = new Plateau();
-        marshall = new Marshall(3,"*MARSHAll*",plateau);
+        marshall = new Marshall(3,"*MARSHAll*",plateau); //Après les tests lol
         initBandits();
     }
 
@@ -48,6 +51,7 @@ public class Jeu {
             try{
                 gamer.executionStack();
                 //1 action dépilé, on quitte la fonction.
+                if(this.marshall != null) this.marshall.faitAction();
                 continue;
             }catch (Error e){
                 //Le stack est vide, on passe au joueur suivant.

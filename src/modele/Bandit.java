@@ -10,13 +10,13 @@ public class Bandit extends Personnage{
     private Stack<Input> buffer ;
     private ArrayList<Objet> loot ;
 
-   /* public int getTotalValeur(){
+    public int getTotalValeur(){
         int result = 0;
         for(modele.Objet i : loot){
             result += i.getValeur();
         }
         return result;
-    }*/
+    }
 
     public Bandit(int x, int y, String t, Plateau p){
         super( x,  y,  t, p);
@@ -25,7 +25,7 @@ public class Bandit extends Personnage{
         this.loot = new ArrayList<>();
     }
 
-   /*public void braqueButin(){
+   public void braqueButin(){
         ArrayList<modele.Objet> lootTrouve = new ArrayList<>();
         lootTrouve = this.plateau.getScene(coordX, coordY).getTresor();
         if(!lootTrouve.isEmpty()){
@@ -36,13 +36,13 @@ public class Bandit extends Personnage{
             System.out.println(this.tag + " braque et trouve " + premierLoot.tag);
             return;
         }
-    }*/
+    }
 
-/*
+
     public void dropButin(){
         loot.get(loot.size()-1).estLache();
         loot.remove(loot.size()-1);
-    }*/
+    }
 
     public void fuit(){
         System.out.println( this.tag + " a eu peur et s'en va");
@@ -77,9 +77,14 @@ public class Bandit extends Personnage{
                 System.out.println( this.tag + " tire, mais il est schizophrénique et rate sa cible ...");
                 break;
             case GAUCHE :
-                for(int i = coordX; i >= 0; i--){
+                for(int i = coordX - 1; i >= 0; i--){
                     ArrayList<Bandit> cibleSet = this.plateau.getScene(i, coordY).getArrayBandits();
-                    if(cibleSet.isEmpty())  continue;//Rien, la balle traverse le wagon
+                    if(cibleSet.isEmpty()) {
+                        //Si dans le wagon, la balle traverse qu'une seule salle.
+                        if(coordY == 0) break;
+                        //Rien, la balle traverse le wagon
+                        continue;
+                    }
                     Bandit cible = cibleSet.get(rnd.nextInt() % cibleSet.size()); //Cible frappé
                     cible.dropButin();
                     cible.fuit();
@@ -89,9 +94,14 @@ public class Bandit extends Personnage{
                 System.out.println( this.tag + " tire ! Mais il est schizophrénique et rate sa cible ...");
                 break;
             case DROITE :
-                for(int i = coordX; i <= Jeu.NB_WAGON - 1; i++){
+                for(int i = coordX + 1; i <= Jeu.NB_WAGON - 1; i++){
                     ArrayList<Bandit> cibleSet = this.plateau.getScene(i, coordY).getArrayBandits();
-                    if(cibleSet.isEmpty())  continue;//Rien, la balle traverse le wagon
+                    if(cibleSet.isEmpty()) {
+                        //Si dans le wagon, la balle traverse qu'une seule salle.
+                        if(coordY == 0) break;
+                        //Rien, la balle traverse le wagon
+                        continue;
+                    }
                     Bandit cible = cibleSet.get(rnd.nextInt() % cibleSet.size()); //Cible frappé
                     cible.dropButin();
                     cible.fuit();
@@ -139,9 +149,5 @@ public class Bandit extends Personnage{
 
         System.out.println(this.getTag() + " exécution");
     }
-    public void dropButin(){}
-
-
-
 
 }

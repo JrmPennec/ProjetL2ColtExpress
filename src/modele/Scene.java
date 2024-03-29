@@ -51,6 +51,10 @@ public class Scene extends Observable {
         throw new Error("retireObjet : L'objet n'existe pas dans la scène !");
     }
 
+    public void putObjet(modele.Objet obj){
+        this.tresor.add(obj);
+    }
+
     public HashMap<String,Bandit> getBandits(){return bandits;}
 
     public ArrayList<Bandit> getArrayBandits(){

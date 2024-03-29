@@ -5,7 +5,6 @@ import java.util.Random;
 
  public class Marshall extends Personnage{
     public int nervosite = 30;
-    private Random rnd = new Random();
 
     public Marshall(int x, String t,Plateau p){
         super(x,0,t,p);
@@ -24,22 +23,26 @@ import java.util.Random;
     }
 
 
-   /* public void faitAction(){
-        int testNerveux = rnd.nextInt() % 100;
-        if(testNerveux < nervosite) return; //Test échoué, le maréchal fait rien.
-        int closestX = this.plateau.NB_WAGON;
+    public void faitAction(){
+        System.out.println(coordX + " " + coordY);
+        int testNerveux = Jeu.rnd.nextInt() % 100;
+        expulse(); //Expulse le bandit de toute manière
+        if(testNerveux < nervosite) {
+            return; //Test échoué, le maréchal fait rien.
+        }
+        int closestX = Jeu.NB_WAGON;
         //Cherche le bandit le plus proche
-        for(int i = 0; i <= this.plateau.NB_WAGON - 1 ; i++){
+        for(int i = 0; i <= Jeu.NB_WAGON - 1 ; i++){
             if(this.plateau.getScene(i, 0).getBandits().isEmpty())  continue;
             //else
-            int oper = this.plateau.getScene(i, 0).getBandits().get(0).getCoordX() - this.coordX;
+            int oper = this.plateau.getScene(i, 0).getArrayBandits().get(0).getCoordX() - this.coordX;
             if(Math.abs(oper) < Math.abs(closestX)) closestX = oper;
         }
         if(closestX < 0) deplace(modele.DIRECTION.GAUCHE);
         //Si il y a aucun bandit en bas, se déplace à droite par défaut
         if(closestX > 0) deplace(modele.DIRECTION.DROITE);
-        expulse(); //Expulse le bandit de toute manière
+        System.out.println(coordX + " " + coordY);
         return;
     }
-*/
+
 }
