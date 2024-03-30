@@ -6,7 +6,6 @@ import java.util.Stack;
 
 
 public class Bandit extends Personnage{
-    private Random rnd ;
     private Stack<Input> buffer ;
     private ArrayList<Objet> loot ;
 
@@ -20,7 +19,6 @@ public class Bandit extends Personnage{
 
     public Bandit(int x, int y, String t, Plateau p){
         super( x,  y,  t, p);
-        this.rnd= new Random();
         this.buffer = new Stack<>();
         this.loot = new ArrayList<>();
     }
@@ -29,7 +27,7 @@ public class Bandit extends Personnage{
         ArrayList<modele.Objet> lootTrouve = new ArrayList<>();
         lootTrouve = this.plateau.getScene(coordX, coordY).getTresor();
         if(!lootTrouve.isEmpty()){
-            modele.Objet premierLoot = lootTrouve.get(rnd.nextInt() % lootTrouve.size());
+            modele.Objet premierLoot = lootTrouve.get(Jeu.rnd.nextInt() % lootTrouve.size());
             premierLoot.estPris(this);
             this.plateau.getScene(coordX,coordY).retireObjet(premierLoot);
             loot.add(premierLoot);
@@ -56,7 +54,7 @@ public class Bandit extends Personnage{
                 if(this.coordY == 0) {
                     ArrayList<Bandit> cibleSet = this.plateau.getScene(coordX, 1).getArrayBandits();
                     if(cibleSet.isEmpty()) break; //Aucune cible, on quitte.
-                    Bandit cible = cibleSet.get(rnd.nextInt() % cibleSet.size());
+                    Bandit cible = cibleSet.get(Jeu.rnd.nextInt() % cibleSet.size());
                     cible.dropButin();
                     cible.fuit();
                     System.out.println(this.tag + " pew pew en haut !");
@@ -68,7 +66,7 @@ public class Bandit extends Personnage{
                 if(this.coordY == 1) {
                     ArrayList<Bandit> cibleSet = this.plateau.getScene(coordX, 0).getArrayBandits();
                     if(cibleSet.isEmpty()) break; //Aucune cible, on quitte.
-                    Bandit cible = cibleSet.get(rnd.nextInt() % cibleSet.size());
+                    Bandit cible = cibleSet.get(Jeu.rnd.nextInt() % cibleSet.size());
                     cible.dropButin();
                     cible.fuit();
                     System.out.println(this.tag + " pew pew en bas !");
@@ -85,7 +83,7 @@ public class Bandit extends Personnage{
                         //Rien, la balle traverse le wagon
                         continue;
                     }
-                    Bandit cible = cibleSet.get(rnd.nextInt() % cibleSet.size()); //Cible frappé
+                    Bandit cible = cibleSet.get(Jeu.rnd.nextInt() % cibleSet.size()); //Cible frappé
                     cible.dropButin();
                     cible.fuit();
                     System.out.println("modele.Bandit " + this.tag + "  pew pew à gauche !");
@@ -102,7 +100,7 @@ public class Bandit extends Personnage{
                         //Rien, la balle traverse le wagon
                         continue;
                     }
-                    Bandit cible = cibleSet.get(rnd.nextInt() % cibleSet.size()); //Cible frappé
+                    Bandit cible = cibleSet.get(Jeu.rnd.nextInt() % cibleSet.size()); //Cible frappé
                     cible.dropButin();
                     cible.fuit();
                     System.out.println(this.tag + "  pew pew à droite !");
