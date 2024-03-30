@@ -1,3 +1,5 @@
+package modele;
+
 import modele.Bandit;
 import modele.Plateau;
 import modele.Scene;

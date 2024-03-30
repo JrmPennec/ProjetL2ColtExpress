@@ -39,6 +39,8 @@ public class Jeu {
             plateau.getScene(0, 1).putPerso(b);
 
         }
+        assert(bandits.size()==NB_JOUEURS);
+        assert(plateau.getScene(0,1).getBandits().size()==NB_JOUEURS);
     }
 
     public void ajouteAction(Bandit b,Input p){

@@ -1,14 +1,22 @@
 package modele;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 
 
 public class Bandit extends Personnage{
-    private Stack<Input> buffer ;
+
+
+
+    private LinkedList<Input> buffer ;
     private ArrayList<Objet> loot ;
 
+    public LinkedList<Input> getBuffer() {
+        return buffer;
+}
+
+    public ArrayList<Objet> getLoot() {
+        return loot;
+}
     public int getTotalValeur(){
         int result = 0;
         for(modele.Objet i : loot){
@@ -19,7 +27,7 @@ public class Bandit extends Personnage{
 
     public Bandit(int x, int y, String t, Plateau p){
         super( x,  y,  t, p);
-        this.buffer = new Stack<>();
+        this.buffer = new LinkedList<>();
         this.loot = new ArrayList<>();
     }
 
@@ -120,15 +128,15 @@ public class Bandit extends Personnage{
             System.out.println("Erreur : putAction(), buffer déjà taille maximale (3), skip phase");
             return;
         }
-        this.buffer.push(action);
+        this.buffer.addLast(action);
     }
 
     public Input popAction() {
         if(this.buffer.isEmpty()){
             throw new Error("Erreur fatale: popAction(), buffer vide, corriger");
         }
-        Input result = buffer.pop();
-        return result;
+
+        return  buffer.pop();
     }
 
     public void executionStack(){
