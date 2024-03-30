@@ -10,18 +10,24 @@ public class VueJeu extends JFrame implements Observer {
     private JPanel affichageTrain;
     private VueInteraction affichageInteraction;
     private Jeu jeu;
+    public final int width;
+    public final int height;
 
 
 
-    public VueJeu(Jeu j) {
+
+    public VueJeu(Jeu j,int width,int height) {
         super("Colt Express");
         this.jeu = j;
+        this.width=width;
+        this.height=height;
         jeu.getPlateau().addObserver(this);
         this.setLayout(new BorderLayout());
         affichageInteraction = new VueInteraction(this);
         this.add(affichageInteraction, BorderLayout.NORTH);
         affichageTrain = new JPanel(new GridLayout(2, Jeu.NB_WAGON));
         this.add(affichageTrain, BorderLayout.CENTER);
+        this.affichageTrain.setPreferredSize(new Dimension(width/3,height/3));
         afficheTrain();
 
         pack();
@@ -60,7 +66,7 @@ public class VueJeu extends JFrame implements Observer {
 
     }
     static public void main(String[] args){
-        VueJeu test= new VueJeu(new Jeu());
+        VueJeu test= new VueJeu(new Jeu(),1280,720);
         Bandit b =test.jeu.getBandits().get(0);
 
         test.jeu.ajouteAction(b,new Input(DIRECTION.DROITE, ACTION.DEPLACE));

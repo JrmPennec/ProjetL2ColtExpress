@@ -58,7 +58,6 @@ import java.util.ArrayList;
     public void deplacePerso(Personnage p, int xTarget, int yTarget){
         getScene(xTarget,yTarget).putPerso(p);
         getScene(p.getCoordX(),p.getCoordY()).removePerso(p.getTag());
-        System.out.println("plateau déplace ");
         notifyObservers();
 
     }

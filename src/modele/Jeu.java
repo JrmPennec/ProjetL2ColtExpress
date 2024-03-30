@@ -1,20 +1,30 @@
 package modele;//import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Random;
 
-public class Jeu {
+public class Jeu extends Observable {
+
+    //CONSTANTES
     public static final int NB_WAGON = 4;
     public static final int NB_JOUEURS = 1;
+    public static final int NB_ACTION = 4;
 
-    public static Random rnd = new Random();
+    //OBJETS
     private ArrayList<Bandit> bandits;
-
-
     private Marshall marshall;
     private Plateau plateau;
 
+    //DEROULEMENT
+    int compteurAction;
+    int compteurJoueur;
+    boolean actionStage;
 
+    //MISC
+    public static Random rnd = new Random();
+
+    //GETTER
     public ArrayList<Bandit> getBandits() {
         return bandits;
     }
@@ -24,14 +34,20 @@ public class Jeu {
     public Plateau getPlateau() {
         return plateau;
     }
+    public boolean isActionStage(){
+        return actionStage;
+    }
+    public int getCompteurJoueur(){
+        return compteurJoueur;
+    }
 
+    //INIT
     public Jeu() {
         bandits = new ArrayList<>();
         plateau = new Plateau();
         marshall = new Marshall(3,"*MARSHAll*",plateau); //Après les tests lol
         initBandits();
     }
-
     private void initBandits() {
         for (int i = 0; i < NB_JOUEURS; i++) {
             Bandit b = new Bandit(0, 1, "b0" + i, plateau);
@@ -42,11 +58,13 @@ public class Jeu {
         assert(bandits.size()==NB_JOUEURS);
         assert(plateau.getScene(0,1).getBandits().size()==NB_JOUEURS);
     }
-
+    //INTERACTION OBJETS
     public void ajouteAction(Bandit b,Input p){
         b.putAction(p);
+        derouleTourPlanningPhase();
+        notifyObservers();
     }
-
+    //DEROULEMENT PARTIE
     public void actionPhase(){ //Dépile 1 fois chaque joueur.
 
         for(Bandit gamer : bandits){
@@ -63,9 +81,27 @@ public class Jeu {
 
 
         }
-        return;
+        derouleTourActionPhase();
+        notifyObservers();
     }
 
+    void derouleTourPlanningPhase(){
+        compteurAction--;
+        if (compteurAction==0) {
+            compteurJoueur++;
+            compteurAction = NB_ACTION;
+        }
+        if(compteurJoueur==Jeu.NB_JOUEURS){
+            actionStage=true;
+        }
+
+    }
+    void derouleTourActionPhase(){
+        compteurAction--;
+        if (compteurAction==0)
+            actionStage=false;
+
+    }
 
     public static void main(String[] args) {
         Jeu test = new Jeu();
