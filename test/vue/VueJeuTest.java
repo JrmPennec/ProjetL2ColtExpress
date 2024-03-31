@@ -11,7 +11,7 @@ class VueJeuTest {
     VueJeu test;
     @BeforeEach
     void init(){
-        test= new VueJeu(new Jeu());
+        test= new VueJeu(new Jeu(),500,500);
     }
     @Test
     void ViewTest()throws InterruptedException{

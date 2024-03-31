@@ -8,7 +8,7 @@ public class Jeu extends Observable {
 
     //CONSTANTES
     public static final int NB_WAGON = 4;
-    public static final int NB_JOUEURS = 1;
+    public static final int NB_JOUEURS = 4;
     public static final int NB_ACTION = 4;
 
     //OBJETS
@@ -16,15 +16,17 @@ public class Jeu extends Observable {
     private Marshall marshall;
     private Plateau plateau;
 
+
+
     //DEROULEMENT
-    int compteurAction;
-    int compteurJoueur;
-    boolean actionStage;
+    private int compteurAction;
+    private int compteurJoueur;
+    private boolean actionStage;
 
     //MISC
     public static Random rnd = new Random();
 
-    //GETTER
+    //GETTER - SETTER
     public ArrayList<Bandit> getBandits() {
         return bandits;
     }
@@ -37,8 +39,14 @@ public class Jeu extends Observable {
     public boolean isActionStage(){
         return actionStage;
     }
+    public void setActionStage(Boolean b){
+        actionStage=b;
+    }
     public int getCompteurJoueur(){
         return compteurJoueur;
+    }
+    public int getCompteurAction() {
+        return compteurAction;
     }
 
     //INIT
@@ -47,6 +55,9 @@ public class Jeu extends Observable {
         plateau = new Plateau();
         marshall = new Marshall(3,"*MARSHAll*",plateau); //Après les tests lol
         initBandits();
+        setActionStage(false);
+        compteurAction=NB_ACTION;
+        compteurJoueur=0;
     }
     private void initBandits() {
         for (int i = 0; i < NB_JOUEURS; i++) {
@@ -60,46 +71,55 @@ public class Jeu extends Observable {
     }
     //INTERACTION OBJETS
     public void ajouteAction(Bandit b,Input p){
-        b.putAction(p);
-        derouleTourPlanningPhase();
-        notifyObservers();
+        if (!isActionStage()) {
+            b.putAction(p);
+            derouleTourPlanningStage();
+            notifyObservers();
+        }
     }
     //DEROULEMENT PARTIE
+
+
     public void actionPhase(){ //Dépile 1 fois chaque joueur.
+        if (isActionStage()) {
 
-        for(Bandit gamer : bandits){
-            try{
-                gamer.executionStack();
-                //1 action dépilé, on quitte la fonction.
-                if(this.marshall != null) this.marshall.faitAction();
-                continue;
-            }catch (Error e){
-                //Le stack est vide, on passe au joueur suivant.
-                System.out.println(gamer.tag + " a un stack vide");
-                continue;
+            for (Bandit gamer : bandits) {
+                try {
+                    gamer.executionStack();
+                    //1 action dépilé, on quitte la fonction.
+                    if (this.marshall != null) this.marshall.faitAction();
+                    continue;
+                } catch (Error e) {
+                    //Le stack est vide, on passe au joueur suivant.
+                    System.out.println(gamer.tag + " a un stack vide");
+                    continue;
+                }
+
+
             }
-
-
+            derouleTourActionStage();
+            notifyObservers();
         }
-        derouleTourActionPhase();
-        notifyObservers();
     }
 
-    void derouleTourPlanningPhase(){
+
+    void derouleTourPlanningStage(){
         compteurAction--;
         if (compteurAction==0) {
             compteurJoueur++;
             compteurAction = NB_ACTION;
         }
         if(compteurJoueur==Jeu.NB_JOUEURS){
-            actionStage=true;
+            setActionStage(true);
         }
 
     }
-    void derouleTourActionPhase(){
+    void derouleTourActionStage(){
         compteurAction--;
-        if (compteurAction==0)
-            actionStage=false;
+        if (compteurAction==0) {
+            compteurAction = NB_ACTION;
+            setActionStage(false);
+        }
 
     }
 
