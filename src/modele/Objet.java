@@ -38,6 +38,7 @@ public class Objet extends Entite{
         }
         this.coordX = this.proprietaire.getCoordX();
         this.coordY = this.proprietaire.getCoordY();
+        this.proprietaire = null;
         this.plateau.getScene(this.coordX, this.coordY).putObjet(this);
 
     }
