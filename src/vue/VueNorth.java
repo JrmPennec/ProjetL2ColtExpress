@@ -5,47 +5,30 @@ import modele.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.geom.Dimension2D;
-import java.util.ArrayList;
 
-public class VueInteraction extends JPanel {
-    VueJeu InterfaceJeu;
+public class VueNorth extends JPanel {
+    VueJeu vueParent;
     Jeu jeu;
 
-    private boolean actionStage;
 
-    boolean isActionStage() {
-        return actionStage;
-    }
-
-    public VueInteraction(VueJeu iJeu) {
+    public VueNorth(VueJeu vue) {
         super();
-        this.InterfaceJeu = iJeu;
-        this.jeu = InterfaceJeu.getJeu();
-        this.setPreferredSize(new Dimension(InterfaceJeu.width/3,InterfaceJeu.height/3));
-        this.setLayout(new BorderLayout());
-        this.add(new PanelDeplacement(),BorderLayout.WEST);
-        this.add(new ActionButton(),BorderLayout.CENTER);
-        this.add(new PanelTir(),BorderLayout.EAST);
+        this.vueParent = vue;
+        this.jeu = vueParent.getJeu();
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints c= new GridBagConstraints();
+        c.gridy= 0;
+        c.gridx=0;
+        c.gridwidth=1;
+        c.gridheight=2;
+        this.add(new PanelDeplacement(),c);
+        c.gridy= 0;
+        c.gridx=2;
+        this.add(new PanelTir(),c);
 
     }
 
-    class ActionButton extends Button {
 
-        public ActionButton() {
-            super(InterfaceJeu, "Action!");
-            addActionListener(this);
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            if (isActionStage()) {
-                jeu.actionPhase();
-            }
-        }
-
-
-    }
 
 
     public class PanelDeplacement extends JPanel {
@@ -56,8 +39,8 @@ public class VueInteraction extends JPanel {
             super();
             this.setLayout(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
-            c.gridheight = 3;
-            c.gridwidth = 3;
+            c.gridheight = 1;
+            c.gridwidth = 1;
             c.gridx = 1;
             c.gridy = 0;
             this.add(new DeplaceButton(DIRECTION.HAUT), c);
@@ -65,7 +48,7 @@ public class VueInteraction extends JPanel {
             c.gridx = 0;
             this.add(new DeplaceButton(DIRECTION.GAUCHE), c);
             c.gridx = 1;
-            this.add(new JLabel("DEPLACEMENT"), c);
+            this.add(new JLabel("MOVE"), c);
             c.gridx = 2;
             this.add(new DeplaceButton(DIRECTION.DROITE), c);
             c.gridx = 1;
@@ -77,20 +60,20 @@ public class VueInteraction extends JPanel {
             DIRECTION dir;
 
             public DeplaceButton(DIRECTION dir) {
-                super(vuejeu, "");
+                super(vueParent.getJeu(), "");
                 this.dir = dir;
                 switch (dir) {
                     case GAUCHE:
-                        this.setName("<");
+                        this.setText("<");
                         break;
                     case HAUT:
-                        this.setName("^");
+                        this.setText("^");
                         break;
                     case DROITE:
-                        this.setName(">");
+                        this.setText(">");
                         break;
                     case BAS:
-                        this.setName("v");
+                        this.setText("v");
                         break;
                 }
                 addActionListener(this);
@@ -108,14 +91,13 @@ public class VueInteraction extends JPanel {
 
     public class PanelTir extends JPanel {
 
-        VueJeu vuejeu;
 
         public PanelTir() {
             super();
             this.setLayout(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
-            c.gridheight = 3;
-            c.gridwidth = 3;
+            c.gridheight = 1;
+            c.gridwidth = 1;
             c.gridx = 1;
             c.gridy = 0;
             this.add(new tirButton(DIRECTION.HAUT), c);
@@ -123,7 +105,7 @@ public class VueInteraction extends JPanel {
             c.gridx = 0;
             this.add(new tirButton(DIRECTION.GAUCHE), c);
             c.gridx = 1;
-            this.add(new JLabel("TIR"), c);
+            this.add(new JLabel("SHOT"), c);
             c.gridx = 2;
             this.add(new tirButton(DIRECTION.DROITE), c);
             c.gridx = 1;
@@ -135,20 +117,20 @@ public class VueInteraction extends JPanel {
             DIRECTION dir;
 
             public tirButton(DIRECTION dir) {
-                super(InterfaceJeu, "");
+                super(vueParent.getJeu(), "");
                 this.dir = dir;
                 switch (dir) {
                     case GAUCHE:
-                        this.setName("<");
+                        this.setText("<");
                         break;
                     case HAUT:
-                        this.setName("^");
+                        this.setText("^");
                         break;
                     case DROITE:
-                        this.setName(">");
+                        this.setText(">");
                         break;
                     case BAS:
-                        this.setName("v");
+                        this.setText("v");
                         break;
                 }
                 addActionListener(this);
@@ -162,6 +144,20 @@ public class VueInteraction extends JPanel {
 
         }
 
+
+    }
+
+    public class PanelMiddle extends JPanel {
+        JLabel ActionsRestantes;
+        JLabel TourJoueur;
+        BraqueButton braquebutton;
+
+
+        public class BraqueButton extends Button{
+            BraqueButton(){
+                super(VueNorth.this.jeu,"Braque?");
+            }
+        }
 
     }
 }

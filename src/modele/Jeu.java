@@ -19,7 +19,7 @@ public class Jeu extends Observable {
 
 
     //DEROULEMENT
-    private int compteurAction;
+    private int actionsRestantes;
     private int compteurJoueur;
     private boolean actionStage;
 
@@ -45,8 +45,8 @@ public class Jeu extends Observable {
     public int getCompteurJoueur(){
         return compteurJoueur;
     }
-    public int getCompteurAction() {
-        return compteurAction;
+    public int getActionsRestantes() {
+        return actionsRestantes;
     }
 
     //INIT
@@ -56,7 +56,7 @@ public class Jeu extends Observable {
         marshall = new Marshall(3,"*MARSHAll*",plateau); //Après les tests lol
         initBandits();
         setActionStage(false);
-        compteurAction=NB_ACTION;
+        actionsRestantes =NB_ACTION;
         compteurJoueur=0;
     }
     private void initBandits() {
@@ -88,6 +88,7 @@ public class Jeu extends Observable {
                     gamer.executionStack();
                     //1 action dépilé, on quitte la fonction.
                     if (this.marshall != null) this.marshall.faitAction();
+                    notifyObservers();
                     continue;
                 } catch (Error e) {
                     //Le stack est vide, on passe au joueur suivant.
@@ -102,22 +103,26 @@ public class Jeu extends Observable {
         }
     }
 
-
+    /**Décremente action restantes et gere l'incrementation pour le
+     * compteJoueur/Passage action phase
+     */
     void derouleTourPlanningStage(){
-        compteurAction--;
-        if (compteurAction==0) {
+        actionsRestantes--;
+        if (actionsRestantes ==0) {
             compteurJoueur++;
-            compteurAction = NB_ACTION;
+            actionsRestantes = NB_ACTION;
         }
         if(compteurJoueur==Jeu.NB_JOUEURS){
             setActionStage(true);
         }
 
     }
+    /**Décremente action restantes et gere passage planning stage
+     */
     void derouleTourActionStage(){
-        compteurAction--;
-        if (compteurAction==0) {
-            compteurAction = NB_ACTION;
+        actionsRestantes--;
+        if (actionsRestantes ==0) {
+            actionsRestantes = NB_ACTION;
             setActionStage(false);
         }
 

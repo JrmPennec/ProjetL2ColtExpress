@@ -26,20 +26,20 @@ class JeuTest {
     void derouleTourPlanningStage(){
         for (int i=0;i<3;i++) {
             jeu.derouleTourPlanningStage();
-            System.out.println(i+ " "+ jeu.getCompteurAction());
+            System.out.println(i+ " "+ jeu.getActionsRestantes());
             assertEquals( 0,jeu.getCompteurJoueur());
-            assertEquals( Jeu.NB_ACTION-(1+i),jeu.getCompteurAction());
+            assertEquals( Jeu.NB_ACTION-(1+i),jeu.getActionsRestantes());
         }
         //4eme action
         jeu.derouleTourPlanningStage();
-        assertEquals(4,jeu.getCompteurAction());
+        assertEquals(4,jeu.getActionsRestantes());
         assertEquals(1,jeu.getCompteurJoueur());
         //Passage action phase
         for (int i=0; i<12;i++){
             jeu.derouleTourPlanningStage();
         }
         assertTrue(jeu.isActionStage());
-        assertEquals(jeu.getCompteurAction(),4);
+        assertEquals(jeu.getActionsRestantes(),4);
     }
 
 
@@ -128,13 +128,13 @@ class JeuTest {
         jeu.setActionStage(true);
         for (int i=0;i<3;i++) {
             jeu.derouleTourActionStage();
-            System.out.println(i+ " "+ jeu.getCompteurAction());
+            System.out.println(i+ " "+ jeu.getActionsRestantes());
             assertEquals( 0,jeu.getCompteurJoueur());
-            assertEquals( Jeu.NB_ACTION-(1+i),jeu.getCompteurAction());
+            assertEquals( Jeu.NB_ACTION-(1+i),jeu.getActionsRestantes());
         }
         //Passage Planning stage
         jeu.derouleTourActionStage();
-        assertEquals(4,jeu.getCompteurAction());
+        assertEquals(4,jeu.getActionsRestantes());
         assertFalse(jeu.isActionStage());
 
     }

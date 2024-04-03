@@ -8,26 +8,30 @@ import java.awt.*;
 
 public class VueJeu extends JFrame implements Observer {
     private JPanel affichageTrain;
-    private VueInteraction affichageInteraction;
+    private JPanel affichageNorth;
+    private JPanel affichageSouth;
+    private JPanel affichageEast;
     private Jeu jeu;
-    public final int width;
-    public final int height;
+
 
 
 
 
     public VueJeu(Jeu j,int width,int height) {
+        //init jframe
         super("Colt Express");
         this.jeu = j;
-        this.width=width;
-        this.height=height;
-        jeu.getPlateau().addObserver(this);
-        this.setLayout(new BorderLayout());
-        affichageInteraction = new VueInteraction(this);
-        this.add(affichageInteraction, BorderLayout.NORTH);
+        this.affichageNorth=new VueNorth(this);
         affichageTrain = new JPanel(new GridLayout(2, Jeu.NB_WAGON));
-        this.add(affichageTrain, BorderLayout.CENTER);
-        this.affichageTrain.setPreferredSize(new Dimension(width/3,height/3));
+        this.affichageSouth=new VueSouth(this);
+        this.affichageEast=new VueNorth(this);
+
+        this.setPreferredSize(new Dimension(width, height));
+        jeu.getPlateau().addObserver(this);
+        this.getContentPane().setLayout(new GridBagLayout());
+        this.add(affichageNorth,getContraintesNorth());
+        this.add(affichageTrain, getContraintesTrain());
+        this.add(affichageSouth,getContraintesSouth());
         afficheTrain();
 
         pack();
@@ -35,6 +39,16 @@ public class VueJeu extends JFrame implements Observer {
         setVisible(true);
     }
 
+    //Affichage Train
+    private GridBagConstraints getContraintesTrain(){
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridy=1;
+        c.gridx=0;
+        c.gridwidth=3;
+        c.gridheight=2;
+        c.insets=new Insets(10,30,10,20);
+        return c;
+    }
     private void afficheTrain() {
         //On clear dans affichage Train
         affichageTrain.removeAll();
@@ -52,11 +66,27 @@ public class VueJeu extends JFrame implements Observer {
         affichageTrain.repaint();
 
     }
+    //Affichage South
 
-    void setAffichageInteraction() {
-
-
+    private GridBagConstraints getContraintesSouth(){
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx=0;
+        c.gridy=3;
+        c.gridheight=1;
+        c.gridwidth=3;
+        c.insets=new Insets(10,30,0,20);
+        return c;
     }
+    private GridBagConstraints getContraintesNorth(){
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx=0;
+        c.gridy=0;
+        c.gridheight=1;
+        c.gridwidth=3;
+        c.insets=new Insets(0,30,10,20);
+        return c;
+    }
+
     public Jeu getJeu() {
         return jeu;
     }
