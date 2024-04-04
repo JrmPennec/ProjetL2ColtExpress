@@ -10,13 +10,25 @@ public class Bandit extends Personnage{
     private LinkedList<Input> buffer ;
     private ArrayList<Objet> loot ;
 
+
+
+
+
+
+
+    public Bandit(int x, int y, String t, Plateau p){
+        super( x,  y,  t, p);
+        this.buffer = new LinkedList<>();
+        this.loot = new ArrayList<>();
+    }
+
+    //GETTER & SETTER
     public LinkedList<Input> getBuffer() {
         return buffer;
-}
-
+    }
     public ArrayList<Objet> getLoot() {
         return loot;
-}
+    }
     public int getTotalValeur(){
         int result = 0;
         for(modele.Objet i : loot){
@@ -25,13 +37,39 @@ public class Bandit extends Personnage{
         return result;
     }
 
-    public Bandit(int x, int y, String t, Plateau p){
-        super( x,  y,  t, p);
-        this.buffer = new LinkedList<>();
-        this.loot = new ArrayList<>();
+
+    //BUFFER
+    public void putAction(Input action){
+        if(this.buffer.size() > 3){
+            System.out.println("Erreur : putAction(), buffer déjà taille maximale (3), skip phase");
+            return;
+        }
+        this.buffer.addLast(action);
     }
 
-   public void braqueButin(){
+    public Input popAction() {
+        if(this.buffer.isEmpty()){
+            throw new Error("Erreur fatale: popAction(), buffer vide, corriger");
+        }
+
+        return  buffer.pop();
+    }
+
+    //ACTIONS
+    public void executionStack(){
+        Input input = this.popAction();
+        switch(input.action){
+            case DEPLACE :
+                this.deplace(input.direction);
+                break;
+            //case modele.ACTION.BRAQUE : this.braqueButin(); break;
+            //case modele.ACTION.TIR : this.tir(input.direction); break;
+            default : return;
+
+        }
+    }
+
+    public void braqueButin(){
         ArrayList<modele.Objet> lootTrouve = new ArrayList<>();
         lootTrouve = this.plateau.getScene(coordX, coordY).getTresor();
         if(!lootTrouve.isEmpty()){
@@ -43,7 +81,6 @@ public class Bandit extends Personnage{
             return;
         }
     }
-
 
     public void dropButin(){
         loot.get(loot.size()-1).estLache();
@@ -123,37 +160,5 @@ public class Bandit extends Personnage{
         return false;
     }
 
-    public void putAction(Input action){
-        if(this.buffer.size() > 3){
-            System.out.println("Erreur : putAction(), buffer déjà taille maximale (3), skip phase");
-            return;
-        }
-        this.buffer.addLast(action);
-    }
-
-    public Input popAction() {
-        if(this.buffer.isEmpty()){
-            throw new Error("Erreur fatale: popAction(), buffer vide, corriger");
-        }
-
-        return  buffer.pop();
-    }
-
-    public void executionStack(){
-        Input input = this.popAction();
-        switch(input.action){
-            case DEPLACE :
-               this.deplace(input.direction);
-                break;
-
-
-            //case modele.ACTION.BRAQUE : this.braqueButin(); break;
-            //case modele.ACTION.TIR : this.tir(input.direction); break;
-            default : return;
-
-        }
-
-        System.out.println(this.getTag() + " exécution");
-    }
 
 }

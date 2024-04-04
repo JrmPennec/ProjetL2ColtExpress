@@ -24,7 +24,7 @@ public class VueJeu extends JFrame implements Observer {
         this.affichageNorth=new VueNorth(this);
         affichageTrain = new JPanel(new GridLayout(2, Jeu.NB_WAGON));
         this.affichageSouth=new VueSouth(this);
-        this.affichageEast=new VueNorth(this);
+        this.affichageEast=new VueEast(this);
 
         this.setPreferredSize(new Dimension(width, height));
         jeu.getPlateau().addObserver(this);
@@ -32,6 +32,7 @@ public class VueJeu extends JFrame implements Observer {
         this.add(affichageNorth,getContraintesNorth());
         this.add(affichageTrain, getContraintesTrain());
         this.add(affichageSouth,getContraintesSouth());
+        this.add(affichageEast,getContraintesEast());
         afficheTrain();
 
         pack();
@@ -86,6 +87,15 @@ public class VueJeu extends JFrame implements Observer {
         c.insets=new Insets(0,30,10,20);
         return c;
     }
+    private GridBagConstraints getContraintesEast(){
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx=4;
+        c.gridy=1;
+        c.gridheight=2;
+        c.gridwidth=1;
+        c.insets=new Insets(10,10,0,0);
+        return c;
+    }
 
     public Jeu getJeu() {
         return jeu;
@@ -97,9 +107,9 @@ public class VueJeu extends JFrame implements Observer {
     }
     static public void main(String[] args){
         VueJeu test= new VueJeu(new Jeu(),1280,720);
-        Bandit b =test.jeu.getBandits().get(0);
+        //Bandit b =test.jeu.getBandits().get(0);
 
-        test.jeu.ajouteAction(b,new Input(DIRECTION.DROITE, ACTION.DEPLACE));
+        //est.jeu.ajouteAction(b,new Input(DIRECTION.DROITE, ACTION.DEPLACE));
     }
 
 }

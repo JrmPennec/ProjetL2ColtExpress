@@ -3,6 +3,9 @@ import modele.*;
 
 import javax.swing.*;
 import modele.*;
+
+import java.awt.*;
+
 public class VueScene extends JPanel {
     JLabel PersosList;
     JLabel Objets;
@@ -10,6 +13,7 @@ public class VueScene extends JPanel {
 
     VueScene(Scene s) {
         super();
+
         //on doit utiliser html pour les jlabel
         String textP = "<html> Personnages : <br/>";
         if (!s.getBandits().isEmpty()) {

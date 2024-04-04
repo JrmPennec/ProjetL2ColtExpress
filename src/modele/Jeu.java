@@ -1,7 +1,6 @@
 package modele;//import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import java.util.ArrayList;
-import java.util.Observable;
 import java.util.Random;
 
 public class Jeu extends Observable {
@@ -16,8 +15,6 @@ public class Jeu extends Observable {
     private Marshall marshall;
     private Plateau plateau;
 
-
-
     //DEROULEMENT
     private int actionsRestantes;
     private int compteurJoueur;
@@ -29,6 +26,9 @@ public class Jeu extends Observable {
     //GETTER - SETTER
     public ArrayList<Bandit> getBandits() {
         return bandits;
+    }
+    public Bandit getBandit(int index){
+        return bandits.get(index);
     }
     public Marshall getMarshall() {
         return marshall;
@@ -76,6 +76,8 @@ public class Jeu extends Observable {
             derouleTourPlanningStage();
             notifyObservers();
         }
+        else
+            System.out.println("actionStage");
     }
     //DEROULEMENT PARTIE
 
