@@ -8,6 +8,7 @@ public class Objet extends Entite{
 
     Objet(int x,int y, String tag, Plateau p, LootType type){
         super(x,y,tag,p);
+        plateau.getScene(x,y).putObjet(this);
         this.proprietaire = null;
         this.type = type;
         switch(this.type){

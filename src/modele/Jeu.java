@@ -63,7 +63,6 @@ public class Jeu extends Observable {
         for (int i = 0; i < NB_JOUEURS; i++) {
             Bandit b = new Bandit(0, 1, "b0" + i, plateau);
             bandits.add(b);
-            plateau.getScene(0, 1).putPerso(b);
 
         }
         assert(bandits.size()==NB_JOUEURS);

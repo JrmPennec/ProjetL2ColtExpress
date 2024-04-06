@@ -31,7 +31,7 @@ public class VueEast extends JPanel implements Observer {
     }
      private void affichageEast(){
          for(Bandit b : jeu.getBandits()){
-             JLabel label= new JLabel("Bandit "+b.getTag()+" CASH : "+b.getTotalValeur());
+             JLabel label= new JLabel(b.getTag()+" CASH : "+b.getTotalValeur());
              this.add(label);
          }
     }

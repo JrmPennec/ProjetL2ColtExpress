@@ -22,10 +22,9 @@ public class VueJeu extends JFrame implements Observer {
         super("Colt Express");
         this.jeu = j;
         this.affichageNorth=new VueNorth(this);
-        affichageTrain = new JPanel(new GridLayout(2, Jeu.NB_WAGON));
+        affichageTrain = new VueTrain(this);
         this.affichageSouth=new VueSouth(this);
         this.affichageEast=new VueEast(this);
-
         this.setPreferredSize(new Dimension(width, height));
         jeu.getPlateau().addObserver(this);
         this.getContentPane().setLayout(new GridBagLayout());
@@ -33,7 +32,6 @@ public class VueJeu extends JFrame implements Observer {
         this.add(affichageTrain, getContraintesTrain());
         this.add(affichageSouth,getContraintesSouth());
         this.add(affichageEast,getContraintesEast());
-        afficheTrain();
 
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,23 +48,7 @@ public class VueJeu extends JFrame implements Observer {
         c.insets=new Insets(10,30,10,20);
         return c;
     }
-    private void afficheTrain() {
-        //On clear dans affichage Train
-        affichageTrain.removeAll();
-        Border border = BorderFactory.createLineBorder(Color.BLACK);
-        //Boucle sur le toit puis l'interieur
-        for (int i = 1; i >= 0; i--) {
-            for (int j = 0; j < Jeu.NB_WAGON; j++) {
-                VueScene vs = new VueScene(jeu.getPlateau().getScene(j, i));
-                vs.setBorder(border);
-                affichageTrain.add(vs);
-            }
-        }
-        //Necessaire pour mettre a jour
-        affichageTrain.revalidate();
-        affichageTrain.repaint();
 
-    }
     //Affichage South
 
     private GridBagConstraints getContraintesSouth(){
@@ -102,7 +84,6 @@ public class VueJeu extends JFrame implements Observer {
     }
     @Override
     public void update() {
-        afficheTrain();
 
     }
     static public void main(String[] args){

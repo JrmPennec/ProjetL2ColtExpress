@@ -6,6 +6,7 @@ public abstract class Personnage extends Entite{
 
     public Personnage(int x,int y,String tag,Plateau p){
         super( x, y, tag, p);
+        plateau.getScene(x,y).putPerso(this);
     }
 
 
