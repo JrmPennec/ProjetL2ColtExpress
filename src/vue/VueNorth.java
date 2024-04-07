@@ -159,7 +159,7 @@ public class VueNorth extends JPanel  {
             jeu.addObserver(this);
             phase = new JLabel("Planning Phase");
             actionsRestantes = new JLabel("Action(s) Restante(s) : " + jeu.getActionsRestantes());
-            tourJoueur = new JLabel(("Joueur n ° " + jeu.getCompteurJoueur()));
+            tourJoueur = new JLabel(("Joueur n ° " + (jeu.getCompteurJoueur() + 1) ));
             braqueButton= new BraqueButton();
             this.setLayout(new GridLayout(4,1));
             this.add(phase);
@@ -177,7 +177,7 @@ public class VueNorth extends JPanel  {
                 tourJoueur.setText("Tous les joueurs");
             } else {
                 phase.setText("Planning Phase");
-                tourJoueur.setText("Joueur n °" + jeu.getCompteurJoueur());
+                tourJoueur.setText("Joueur n °" + (jeu.getCompteurJoueur() + 1));
             }
         }
 

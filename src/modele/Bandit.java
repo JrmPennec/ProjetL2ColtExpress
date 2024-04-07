@@ -83,14 +83,15 @@ public class Bandit extends Personnage{
     }
 
     public void dropButin(){
+        if(loot.isEmpty()) return;
         loot.get(loot.size()-1).estLache();
         loot.remove(loot.size()-1);
     }
 
     public void fuit(){
         System.out.println( this.tag + " a eu peur et s'en va");
-        if(this.coordY == 0) {this.coordY = 1; return;}
-        this.coordY = 0; return;
+        if(this.coordY == 0) {deplace(DIRECTION.HAUT); return;}
+        if(this.coordY == 1) {deplace(DIRECTION.BAS); return;}
     }
 
     public boolean tir(DIRECTION dir){

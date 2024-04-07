@@ -114,6 +114,7 @@ public class Jeu extends Observable {
             actionsRestantes = NB_ACTION;
         }
         if(compteurJoueur==Jeu.NB_JOUEURS){
+            compteurJoueur = 0;
             setActionStage(true);
         }
 

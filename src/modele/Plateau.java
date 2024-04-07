@@ -46,10 +46,16 @@ import java.util.ArrayList;
             y=0;
         //Cas Dernier Wagon
         train.get(y).add(new Scene(estToit, false, true));
-        for (int i = 1; i < Jeu.NB_WAGON-1; i++)
+        for (int i = 1; i < Jeu.NB_WAGON-1; i++) {
             train.get(y).add(new Scene(estToit, false, false));
+            if(Jeu.rnd.nextInt() % 100 < 20){continue;}
+            if(Jeu.rnd.nextInt() % 100 > 90){modele.Objet newTreasure = new modele.Objet(i, y, "bijoux" + Jeu.rnd.nextInt() % 3000, this, LootType.BIJOUX); continue;}
+            modele.Objet newTreasure = new modele.Objet(i, y, "bourse" + Jeu.rnd.nextInt() % 3000, this, LootType.BOURSE);
+        }
         //Cas locomotive
         train.get(y).add(new Scene(estToit, true, false));
+        if(y == 1) return;
+        modele.Objet newTreasure = new modele.Objet(train.get(y).size() - 1, 0, "Maggot", this, LootType.MAGOT);
 
 
     }
