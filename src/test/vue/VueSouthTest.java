@@ -1,8 +1,10 @@
-package vue;
+package test.vue;
 
 import modele.Jeu;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import vue.VueJeu;
+import vue.VueSouth;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,5 +1,6 @@
-package modele;
+package test.modele;
 
+import modele.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

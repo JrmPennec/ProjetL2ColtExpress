@@ -1,4 +1,4 @@
-package vue;
+package test.vue;
 
 import modele.*;
 import org.junit.jupiter.api.BeforeEach;

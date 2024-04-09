@@ -107,7 +107,7 @@ public class Jeu extends Observable {
     /**Décremente action restantes et gere l'incrementation pour le
      * compteJoueur/Passage action phase
      */
-    void derouleTourPlanningStage(){
+    public void derouleTourPlanningStage(){
         actionsRestantes--;
         if (actionsRestantes ==0) {
             compteurJoueur++;
@@ -121,7 +121,7 @@ public class Jeu extends Observable {
     }
     /**Décremente action restantes et gere passage planning stage
      */
-    void derouleTourActionStage(){
+    public void derouleTourActionStage(){
         actionsRestantes--;
         if (actionsRestantes ==0) {
             actionsRestantes = NB_ACTION;

@@ -1,6 +1,7 @@
 package modele;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public abstract class Personnage extends Entite{
 
@@ -67,45 +68,10 @@ public abstract class Personnage extends Entite{
     }
 
 
-    /*@BeforeEach
-    void testPersonnage(){
-        System.out.println("TEST PERSONNAGE : MOVEMENT");
-    }
-
-   @Test
-    public void testMoveIsolated(){
-        modele.Jeu testGame = new modele.Jeu();
-        System.out.println("1");
-        modele.Personnage testSubject = testGame.getPersos().get(0);
-        //Mouvement à droite
-        //testSubject.deplace(modele.DIRECTION.DROITE));
-        System.out.println(testSubject.deplace(modele.DIRECTION.DROITE));
-        assertEquals(1, testSubject.coordX);
-        System.out.println("2");
-
-        //Mouvement bloqué
-        //assertFalse(testSubject.deplace(modele.DIRECTION.DROITE));
-        System.out.println("3");
-        assertEquals(1, testSubject.coordX);
-        System.out.println("4");
-        //Mouvement aller-retour
-        //assertTrue(testSubject.deplace(modele.DIRECTION.GAUCHE));
-        assertEquals(0, testSubject.coordX);
-        //assertTrue(testSubject.deplace(modele.DIRECTION.DROITE));
-        assertEquals(1, testSubject.coordX);
-
-        //Mouvement complex
-        assertEquals(0, testSubject.coordY);
-        //assertTrue(testSubject.deplace(modele.DIRECTION.HAUT));
-        assertEquals(1, testSubject.coordY);
-        //assertTrue(testSubject.deplace(modele.DIRECTION.GAUCHE));
-        //assertTrue(testSubject.deplace(modele.DIRECTION.BAS));
-        //assertTrue(testSubject.deplace(modele.DIRECTION.DROITE));
-        assertEquals(1, testSubject.coordX);
-
-    }*/
+/*
 
 
+*/
 
 
 }

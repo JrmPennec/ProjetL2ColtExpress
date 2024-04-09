@@ -1,4 +1,4 @@
-package modele;
+package test.modele;
 
 import modele.Bandit;
 import modele.Plateau;

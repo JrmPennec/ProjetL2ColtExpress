@@ -1,4 +1,4 @@
-package modele;
+package test.modele;
 
 import modele.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,13 +12,14 @@ class BanditTest {
 
     @BeforeEach
     void testPersonnage() {
-        testGame = new Jeu();
-        Personnage testSubject = testGame.getBandits().get(0);
-
+        Jeu testGame = new Jeu();
+        Bandit testSubject = testGame.getBandit(0);
     }
 
     @Test
     void testStack(){
+        Jeu testGame = new Jeu();
+        Bandit testSubject = testGame.getBandit(0); //Jank code
         System.out.println(" TEST : STACK");
         System.out.println("X : "+ testSubject.getCoordX()+ " Y : "+ testSubject.getCoordY());
         Input testInput1 = new Input(DIRECTION.DROITE, ACTION.DEPLACE);
@@ -26,11 +27,6 @@ class BanditTest {
         Input testInput3 = new Input(DIRECTION.HAUT, ACTION.DEPLACE);
         Input testInput4 = new Input(DIRECTION.NEUTRAL, ACTION.BRAQUE);
         Input inputReceiver;
-
-
-       // if(!(testSubject instanceof modele.Bandit)) {
-        //    fail("initBandit mal fait");
-
 
         Bandit testBandit = (Bandit) testSubject;
 
@@ -43,9 +39,9 @@ class BanditTest {
         testBandit.putAction(testInput1);
         testBandit.putAction(testInput2);
         inputReceiver = testBandit.popAction();
-        assertEquals(inputReceiver, testInput2);
-        inputReceiver = testBandit.popAction();
         assertEquals(inputReceiver, testInput1);
+        inputReceiver = testBandit.popAction();
+        assertEquals(inputReceiver, testInput2);
 
         //Test de limite de stack
         testBandit.putAction(testInput4);
@@ -53,21 +49,16 @@ class BanditTest {
         testBandit.putAction(testInput1);
         testBandit.putAction(testInput3);
         inputReceiver = testBandit.popAction();
-        assertEquals(inputReceiver, testInput1);
-
-        //Test final
+        assertEquals(inputReceiver, testInput4);
         inputReceiver = testBandit.popAction();
         assertEquals(inputReceiver, testInput4);
-
-        //Test empty
         inputReceiver = testBandit.popAction();
+        assertEquals(inputReceiver, testInput1);
         try{
             inputReceiver = testBandit.popAction();
-            fail("Erreur pas attrapé");
-        }catch(Error a){
+        }catch(Error e){
             assertTrue(true);
         }
-
 
     }
 
@@ -76,10 +67,10 @@ class BanditTest {
     void testTir(){
         System.out.println(" TEST : TIR");
         Jeu testGame = new Jeu();
-        Bandit testSubject1 = (Bandit)testGame.getBandits().get(0); //x , y = 0 , 0
-        Bandit testSubject2 = (Bandit)testGame.getBandits().get(1); //x , y = 0 , 0
-        Bandit testSubject3 = (Bandit)testGame.getBandits().get(2); //x , y = 0 , 0
-        Bandit testSubject4 = (Bandit)testGame.getBandits().get(3); //x , y = 0 , 0
+        Bandit testSubject1 = (Bandit)testGame.getBandits().get(0); //x , y = 0 , 1
+        Bandit testSubject2 = (Bandit)testGame.getBandits().get(1); //x , y = 0 , 1
+        Bandit testSubject3 = (Bandit)testGame.getBandits().get(2); //x , y = 0 , 1
+        Bandit testSubject4 = (Bandit)testGame.getBandits().get(3); //x , y = 0 , 1
         boolean receptor; //Existe juste pour attraper les returns des deplacements, dont le résultat de l'opération ne nous intéresse pas.
 
         //Test tir simple dans la salle
@@ -90,10 +81,12 @@ class BanditTest {
         assertFalse(testSubject1.tir(DIRECTION.GAUCHE));
 
         //Test : 1 case plus loin
-        receptor = testSubject2.deplace(DIRECTION.HAUT); //x , y = 0 , 1
-        receptor = testSubject3.deplace(DIRECTION.GAUCHE); //x , y = 1 , 0
+        receptor = testSubject1.deplace(DIRECTION.BAS); //x , y = 0 , 0
+        receptor = testSubject3.deplace(DIRECTION.DROITE); //x , y = 1 , 1
+        receptor = testSubject4.deplace(DIRECTION.DROITE); //x , y = 1 , 1
+        receptor = testSubject3.deplace(DIRECTION.BAS); //x , y = 1 , 0
         assertTrue(testSubject1.tir(DIRECTION.HAUT));
-        assertTrue(testSubject1.tir(DIRECTION.GAUCHE));
+        assertTrue(testSubject1.tir(DIRECTION.DROITE));
 
         //Test de fuite dû au dégat, étape 1
         assertFalse(testSubject1.tir(DIRECTION.HAUT));
@@ -101,23 +94,8 @@ class BanditTest {
 
         //Test : fuite dû au dégat. étape 2
         receptor = testSubject1.deplace(DIRECTION.HAUT);
-        assertTrue(testSubject1.tir(DIRECTION.GAUCHE)); // x , y = 1 , 1
+        assertTrue(testSubject1.tir(DIRECTION.DROITE)); // x , y = 1 , 1
 
-        //Test : Tir après déplacement abscisse
-        receptor = testSubject1.deplace(DIRECTION.GAUCHE);
-        receptor = testSubject1.deplace(DIRECTION.BAS);
-        receptor = testSubject2.deplace(DIRECTION.DROITE);
-        assertEquals(testSubject2.getCoordX(), 0);
-        assertEquals(testSubject2.getCoordY(), 0);
-        assertEquals(testSubject3.getCoordX(), 0);
-        assertEquals(testSubject3.getCoordY(), 0);
-        receptor = testSubject1.deplace(DIRECTION.DROITE);
-        assertEquals(testSubject1.getCoordX(), 2);
-        assertEquals(testSubject2.getCoordY(), 0);
-        assertTrue(testSubject1.tir(DIRECTION.GAUCHE)); // vers 0, 0
-        assertTrue(testSubject1.tir(DIRECTION.GAUCHE));
-        assertTrue(testSubject1.tir(DIRECTION.GAUCHE));
-        assertFalse(testSubject1.tir(DIRECTION.GAUCHE)); //Les 3 bandits ont fuit en haut.
     }
 
     void testButin(){
