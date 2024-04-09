@@ -39,7 +39,7 @@ public class Scene extends Observable {
     public Marshall getMarshall(){
         return marshall;
     }
-    public  ArrayList<Objet> getTresor(){ return tresor;}
+    public  ArrayList<modele.Objet> getTresor(){ return tresor;}
 
     public void retireObjet(Objet obj){
         for(Objet i : this.tresor){

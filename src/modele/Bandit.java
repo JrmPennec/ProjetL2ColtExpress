@@ -70,9 +70,8 @@ public class Bandit extends Personnage{
         ArrayList<modele.Objet> lootTrouve = new ArrayList<>();
         lootTrouve = this.plateau.getScene(coordX, coordY).getTresor();
         if(!lootTrouve.isEmpty()){
-            modele.Objet premierLoot = lootTrouve.get(Jeu.rnd.nextInt() % lootTrouve.size());
+            modele.Objet premierLoot = lootTrouve.get(abs(Jeu.rnd.nextInt()) % lootTrouve.size());
             premierLoot.estPris(this);
-            this.plateau.getScene(coordX,coordY).retireObjet(premierLoot);
             loot.add(premierLoot);
             System.out.println(this.tag + " braque et trouve " + premierLoot.tag);
             return;

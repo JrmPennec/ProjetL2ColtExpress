@@ -98,11 +98,47 @@ class BanditTest {
 
     }
 
+    @Test
+    //Presupposition : putObjet, retireObjet, Constructeur objet marche
     void testButin(){
         System.out.println(" TEST : BUTIN");
         Jeu testGame = new Jeu();
-        Bandit testSubject1 = (Bandit)testGame.getBandits().get(0); //x , y = 0 , 0
-        Bandit testSubject2 = (Bandit)testGame.getBandits().get(1); //x , y = 0 , 0
+        Bandit testBandit = (Bandit)testGame.getBandits().get(0); //x , y = 0 , 0
+
+        //Insertion de 3 objets.
+        Scene scene1 = testGame.getPlateau().getScene(testBandit.getCoordX(), testBandit.getCoordY());
+        Scene scene2 = testGame.getPlateau().getScene(testBandit.getCoordX() + 2, 0);
+
+        modele.Objet loot1 = new modele.Objet(testBandit.getCoordX(), testBandit.getCoordY(), "MeShimmers" ,testGame.getPlateau(), LootType.BIJOUX);
+        modele.Objet loot2 = new modele.Objet(testBandit.getCoordX() + 2, 0, "MeLoot'", testGame.getPlateau(), LootType.MAGOT);
+        modele.Objet loot3 = new modele.Objet(testBandit.getCoordX() + 2, 0, "MeShiny", testGame.getPlateau(), LootType.BIJOUX);
+
+        //Check inventaire
+        assertEquals(0, testBandit.getTotalValeur());
+
+        //Braque bijoux
+        testBandit.braqueButin();
+        assertEquals(500, testBandit.getTotalValeur());
+
+        //Braque : rien trouvé
+        testBandit.braqueButin();
+        assertEquals(500, testBandit.getTotalValeur());
+
+        //Test dropButin
+        testBandit.dropButin();
+        assertEquals(0, testBandit.getTotalValeur());
+
+        //Déplacement vers loot2/loot3
+        assertTrue(testBandit.deplace(DIRECTION.DROITE));
+        assertTrue(testBandit.deplace(DIRECTION.DROITE));
+        assertTrue(testBandit.deplace(DIRECTION.BAS));
+
+        //Braque 2 trésors
+        testBandit.braqueButin();
+        testBandit.braqueButin(); //Magot + bijoux = 1500
+        assertEquals(1500, testBandit.getTotalValeur());
+        testBandit.dropButin();
+        assertTrue(testBandit.getTotalValeur() == 1000 || testBandit.getTotalValeur() == 500);
 
 
     }
