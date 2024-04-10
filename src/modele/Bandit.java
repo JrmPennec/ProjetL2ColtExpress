@@ -55,14 +55,15 @@ public class Bandit extends Personnage{
     //ACTIONS
     public void executionStack(){
         Input input = this.popAction();
-        System.out.println(input.action);
         switch(input.action){
             case DEPLACE :
-                this.deplace(input.direction);break;
-            case BRAQUE : this.braqueButin(); break;
-
+                this.deplace(input.direction);
+                break;
+            case BRAQUE : {
+                this.braqueButin();
+            } break;
             case TIR : this.tir(input.direction); break;
-            default : throw new RuntimeException("Pas d'action a executer");
+            default : return;
 
         }
     }

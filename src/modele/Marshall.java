@@ -6,7 +6,7 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 public class Marshall extends Personnage{
-    public int nervosite = 30;
+    public int nervosite = 15;
 
     public Marshall(int x, String t,Plateau p){
         super(x,0,t,p);
