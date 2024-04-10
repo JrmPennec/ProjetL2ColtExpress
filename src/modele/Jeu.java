@@ -83,19 +83,18 @@ public class Jeu extends Observable {
 
     public void actionPhase(){ //Dépile 1 fois chaque joueur.
         if (isActionStage()) {
-
+            if (this.marshall != null) this.marshall.faitAction();
+            notifyObservers();
             for (Bandit gamer : bandits) {
-                try {
+                //try {
                     gamer.executionStack();
                     //1 action dépilé, on quitte la fonction.
-                    if (this.marshall != null) this.marshall.faitAction();
-                    notifyObservers();
                     continue;
-                } catch (Error e) {
+                /*} catch (Error e) {
                     //Le stack est vide, on passe au joueur suivant.
                     System.out.println(gamer.tag + " a un stack vide");
-                    continue;
-                }
+                    continue;*/
+                //}
 
 
             }
