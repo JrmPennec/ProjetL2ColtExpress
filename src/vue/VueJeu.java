@@ -21,12 +21,15 @@ public class VueJeu extends JFrame implements Observer {
         //init jframe
         super("Colt Express");
         this.jeu = j;
+        //Init des attributs
         this.affichageNorth=new VueNorth(this);
-        affichageTrain = new VueTrain(this);
+        this.affichageTrain = new VueTrain(this);
         this.affichageSouth=new VueSouth(this);
         this.affichageEast=new VueEast(this);
-        this.setPreferredSize(new Dimension(width, height));
+        //Init Observer
         jeu.getPlateau().addObserver(this);
+        //Ajout des panel dans le frame
+        this.setPreferredSize(new Dimension(width, height));
         this.getContentPane().setLayout(new GridBagLayout());
         this.add(affichageNorth,getContraintesNorth());
         this.add(affichageTrain, getContraintesTrain());
@@ -54,7 +57,7 @@ public class VueJeu extends JFrame implements Observer {
     private GridBagConstraints getContraintesSouth(){
         GridBagConstraints c = new GridBagConstraints();
         c.gridx=0;
-        c.gridy=3;
+        c.gridy=4;
         c.gridheight=1;
         c.gridwidth=3;
         c.insets=new Insets(10,30,0,20);

@@ -45,6 +45,7 @@ public class Scene extends Observable {
         for(Objet i : this.tresor){
             if(i.getTag().equals(obj.getTag())){
                 tresor.remove(i);
+                notifyObservers();
                 return;
             }
         }
@@ -53,6 +54,7 @@ public class Scene extends Observable {
 
     public void putObjet(modele.Objet obj){
         this.tresor.add(obj);
+        notifyObservers();
     }
 
     public HashMap<String,Bandit> getBandits(){return bandits;}

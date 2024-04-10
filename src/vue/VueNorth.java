@@ -5,27 +5,32 @@ import modele.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-
+/** Affichage du panel de planification **/
 public class VueNorth extends JPanel  {
     VueJeu vueParent;
     Jeu jeu;
 
 
     public VueNorth(VueJeu vue) {
+        //Init attributs
         super();
         this.vueParent = vue;
         this.jeu = vueParent.getJeu();
+        //Init du layout du panel
         this.setLayout(new GridBagLayout());
         GridBagConstraints c= new GridBagConstraints();
+        //Placement du premier panel
         c.gridy= 0;
         c.gridx=0;
         c.gridwidth=1;
         c.gridheight=2;
         c.insets=new Insets(10,10,10,10);
         this.add(new PanelDeplacement(),c);
+        //Placement du deuxieme panel
         c.gridy= 0;
         c.gridx=2;
         this.add(new PanelTir(),c);
+        //Placement du 3eme panel
         c.gridx=1;
         c.gridy=0;
         c.gridheight=3;
@@ -39,6 +44,7 @@ public class VueNorth extends JPanel  {
 
         public PanelDeplacement() {
             super();
+            //Init layout puis placement de chaque bouttons grave au GridBagConstraint c
             this.setLayout(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
             c.gridheight = 1;
@@ -96,6 +102,7 @@ public class VueNorth extends JPanel  {
 
         public PanelTir() {
             super();
+            //Init layout puis placement de chaque bouttons grave au GridBagConstraint c
             this.setLayout(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
             c.gridheight = 1;
@@ -156,11 +163,16 @@ public class VueNorth extends JPanel  {
         BraqueButton braqueButton;
         public MiddlePanel() {
             super();
+            //Récupération de l'information des tours
             jeu.addObserver(this);
+            // Compteur d'action + phase
             phase = new JLabel("Planning Phase");
             actionsRestantes = new JLabel("Action(s) Restante(s) : " + jeu.getActionsRestantes());
+            // Affichage du joueur en cours de planification
             tourJoueur = new JLabel(("Joueur n ° " + (jeu.getCompteurJoueur() + 1) ));
+
             braqueButton= new BraqueButton();
+            //Placement dans le panel
             this.setLayout(new GridLayout(4,1));
             this.add(phase);
             this.add(actionsRestantes);
@@ -183,7 +195,15 @@ public class VueNorth extends JPanel  {
 
         public class BraqueButton extends Button{
             BraqueButton(){
-                super(VueNorth.this.jeu,"Braque?");
+                super(VueNorth.this.jeu,"Braque");
+                addActionListener(this);
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Input braque = new Input(DIRECTION.NEUTRAL,ACTION.BRAQUE);
+                jeu.ajouteAction(jeu.getBandits().get(jeu.getCompteurJoueur()),braque);
+
             }
         }
 

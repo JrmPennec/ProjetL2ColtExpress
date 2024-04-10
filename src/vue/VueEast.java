@@ -6,7 +6,7 @@ import modele.Jeu;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-
+/** Affichage des scores **/
 public class VueEast extends JPanel implements Observer {
     VueJeu vueParent;
     Jeu jeu;

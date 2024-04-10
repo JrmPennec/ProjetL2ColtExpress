@@ -16,7 +16,7 @@ public class Marshall extends Personnage{
     public void expulse(){
         ArrayList<Bandit> cibleSet = this.plateau.getScene(this.coordX, this.coordY).getArrayBandits();
         if(cibleSet.isEmpty()) return; //Aucun bandit à taper
-        System.out.println("Le maréchal " +this.tag + " fait fuir des bandits");
+        System.out.println("Le marshall " +this.tag + " fait fuir des bandits");
         for(Bandit cible : cibleSet){
             cible.dropButin();
             cible.fuit();

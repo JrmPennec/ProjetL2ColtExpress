@@ -50,7 +50,7 @@ import java.util.ArrayList;
             train.get(y).add(new Scene(estToit, false, false));
             if(Jeu.rnd.nextInt() % 100 < 20){continue;}
             if(Jeu.rnd.nextInt() % 100 > 90){modele.Objet newTreasure = new modele.Objet(i, y, "bijoux" + Jeu.rnd.nextInt() % 3000, this, LootType.BIJOUX); continue;}
-            else {modele.Objet newTreasure = new modele.Objet(i, y, "bourse" + Jeu.rnd.nextInt() % 3000, this, LootType.BOURSE);}
+            else {modele.Objet newTreasure = new modele.Objet(i, y, "bourse" /*+ Jeu.rnd.nextInt() % 3000*/, this, LootType.BOURSE);}
         }
         //Cas locomotive
         train.get(y).add(new Scene(estToit, true, false));

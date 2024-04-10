@@ -53,7 +53,7 @@ public class Jeu extends Observable {
     public Jeu() {
         bandits = new ArrayList<>();
         plateau = new Plateau();
-        marshall = new Marshall(3,"*MARSHAll*",plateau); //Après les tests lol
+        marshall = new Marshall(3,"MARSHAll",plateau); //Après les tests lol
         initBandits();
         setActionStage(false);
         actionsRestantes =NB_ACTION;
@@ -61,7 +61,7 @@ public class Jeu extends Observable {
     }
     private void initBandits() {
         for (int i = 0; i < NB_JOUEURS; i++) {
-            Bandit b = new Bandit(0, 1, "b0" + i, plateau);
+            Bandit b = new Bandit(0, 1, "Bandit0" + (i+1), plateau);
             bandits.add(b);
 
         }
@@ -117,7 +117,7 @@ public class Jeu extends Observable {
             compteurJoueur = 0;
             setActionStage(true);
         }
-
+        notifyObservers();
     }
     /**Décremente action restantes et gere passage planning stage
      */
@@ -127,7 +127,7 @@ public class Jeu extends Observable {
             actionsRestantes = NB_ACTION;
             setActionStage(false);
         }
-
+        notifyObservers();
     }
 
     public static void main(String[] args) {

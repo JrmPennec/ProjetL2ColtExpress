@@ -1,5 +1,6 @@
 package vue;
 
+import com.sun.org.apache.xml.internal.security.Init;
 import modele.*;
 
 import javax.swing.*;
@@ -9,36 +10,36 @@ import java.awt.*;
 public class VueTrain extends JPanel implements Observer {
     VueJeu vue;
     Jeu jeu;
-    Border border;
 
 
-    public VueTrain(VueJeu vue){
+
+
+    public VueTrain(VueJeu vue) {
         super();
-        this.vue=vue;
+        this.vue = vue;
         this.jeu = vue.getJeu();
-        this.border = BorderFactory.createLineBorder(Color.BLACK);
-        GridLayout gl = new GridLayout();
-        gl.setRows(2);
+        jeu.getPlateau().addObserver(this);
+        GridLayout gl= new GridLayout();
         gl.setColumns(Jeu.NB_WAGON);
-        gl.setVgap(2);
-        gl.setHgap(2);
+        gl.setRows(2);
+        gl.setHgap(4);
+        gl.setVgap(4);
 
         this.setLayout(gl);
         afficheTrain();
-
     }
 
     private void afficheTrain() {
-        for (int i = 1; i >= 0; i--) {
-            for (int j = 0; j < Jeu.NB_WAGON; j++) {
-                VueScene vs = new VueTrain.VueScene(jeu.getPlateau().getScene(j, i));
-                vs.setBorder(border);
-                this.add(vs);
-            }
+        for (int i =1; i>=0;i--) {
+            for (int j = 0; j < Jeu.NB_WAGON; j++)
+                this.add(new VueScene(jeu.getPlateau().getScene(j, i)));
         }
     }
 
-    public void update(){
+
+
+
+    public void update() {
         this.removeAll();
         afficheTrain();
         revalidate();
@@ -47,52 +48,85 @@ public class VueTrain extends JPanel implements Observer {
 
 
     public static class VueScene extends JPanel {
+        Scene scene;
+
+
         VueScene(Scene s) {
             super();
-            GridBagLayout layout = new GridBagLayout();
-            //possibilité de modifier ici les caractéristiques du layout
-            this.setLayout(layout);
+            //Initialisation du layout
+            this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            this.scene = s;
+            this.setLayout(new GridBagLayout());
+            this.setPreferredSize(new Dimension(200,130));
+            //Init contraintes
             GridBagConstraints c = new GridBagConstraints();
+            c.fill=GridBagConstraints.BOTH;
+            c.anchor=GridBagConstraints.NORTH;
             c.gridx=0;
             c.gridy=0;
-            c.gridheight=1;
-            c.gridwidth=2;
-            if (s.isMarshallHere())
-                this.add(new JLabel(s.getMarshall().getTag()),c);
-            for (int i=0;i<s.getBandits().size();i++){
-                c.gridy=1+i;
-                this.add(new JLabel("Bandit "+s.getArrayBandits().get(i).getTag()+"      "),c);
+            c.weighty=0.75;
+            c.weightx=1;
+
+            this.add(affichagePerso(),c);
+            //Modification des contraintes pour le panel d'objets
+            c.gridy=1;
+            c.weighty=0.25;
+            c.anchor=GridBagConstraints.SOUTHWEST;
+            this.add(affichageObjet(),c);
+        }
+        public JPanel affichagePerso(){
+            JPanel panel= new JPanel();
+            panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
+            //panel.setMinimumSize(new Dimension(200,80));
+            //" Titre " du panel
+            panel.add(new JLabel("Personnages :       ",SwingConstants.LEFT));
+            //insertion ou non du sheriff
+           if (scene.isMarshallHere()) {
+                JLabel label = new JLabel("      "+scene.getMarshall().getTag());
+                panel.add(label);
             }
-            c.gridy=Jeu.NB_JOUEURS+2;
-            c.gridwidth=2;
-            GridLayout gl= new GridLayout(1,s.getTresor().size());
-                for (Objet o : s.getTresor()) {
-                    this.add(new JLabel(o.getTag()));
-                }
+            //Insertion de bandits
+            for (Bandit b : scene.getArrayBandits()){
+                JLabel label = new JLabel("      "+b.getTag());
+                panel.add(label);
             }
-
-
-
-
-
-
-
-            /*//on doit utiliser html pour les jlabel
-            String textP = "<html> Personnages : <br/>";
-            if (!s.getBandits().isEmpty()) {
-                for (Personnage p : s.getBandits().values())
-                    textP += p.getTag() + "<br/";
-                if(s.isMarshallHere())
-                    textP+=s.getMarshall().getTag() + "<br/>";
-                textP += "<html>";
-
-            }
-            PersosList = new JLabel(textP);
-            this.add(PersosList);
-            //Pas encore implementée la  suite
-            String textO = " modele.Objet(s) : ";*/
-
+            return panel;
         }
 
+        public JPanel affichageObjet(){
+            JPanel panel = new JPanel(new GridLayout(2,3));
+            panel.add(new JLabel("Objets :"));
+            for (Objet o : scene.getTresor())
+                panel.add(new JLabel(o.getTag()));
+            return panel;
+        }
+        //Premier affichage
+        public JLabel affichagePerso1() {
+            //Jlabel au format html pour le formatage
+            String textP = "<html>";
+            //Marshall
+            if (scene.isMarshallHere())
+                textP += scene.getMarshall().getTag();
+            textP+="<br>";
+            //Bandits
+            for (int i=0; i<Jeu.NB_JOUEURS;i++){
+                if(i<scene.getArrayBandits().size())
+                    textP+=scene.getArrayBandits().get(i).getTag();
+                textP+="<br>";
+            }
+            textP+="<html>";
+            return new JLabel(textP);
+        }
+        //Premier affichage
+        JLabel affichageObjet1(){
+            String textP = "<html>";
+            for ( Objet o : scene.getTresor())
+                textP+= o.getTag() + " ";
+            textP+="<html>";
+            return new JLabel(textP);
+        }
+
+
+    }
 }
 
