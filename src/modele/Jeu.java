@@ -86,8 +86,6 @@ public class Jeu extends Observable {
             notifyObservers();
             if (this.marshall != null) this.marshall.expulse();
             for (Bandit gamer : bandits) {
-                gamer.executionStack();
-                /*
                 try {
                     gamer.executionStack();
                     //1 action dépilé, on quitte la fonction.
@@ -97,9 +95,6 @@ public class Jeu extends Observable {
                     System.out.println(gamer.tag + " a un stack vide");
                     continue;
                 }
-                */
-
-
 
             }
             if (this.marshall != null) this.marshall.faitAction();

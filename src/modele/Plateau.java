@@ -35,7 +35,7 @@ public class Plateau extends Observable {
 
     public Scene getScene(int x, int y) {
         if (x > Jeu.NB_WAGON || x < 0 || y > 1 || y < 0) {
-            throw new Error("Mauvais indice pour getScene");
+            throw new ArrayIndexOutOfBoundsException("Mauvais indice pour getScene");
         }
         return train.get(y).get(x);
     }
@@ -50,9 +50,14 @@ public class Plateau extends Observable {
         train.get(y).add(new Scene(estToit, false, true));
         for (int i = 1; i < Jeu.NB_WAGON-1; i++) {
             train.get(y).add(new Scene(estToit, false, false));
-            if(abs(Jeu.rnd.nextInt()) % 100 < 1){continue;}
-            if(abs(Jeu.rnd.nextInt()) % 100 > 90){modele.Objet newTreasure = new modele.Objet(i, y, "bijoux" + Jeu.rnd.nextInt() % 3000, this, LootType.BIJOUX); continue;}
-            else {modele.Objet newTreasure = new modele.Objet(i, y, "bourse" /*+ Jeu.rnd.nextInt() % 3000*/, this, LootType.BOURSE);}
+            for(int chance = 0; chance < (abs(Jeu.rnd.nextInt()) % 101 > 75 ? 2 + (abs(Jeu.rnd.nextInt()) % 101 < 30 ? 1 : 0) : 1); chance++) {
+                if (abs(Jeu.rnd.nextInt()) % 101 > 70) {
+                    modele.Objet newTreasure = new modele.Objet(i, y, "bijoux-" + abs(Jeu.rnd.nextInt()) % 3000, this, LootType.BIJOUX);
+                    continue;
+                } else {
+                    modele.Objet newTreasure = new modele.Objet(i, y, "bourse-"  +abs(Jeu.rnd.nextInt()) % 3000, this, LootType.BOURSE);
+                }
+            }
         }
         //Cas locomotive
         train.get(y).add(new Scene(estToit, true, false));

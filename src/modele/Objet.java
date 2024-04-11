@@ -39,9 +39,9 @@ public class Objet extends Entite{
         if(this.proprietaire == null){
             throw new Error("estLache : l'objet est déjà laché");
         }
-        this.plateau.getScene(this.coordX, this.coordY).putObjet(this);
         this.coordX = this.proprietaire.getCoordX();
         this.coordY = this.proprietaire.getCoordY();
+        this.plateau.getScene(this.coordX, this.coordY).putObjet(this);
         this.proprietaire = null;
 
 
