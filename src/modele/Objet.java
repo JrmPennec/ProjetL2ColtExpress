@@ -31,9 +31,9 @@ public class Objet extends Entite{
             throw new Error("estPris : l'objet a déjà un bandit propriétaire");
         }
         this.proprietaire = b;
+        this.plateau.getScene(this.proprietaire.getCoordX(), this.proprietaire.getCoordY()).retireObjet(this);
         this.coordX = -1;
         this.coordY = -1;
-        this.plateau.getScene(this.coordX, this.coordY).retireObjet(this);
     }
     public void estLache(){
         if(this.proprietaire == null){

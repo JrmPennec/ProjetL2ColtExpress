@@ -2,7 +2,9 @@ package modele;
 
 import java.util.ArrayList;
 
- public class Plateau extends Observable {
+import static java.lang.Math.abs;
+
+public class Plateau extends Observable {
      private Jeu jeu;
      private ArrayList<ArrayList<Scene>> train; //Y, puis X coordonnées
 
@@ -48,8 +50,8 @@ import java.util.ArrayList;
         train.get(y).add(new Scene(estToit, false, true));
         for (int i = 1; i < Jeu.NB_WAGON-1; i++) {
             train.get(y).add(new Scene(estToit, false, false));
-            if(Jeu.rnd.nextInt() % 100 < 20){continue;}
-            if(Jeu.rnd.nextInt() % 100 > 90){modele.Objet newTreasure = new modele.Objet(i, y, "bijoux" + Jeu.rnd.nextInt() % 3000, this, LootType.BIJOUX); continue;}
+            if(abs(Jeu.rnd.nextInt()) % 100 < 1){continue;}
+            if(abs(Jeu.rnd.nextInt()) % 100 > 90){modele.Objet newTreasure = new modele.Objet(i, y, "bijoux" + Jeu.rnd.nextInt() % 3000, this, LootType.BIJOUX); continue;}
             else {modele.Objet newTreasure = new modele.Objet(i, y, "bourse" /*+ Jeu.rnd.nextInt() % 3000*/, this, LootType.BOURSE);}
         }
         //Cas locomotive
