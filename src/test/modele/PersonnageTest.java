@@ -1,7 +1,6 @@
 package test.modele;
 
-import modele.*;
-import org.junit.jupiter.api.BeforeEach;
+import controleur.Partie;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,7 +8,7 @@ class PersonnageTest {
     @Test
     public void testMoveIsolated(){
         System.out.println("TEST PERSONNAGE : MOVEMENT");
-        modele.Jeu testGame = new modele.Jeu();
+        Partie testGame = new Partie(4,4,4,4);
         modele.Bandit testSubject = testGame.getBandits().get(0);
         boolean receiver;
 

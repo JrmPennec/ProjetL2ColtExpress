@@ -1,5 +1,5 @@
 package test.modele;
-
+import controleur.Partie;
 import modele.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,18 +7,18 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BanditTest {
-    Jeu testGame;
+    Partie testGame;
     Personnage testSubject;
 
     @BeforeEach
     void testPersonnage() {
-        Jeu testGame = new Jeu();
+        Partie testGame = new Partie(4,4,4,4);
         Bandit testSubject = testGame.getBandit(0);
     }
 
     @Test
     void testStack(){
-        Jeu testGame = new Jeu();
+        Partie testGame = new Partie(4,4,4,4);
         Bandit testSubject = testGame.getBandit(0); //Jank code
         System.out.println(" TEST : STACK");
         System.out.println("X : "+ testSubject.getCoordX()+ " Y : "+ testSubject.getCoordY());
@@ -66,7 +66,7 @@ class BanditTest {
     @Test
     void testTir(){
         System.out.println(" TEST : TIR");
-        Jeu testGame = new Jeu();
+        Partie testGame = new Partie(4,4,4,4);
         Bandit testSubject1 = (Bandit)testGame.getBandits().get(0); //x , y = 0 , 1
         Bandit testSubject2 = (Bandit)testGame.getBandits().get(1); //x , y = 0 , 1
         Bandit testSubject3 = (Bandit)testGame.getBandits().get(2); //x , y = 0 , 1
@@ -102,7 +102,7 @@ class BanditTest {
     //Presupposition : putObjet, retireObjet, Constructeur objet marche
     void testButin(){
         System.out.println(" TEST : BUTIN");
-        Jeu testGame = new Jeu();
+        Partie testGame = new Partie(4,4,4,4);
         Bandit testBandit = (Bandit)testGame.getBandits().get(0); //x , y = 0 , 0
 
         //Insertion de 3 objets.

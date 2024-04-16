@@ -1,5 +1,6 @@
 package test.modele;
 
+import controleur.Partie;
 import modele.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -9,16 +10,16 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JeuTest {
-    Jeu jeu;
+class PartieTest {
+    Partie partie;
     Bandit b00;
     ArrayList<Input> inputs;
 
 
     @BeforeEach
     void init() {
-        jeu = new Jeu();
-        b00 = jeu.getBandits().get(0);
+        partie = new Partie(4,4,4,4);
+        b00 = partie.getBandits().get(0);
         inputs= new ArrayList<>();
 
     }
@@ -26,21 +27,21 @@ class JeuTest {
     @Test
     void derouleTourPlanningStage(){
         for (int i=0;i<3;i++) {
-            jeu.derouleTourPlanningStage();
-            System.out.println(i+ " "+ jeu.getActionsRestantes());
-            assertEquals( 0,jeu.getCompteurJoueur());
-            assertEquals( Jeu.NB_ACTION-(1+i),jeu.getActionsRestantes());
+            partie.derouleTourPlanningStage();
+            System.out.println(i+ " "+ partie.getActionsRestantes());
+            assertEquals( 0, partie.getCompteurJoueur());
+            assertEquals( partie.NB_ACTION-(1+i), partie.getActionsRestantes());
         }
         //4eme action
-        jeu.derouleTourPlanningStage();
-        assertEquals(4,jeu.getActionsRestantes());
-        assertEquals(1,jeu.getCompteurJoueur());
+        partie.derouleTourPlanningStage();
+        assertEquals(4, partie.getActionsRestantes());
+        assertEquals(1, partie.getCompteurJoueur());
         //Passage action phase
         for (int i=0; i<12;i++){
-            jeu.derouleTourPlanningStage();
+            partie.derouleTourPlanningStage();
         }
-        assertTrue(jeu.isActionStage());
-        assertEquals(jeu.getActionsRestantes(),4);
+        assertTrue(partie.isActionStage());
+        assertEquals(partie.getActionsRestantes(),4);
     }
 
 
@@ -57,24 +58,24 @@ class JeuTest {
 
         @Test
         void ajouteActionWrongStage() {
-            jeu.setActionStage(true);
+            partie.setActionStage(true);
             assertTrue(b00.getBuffer().isEmpty());
-            jeu.ajouteAction(b00, inputs.get(0));
+            partie.ajouteAction(b00, inputs.get(0));
             assertTrue(b00.getBuffer().isEmpty());
         }
         @Test
         void ajouteActionVide() {
             assertTrue(b00.getBuffer().isEmpty());
-            jeu.ajouteAction(b00, inputs.get(0));
+            partie.ajouteAction(b00, inputs.get(0));
             assertEquals(b00.getBuffer().get(0),inputs.get(0));
 
         }
         @Test
         void ajouteActions(){
-            jeu.ajouteAction(b00,inputs.get(0));
+            partie.ajouteAction(b00,inputs.get(0));
             assertEquals(inputs.get(0),b00.getBuffer().getFirst());
-            jeu.ajouteAction(b00,inputs.get(1));
-            jeu.ajouteAction(b00,inputs.get(2));
+            partie.ajouteAction(b00,inputs.get(1));
+            partie.ajouteAction(b00,inputs.get(2));
             for (int i=0;i<3;i++){
                     assertEquals(inputs.get(i),b00.getBuffer().get(i));
             }
@@ -93,50 +94,50 @@ class JeuTest {
 
         @Test
         void ActionPhaseOnWrongStage() {
-            jeu.setActionStage(false);
-            jeu.ajouteAction(b00, inputs.get(0));
+            partie.setActionStage(false);
+            partie.ajouteAction(b00, inputs.get(0));
             assertFalse(b00.getBuffer().isEmpty());
-            jeu.actionPhase();
+            partie.actionPhase();
             assertFalse(b00.getBuffer().isEmpty());
         }
 
         @Test
         void ActionPhaseEmptyQueue() {
-            jeu.setActionStage(true);
-            assertDoesNotThrow(() -> jeu.actionPhase());
+            partie.setActionStage(true);
+            assertDoesNotThrow(() -> partie.actionPhase());
             assertTrue(b00.getBuffer().isEmpty());
         }
 
         @Test
         void ActionPhaseWith1Input() {
-            jeu.ajouteAction(b00, inputs.get(0));
-            jeu.setActionStage(true);
-            jeu.actionPhase();
+            partie.ajouteAction(b00, inputs.get(0));
+            partie.setActionStage(true);
+            partie.actionPhase();
             assertTrue(b00.getBuffer().isEmpty());
         }
 
         @Test
         void ActionPhaseWithMultipleInputsOnSameQueue() {
-            jeu.ajouteAction(b00, inputs.get(0));
-            jeu.ajouteAction(b00, inputs.get(1));
-            jeu.setActionStage(true);
-            jeu.actionPhase();
+            partie.ajouteAction(b00, inputs.get(0));
+            partie.ajouteAction(b00, inputs.get(1));
+            partie.setActionStage(true);
+            partie.actionPhase();
             assertEquals(b00.getBuffer().pop(), inputs.get(1));
         }
     }
     @Test
     void derouleActionStage(){
-        jeu.setActionStage(true);
+        partie.setActionStage(true);
         for (int i=0;i<3;i++) {
-            jeu.derouleTourActionStage();
-            System.out.println(i+ " "+ jeu.getActionsRestantes());
-            assertEquals( 0,jeu.getCompteurJoueur());
-            assertEquals( Jeu.NB_ACTION-(1+i),jeu.getActionsRestantes());
+            partie.derouleTourActionStage();
+            System.out.println(i+ " "+ partie.getActionsRestantes());
+            assertEquals( 0, partie.getCompteurJoueur());
+            assertEquals( partie.NB_ACTION-(1+i), partie.getActionsRestantes());
         }
         //Passage Planning stage
-        jeu.derouleTourActionStage();
-        assertEquals(4,jeu.getActionsRestantes());
-        assertFalse(jeu.isActionStage());
+        partie.derouleTourActionStage();
+        assertEquals(4, partie.getActionsRestantes());
+        assertFalse(partie.isActionStage());
 
     }
 }

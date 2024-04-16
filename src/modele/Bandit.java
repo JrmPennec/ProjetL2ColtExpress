@@ -1,6 +1,7 @@
 package modele;
 
 import java.util.*;
+import controleur.Partie;
 
 import static java.lang.Math.abs;
 
@@ -72,7 +73,7 @@ public class Bandit extends Personnage{
         ArrayList<modele.Objet> lootTrouve = new ArrayList<>();
         lootTrouve = this.plateau.getScene(coordX, coordY).getTresor();
         if(!lootTrouve.isEmpty()){
-            modele.Objet premierLoot = lootTrouve.get(abs(Jeu.rnd.nextInt()) % lootTrouve.size());
+            modele.Objet premierLoot = lootTrouve.get(abs(Partie.rnd.nextInt()) % lootTrouve.size());
             premierLoot.estPris(this);
             loot.add(premierLoot);
             System.out.println(this.tag + " braque et trouve " + premierLoot.tag);
@@ -98,7 +99,7 @@ public class Bandit extends Personnage{
                 if(this.coordY == 0) {
                     ArrayList<Bandit> cibleSet = this.plateau.getScene(coordX, 1).getArrayBandits();
                     if(cibleSet.isEmpty()) break; //Aucune cible, on quitte.
-                    Bandit cible = cibleSet.get(abs(Jeu.rnd.nextInt()) % cibleSet.size());
+                    Bandit cible = cibleSet.get(abs(Partie.rnd.nextInt()) % cibleSet.size());
                     cible.dropButin();
                     cible.fuit();
                     System.out.println(this.tag + " pew pew en haut !");
@@ -110,7 +111,7 @@ public class Bandit extends Personnage{
                 if(this.coordY == 1) {
                     ArrayList<Bandit> cibleSet = this.plateau.getScene(coordX, 0).getArrayBandits();
                     if(cibleSet.isEmpty()) break; //Aucune cible, on quitte.
-                    Bandit cible = cibleSet.get(abs(Jeu.rnd.nextInt()) % cibleSet.size());
+                    Bandit cible = cibleSet.get(abs(Partie.rnd.nextInt()) % cibleSet.size());
                     cible.dropButin();
                     cible.fuit();
                     System.out.println(this.tag + " pew pew en bas !");
@@ -127,7 +128,7 @@ public class Bandit extends Personnage{
                         //Rien, la balle traverse le wagon
                         continue;
                     }
-                    Bandit cible = cibleSet.get(abs(Jeu.rnd.nextInt()) % cibleSet.size()); //Cible frappé
+                    Bandit cible = cibleSet.get(abs(Partie.rnd.nextInt()) % cibleSet.size()); //Cible frappé
                     cible.dropButin();
                     cible.fuit();
                     System.out.println("modele.Bandit " + this.tag + "  pew pew à gauche !");
@@ -136,7 +137,7 @@ public class Bandit extends Personnage{
                 System.out.println( this.tag + " tire ! Mais il est schizophrénique et rate sa cible ...");
                 break;
             case DROITE :
-                for(int i = coordX + 1; i <= Jeu.NB_WAGON - 1; i++){
+                for(int i = coordX + 1; i <= partie.NB_WAGON - 1; i++){
                     ArrayList<Bandit> cibleSet = this.plateau.getScene(i, coordY).getArrayBandits();
                     if(cibleSet.isEmpty()) {
                         //Si dans le wagon, la balle traverse qu'une seule salle.
@@ -144,7 +145,7 @@ public class Bandit extends Personnage{
                         //Rien, la balle traverse le wagon
                         continue;
                     }
-                    Bandit cible = cibleSet.get(abs(Jeu.rnd.nextInt()) % cibleSet.size()); //Cible frappé
+                    Bandit cible = cibleSet.get(abs(Partie.rnd.nextInt()) % cibleSet.size()); //Cible frappé
                     cible.dropButin();
                     cible.fuit();
                     System.out.println(this.tag + "  pew pew à droite !");

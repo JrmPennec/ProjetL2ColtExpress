@@ -1,17 +1,24 @@
 package test.vue;
 
+import controleur.Partie;
 import modele.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import vue.VueJeu;
+import vue.VuePartie;
+
+import javax.swing.*;
+import java.awt.*;
 
 
-class VueJeuTest {
-
-    VueJeu test;
+class VuePartieTest {
+    JFrame frame;
+    VuePartie test;
     @BeforeEach
     void init(){
-        test= new VueJeu(new Jeu(),500,500);
+        frame= new JFrame("testVueJeuTest");
+        frame.setPreferredSize(new Dimension(500,500));
+        test= new VuePartie(new Partie(4,4,4,4));
+        frame.add(test);
     }
     @Test
     void ViewTest()throws InterruptedException{

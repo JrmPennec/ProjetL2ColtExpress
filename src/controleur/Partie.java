@@ -1,21 +1,31 @@
-package modele;//import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+package controleur;
+
+import modele.*;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Jeu extends Observable {
-
+/** Controleur de la partie .
+ * du code aurait pu être enlever si cette classe etait une subclasse de Jeu, mais pour une question de lisibilité,
+ * elle est restée indépendante
+ */
+public class Partie extends Observable {
+    //PARENT pour retourner la fin de la partie
+    Jeu jeu;
     //CONSTANTES
-    public static final int NB_WAGON = 4;
-    public static final int NB_JOUEURS = 4;
-    public static final int NB_ACTION = 4;
-
-    //OBJETS
+    
+     public final int NB_JOUEURS ;
+     public final int NB_TOUR ;
+     public final int NB_ACTION ;
+     public final int NB_WAGON ;
+    
+    //OBJETS / MODELE
     private ArrayList<Bandit> bandits;
     private Marshall marshall;
     private Plateau plateau;
 
     //DEROULEMENT
+    private int compteurTours;
     private int actionsRestantes;
     private int compteurJoueur;
     private boolean actionStage;
@@ -50,14 +60,38 @@ public class Jeu extends Observable {
     }
 
     //INIT
-    public Jeu() {
+    public Partie(int nbJ,int nbT,int nbA, int nbW) {
+        this.jeu=null;
+        NB_JOUEURS=nbJ;
+        NB_TOUR=nbT;
+        NB_ACTION=nbA;
+        NB_WAGON=nbW;
+        System.out.println("JoueursPartie :"+NB_JOUEURS+ " Tours = "+NB_TOUR+" Actions = "+NB_ACTION+ "Wagons = "+NB_WAGON);
+        compteurTours=0;
         bandits = new ArrayList<>();
-        plateau = new Plateau();
+        plateau = new Plateau(this);
         marshall = new Marshall(3,"MARSHAll",plateau); //Après les tests lol
         initBandits();
         setActionStage(false);
         actionsRestantes =NB_ACTION;
         compteurJoueur=0;
+    }
+    public Partie(Jeu jeu,int nbJ,int nbT,int nbA, int nbW) {
+        this.jeu=jeu;
+        NB_JOUEURS=nbJ;
+        NB_TOUR=nbT;
+        NB_ACTION=nbA;
+        NB_WAGON=nbW;
+        System.out.println("JoueursPartie :"+NB_JOUEURS+ " Tours = "+NB_TOUR+" Actions = "+NB_ACTION+ "Wagons = "+NB_WAGON);
+        compteurTours=0;
+        bandits = new ArrayList<>();
+        plateau = new Plateau(this);
+        marshall = new Marshall(NB_WAGON-1,"MARSHAll",plateau); //Après les tests lol
+        initBandits();
+        setActionStage(false);
+        actionsRestantes =NB_ACTION;
+        compteurJoueur=0;
+        System.out.println("finConstruct");
     }
     private void initBandits() {
         for (int i = 0; i < NB_JOUEURS; i++) {
@@ -69,7 +103,7 @@ public class Jeu extends Observable {
         assert(plateau.getScene(0,1).getBandits().size()==NB_JOUEURS);
     }
     //INTERACTION OBJETS
-    public void ajouteAction(Bandit b,Input p){
+    public void ajouteAction(Bandit b, Input p){
         if (!isActionStage()) {
             b.putAction(p);
             derouleTourPlanningStage();
@@ -92,7 +126,7 @@ public class Jeu extends Observable {
                     continue;
                 } catch (Error e) {
                     //Le stack est vide, on passe au joueur suivant.
-                    System.out.println(gamer.tag + " a un stack vide");
+                    System.out.println(gamer.getTag() + " a un stack vide");
                     continue;
                 }
 
@@ -112,7 +146,7 @@ public class Jeu extends Observable {
             compteurJoueur++;
             actionsRestantes = NB_ACTION;
         }
-        if(compteurJoueur==Jeu.NB_JOUEURS){
+        if(compteurJoueur== NB_JOUEURS){
             compteurJoueur = 0;
             setActionStage(true);
         }
@@ -125,15 +159,26 @@ public class Jeu extends Observable {
         if (actionsRestantes ==0) {
             actionsRestantes = NB_ACTION;
             setActionStage(false);
+            compteurTours++;
+            if (compteurTours==NB_TOUR)
+                declencheFin();
+
+
         }
         notifyObservers();
     }
 
+    private void declencheFin(){
+        if (jeu==null) {
+            System.out.println("Fin de Partie");
+            System.exit(0);
+        }
+        else jeu.finPartie();
+        }
+
+
     public static void main(String[] args) {
-        Jeu test = new Jeu();
-        test.bandits.get(0).deplace(DIRECTION.GAUCHE);
-        test.bandits.get(0).deplace(DIRECTION.HAUT);
-        test.bandits.get(0).deplace(DIRECTION.BAS);
+
 
     }
 }

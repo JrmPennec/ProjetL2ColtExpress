@@ -1,20 +1,17 @@
 package vue;
-
+import controleur.Partie;
 import modele.Bandit;
-import modele.Jeu;
-
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 /** Affichage des scores **/
 public class VueEast extends JPanel implements Observer {
-    VueJeu vueParent;
-    Jeu jeu;
+    VuePartie vueParent;
+    Partie partie;
 
-    public VueEast(VueJeu vue){
+    public VueEast(VuePartie vue){
         super();
         vueParent = vue;
-        jeu=vueParent.getJeu();
+        partie =vueParent.getJeu();
         GridLayout gl = new GridLayout(4,1);
         gl.setVgap(5);
         this.setLayout(gl);
@@ -30,7 +27,7 @@ public class VueEast extends JPanel implements Observer {
         repaint();
     }
      private void affichageEast(){
-         for(Bandit b : jeu.getBandits()){
+         for(Bandit b : partie.getBandits()){
              JLabel label= new JLabel(b.getTag()+" CASH : "+b.getTotalValeur());
              this.add(label);
          }

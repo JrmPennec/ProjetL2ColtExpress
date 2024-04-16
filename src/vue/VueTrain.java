@@ -1,26 +1,25 @@
 package vue;
 
-import com.sun.org.apache.xml.internal.security.Init;
+import controleur.Partie;
 import modele.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class VueTrain extends JPanel implements Observer {
-    VueJeu vue;
-    Jeu jeu;
+    VuePartie vue;
+    Partie partie;
 
 
 
 
-    public VueTrain(VueJeu vue) {
+    public VueTrain(VuePartie vue) {
         super();
         this.vue = vue;
-        this.jeu = vue.getJeu();
-        jeu.getPlateau().addObserver(this);
+        this.partie = vue.getJeu();
+        partie.getPlateau().addObserver(this);
         GridLayout gl= new GridLayout();
-        gl.setColumns(Jeu.NB_WAGON);
+        gl.setColumns(partie.NB_WAGON);
         gl.setRows(2);
         gl.setHgap(4);
         gl.setVgap(4);
@@ -31,8 +30,8 @@ public class VueTrain extends JPanel implements Observer {
 
     private void afficheTrain() {
         for (int i =1; i>=0;i--) {
-            for (int j = 0; j < Jeu.NB_WAGON; j++)
-                this.add(new VueScene(jeu.getPlateau().getScene(j, i)));
+            for (int j = 0; j < partie.NB_WAGON; j++)
+                this.add(new VueScene(partie.getPlateau().getScene(j, i)));
         }
     }
 
@@ -100,7 +99,7 @@ public class VueTrain extends JPanel implements Observer {
                 panel.add(new JLabel(o.getTag()));
             return panel;
         }
-        //Premier affichage
+        /*//Premier affichage
         public JLabel affichagePerso1() {
             //Jlabel au format html pour le formatage
             String textP = "<html>";
@@ -109,7 +108,7 @@ public class VueTrain extends JPanel implements Observer {
                 textP += scene.getMarshall().getTag();
             textP+="<br>";
             //Bandits
-            for (int i=0; i<Jeu.NB_JOUEURS;i++){
+            for (int i = 0; i<; i++){
                 if(i<scene.getArrayBandits().size())
                     textP+=scene.getArrayBandits().get(i).getTag();
                 textP+="<br>";
@@ -124,7 +123,7 @@ public class VueTrain extends JPanel implements Observer {
                 textP+= o.getTag() + " ";
             textP+="<html>";
             return new JLabel(textP);
-        }
+        }*/
 
 
     }

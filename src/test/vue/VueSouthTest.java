@@ -1,22 +1,27 @@
 package test.vue;
 
-import modele.Jeu;
+import controleur.Partie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import vue.VueJeu;
+import vue.VuePartie;
 import vue.VueSouth;
 
-import static org.junit.jupiter.api.Assertions.*;
+import javax.swing.*;
+import java.awt.*;
 
 class VueSouthTest {
-    Jeu jeu;
-    VueJeu vue;
+    JFrame frame;
+    Partie partie;
+    VuePartie vue;
     VueSouth vueSouth;
 
     @BeforeEach
     void init(){
-        jeu = new Jeu();
-        vue = new VueJeu(jeu,1280,720);
+         frame= new JFrame("VueSouthTest");
+        frame= new JFrame("testVueJeuTest");
+        frame.setPreferredSize(new Dimension(1280,720));
+        partie = new Partie(4,4,4,4);
+        vue = new VuePartie(partie);
     }
     @Test
     void AffichageTest(){

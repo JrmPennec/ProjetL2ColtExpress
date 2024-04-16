@@ -1,12 +1,14 @@
 package modele;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import controleur.Jeu;
+import controleur.Partie;
 
 public abstract class Personnage extends Entite{
+    Partie partie;
 
     public Personnage(int x,int y,String tag,Plateau p){
         super( x, y, tag, p);
+        partie=p.getPartie();
         plateau.getScene(x,y).putPerso(this);
     }
 
@@ -27,7 +29,7 @@ public abstract class Personnage extends Entite{
                     System.out.println(this.tag + " est déja au bout du train");
                 break;
             case DROITE :
-                if(this.coordX +1 <= Jeu.NB_WAGON - 1) {
+                if(this.coordX +1 <= partie.NB_WAGON - 1) {
                     targetX++;
                     System.out.println(this.tag + " se déplace à droite");
                     reussite=true;

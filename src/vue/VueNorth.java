@@ -1,21 +1,21 @@
 package vue;
 
+import controleur.Partie;
 import modele.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 /** Affichage du panel de planification **/
 public class VueNorth extends JPanel  {
-    VueJeu vueParent;
-    Jeu jeu;
+    VuePartie vueParent;
+    Partie partie;
 
 
-    public VueNorth(VueJeu vue) {
+    public VueNorth(VuePartie vue) {
         //Init attributs
         super();
         this.vueParent = vue;
-        this.jeu = vueParent.getJeu();
+        this.partie = vueParent.getJeu();
         //Init du layout du panel
         this.setLayout(new GridBagLayout());
         GridBagConstraints c= new GridBagConstraints();
@@ -40,7 +40,7 @@ public class VueNorth extends JPanel  {
 
     public class PanelDeplacement extends JPanel {
 
-        VueJeu vuejeu;
+        VuePartie vuejeu;
 
         public PanelDeplacement() {
             super();
@@ -90,7 +90,7 @@ public class VueNorth extends JPanel  {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Input deplacement = new Input(dir, ACTION.DEPLACE);
-                jeu.ajouteAction(jeu.getBandits().get(jeu.getCompteurJoueur()), deplacement);
+                partie.ajouteAction(partie.getBandits().get(partie.getCompteurJoueur()), deplacement);
             }
 
 
@@ -148,7 +148,7 @@ public class VueNorth extends JPanel  {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Input tir = new Input(dir, ACTION.TIR);
-                jeu.ajouteAction(jeu.getBandits().get(jeu.getCompteurJoueur()), tir);
+                partie.ajouteAction(partie.getBandits().get(partie.getCompteurJoueur()), tir);
             }
 
         }
@@ -164,12 +164,12 @@ public class VueNorth extends JPanel  {
         public MiddlePanel() {
             super();
             //Récupération de l'information des tours
-            jeu.addObserver(this);
+            partie.addObserver(this);
             // Compteur d'action + phase
             phase = new JLabel("Planning Phase");
-            actionsRestantes = new JLabel("Action(s) Restante(s) : " + jeu.getActionsRestantes());
+            actionsRestantes = new JLabel("Action(s) Restante(s) : " + partie.getActionsRestantes());
             // Affichage du joueur en cours de planification
-            tourJoueur = new JLabel(("Joueur n ° " + (jeu.getCompteurJoueur() + 1) ));
+            tourJoueur = new JLabel(("Joueur n ° " + (partie.getCompteurJoueur() + 1) ));
 
             braqueButton= new BraqueButton();
             //Placement dans le panel
@@ -183,26 +183,26 @@ public class VueNorth extends JPanel  {
         @Override
         public void update() {
 
-            actionsRestantes.setText("Action(s) Restante(s) : " + jeu.getActionsRestantes());
-            if (jeu.isActionStage()) {
+            actionsRestantes.setText("Action(s) Restante(s) : " + partie.getActionsRestantes());
+            if (partie.isActionStage()) {
                 phase.setText("Action Phase");
                 tourJoueur.setText("Tous les joueurs");
             } else {
                 phase.setText("Planning Phase");
-                tourJoueur.setText("Joueur n °" + (jeu.getCompteurJoueur() + 1));
+                tourJoueur.setText("Joueur n °" + (partie.getCompteurJoueur() + 1));
             }
         }
 
         public class BraqueButton extends Button{
             BraqueButton(){
-                super(VueNorth.this.jeu,"Braque");
+                super(VueNorth.this.partie,"Braque");
                 addActionListener(this);
             }
 
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Input braque = new Input(DIRECTION.NEUTRAL,ACTION.BRAQUE);
-                jeu.ajouteAction(jeu.getBandits().get(jeu.getCompteurJoueur()),braque);
+                partie.ajouteAction(partie.getBandits().get(partie.getCompteurJoueur()),braque);
 
             }
         }

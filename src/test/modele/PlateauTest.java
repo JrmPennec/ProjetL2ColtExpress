@@ -1,5 +1,6 @@
 package test.modele;
 
+import controleur.Partie;
 import modele.Bandit;
 import modele.Personnage;
 import modele.Plateau;
@@ -14,7 +15,7 @@ class PlateauTest {
 
     @BeforeEach
     void init() {
-    p =new Plateau();
+    p =new Plateau(new Partie(4,4,4,4));
     }
 
     @Test

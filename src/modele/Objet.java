@@ -1,6 +1,7 @@
 package modele;
 
 import static java.lang.Math.abs;
+import controleur.Partie;
 
 public class Objet extends Entite{
 
@@ -15,7 +16,7 @@ public class Objet extends Entite{
         this.type = type;
         switch(this.type){
             case BIJOUX : this.valeur = 500; break;
-            case BOURSE : this.valeur = abs(Jeu.rnd.nextInt()) % 501; break;
+            case BOURSE : this.valeur = abs(Partie.rnd.nextInt()) % 501; break;
             case MAGOT  : this.valeur = 1000; break;
             default : throw new Error("Constructeur Objet : type de trésor mal définit !");
         }

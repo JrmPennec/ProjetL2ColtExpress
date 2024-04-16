@@ -1,7 +1,8 @@
 package modele;
 
+import controleur.Partie;
+
 import java.util.ArrayList;
-import java.util.Random;
 
 import static java.lang.Math.abs;
 
@@ -27,14 +28,14 @@ public class Marshall extends Personnage{
 
     public void faitAction(){
         System.out.println(coordX + " " + coordY);
-        int testNerveux = abs(Jeu.rnd.nextInt()) % 100;
+        int testNerveux = abs(Partie.rnd.nextInt()) % 100;
         expulse(); //Expulse le bandit de toute manière
         if(testNerveux < nervosite) {
             return; //Test échoué, le maréchal fait rien.
         }
-        int closestX = Jeu.NB_WAGON;
+        int closestX = partie.NB_WAGON;
         //Cherche le bandit le plus proche
-        for(int i = 0; i <= Jeu.NB_WAGON - 1 ; i++){
+        for(int i = 0; i <= partie.NB_WAGON - 1 ; i++){
             if(this.plateau.getScene(i, 0).getBandits().isEmpty())  continue;
             //else
             int oper = this.plateau.getScene(i, 0).getArrayBandits().get(0).getCoordX() - this.coordX;

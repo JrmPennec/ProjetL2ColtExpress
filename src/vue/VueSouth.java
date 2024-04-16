@@ -1,16 +1,14 @@
 package vue;
 
-import modele.Jeu;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class VueSouth extends JPanel {
-    VueJeu vueParent;
+    VuePartie vueParent;
 
 
-    public VueSouth(VueJeu vue){
+    public VueSouth(VuePartie vue){
         this.vueParent=vue;
         this.setLayout(new BorderLayout());
         this.add(new ActionButton(),BorderLayout.NORTH);
@@ -29,8 +27,8 @@ public class VueSouth extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            if (jeu.isActionStage()) {
-                jeu.actionPhase();
+            if (partie.isActionStage()) {
+                partie.actionPhase();
             }
         }
 

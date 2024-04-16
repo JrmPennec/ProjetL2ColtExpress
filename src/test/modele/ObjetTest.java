@@ -1,7 +1,7 @@
 package test.modele;
 
+import controleur.Partie;
 import modele.*;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,7 +10,7 @@ class ObjetTest {
 
     @Test
     void objetTest(){
-        Jeu testGame = new Jeu();
+        Partie testGame = new Partie(4,4,4,4);
         System.out.println("TEST : OBJET");
 
         //Insertion de 3 objets.

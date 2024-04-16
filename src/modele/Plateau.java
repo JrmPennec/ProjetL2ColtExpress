@@ -1,11 +1,11 @@
 package modele;
 
+import controleur.Partie;
 import java.util.ArrayList;
-
 import static java.lang.Math.abs;
 
 public class Plateau extends Observable {
-     private Jeu jeu;
+     private Partie partie;
      private ArrayList<ArrayList<Scene>> train; //Y, puis X coordonnées
 
 
@@ -23,7 +23,8 @@ public class Plateau extends Observable {
         this.train = completeMap;
     }*/
 
-    public Plateau() {
+    public Plateau(Partie partie) {
+        this.partie=partie;
         //mise en place des scenes
         train = new ArrayList<ArrayList<Scene>>();
         train.add(new ArrayList<Scene>());
@@ -32,10 +33,13 @@ public class Plateau extends Observable {
         initScenes(true);
 
     }
+    public Partie getPartie(){
+        return partie;
+    }
 
     public Scene getScene(int x, int y) {
-        if (x > Jeu.NB_WAGON || x < 0 || y > 1 || y < 0) {
-            throw new ArrayIndexOutOfBoundsException("Mauvais indice pour getScene");
+        if (x > partie.NB_WAGON || x < 0 || y > 1 || y < 0) {
+            throw new ArrayIndexOutOfBoundsException("Mauvais indice pour getScene " + x+ " Nb.Wagons"+ partie.NB_WAGON);
         }
         return train.get(y).get(x);
     }
@@ -48,14 +52,14 @@ public class Plateau extends Observable {
             y=0;
         //Cas Dernier Wagon
         train.get(y).add(new Scene(estToit, false, true));
-        for (int i = 1; i < Jeu.NB_WAGON-1; i++) {
+        for (int i = 1; i < partie.NB_WAGON-1; i++) {
             train.get(y).add(new Scene(estToit, false, false));
-            for(int chance = 0; chance < (abs(Jeu.rnd.nextInt()) % 101 > 75 ? 2 + (abs(Jeu.rnd.nextInt()) % 101 < 30 ? 1 : 0) : 1); chance++) {
-                if (abs(Jeu.rnd.nextInt()) % 101 > 70) {
-                    modele.Objet newTreasure = new modele.Objet(i, y, "bijoux-" + abs(Jeu.rnd.nextInt()) % 3000, this, LootType.BIJOUX);
+            for(int chance = 0; chance < (abs(Partie.rnd.nextInt()) % 101 > 75 ? 2 + (abs(Partie.rnd.nextInt()) % 101 < 30 ? 1 : 0) : 1); chance++) {
+                if (abs(Partie.rnd.nextInt()) % 101 > 70) {
+                    modele.Objet newTreasure = new modele.Objet(i, y, "bijoux-" + abs(Partie.rnd.nextInt()) % 3000, this, LootType.BIJOUX);
                     continue;
                 } else {
-                    modele.Objet newTreasure = new modele.Objet(i, y, "bourse-"  +abs(Jeu.rnd.nextInt()) % 3000, this, LootType.BOURSE);
+                    modele.Objet newTreasure = new modele.Objet(i, y, "bourse-"  +abs(Partie.rnd.nextInt()) % 3000, this, LootType.BOURSE);
                 }
             }
         }
@@ -76,7 +80,7 @@ public class Plateau extends Observable {
     }
     static public void main(String[] args){
         System.out.println("Test Constructeur :");
-        Plateau p = new Plateau();
+        Plateau p = new Plateau(new Partie(4,4,4,4));
         for (Scene s : p.train.get(1)) {
             System.out.print("Toit : ");
             s.getBandits().forEach((k,v)-> System.out.print(k +" "));

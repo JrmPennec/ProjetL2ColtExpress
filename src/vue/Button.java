@@ -1,6 +1,6 @@
 package vue;
 
-import modele.Jeu;
+import controleur.Partie;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -8,11 +8,11 @@ import java.awt.event.ActionListener;
 
 public abstract class Button extends JButton implements ActionListener {
 
-    protected Jeu jeu;
+    protected Partie partie;
 
-    public Button(Jeu jeu, String name){
+    public Button(Partie partie, String name){
         super(name);
-        this.jeu=jeu;
+        this.partie = partie;
 
     }
     @Override
