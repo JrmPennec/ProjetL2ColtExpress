@@ -12,8 +12,10 @@ public class VueSouth extends JPanel {
         this.vueParent=vue;
         this.setLayout(new BorderLayout());
         //Ajout des éléments avec cardinalité (border layout )
-        this.add(new ActionButton(),BorderLayout.NORTH);
-        this.add(new JLabel("LOGS A FAIRE"),BorderLayout.CENTER);
+        this.add(new ActionButton(),BorderLayout.WEST);
+        this.add(new CancelButton(),BorderLayout.EAST);
+        //this.add(new JLabel("LOGS A FAIRE"),BorderLayout.CENTER);
+        this.logUpdate();
     }
     class ActionButton extends Button {
 
@@ -27,6 +29,28 @@ public class VueSouth extends JPanel {
             if (partie.isActionStage()) {
                 partie.actionPhase();
             }
+            logUpdate();
+        }
+
+
+    }
+
+    public void logUpdate(){
+        this.add(new JLabel(vueParent.getJeu().getLog()),BorderLayout.NORTH);
+    }
+
+    class CancelButton extends Button {
+
+        public CancelButton() {
+            super(VueSouth.this.vueParent.getJeu(), "Annuler ...");
+            addActionListener(this);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            if (partie.isActionStage()) return;
+            partie.annuleAction(partie.getBandits().get(partie.getCompteurJoueur()));
+            logUpdate();
         }
 
 

@@ -60,6 +60,8 @@ public class Jeu {
         vue.lanceScore();
 
     }
+
+
     static public void main(String[] args){
         Jeu jeu= new Jeu(1280,720);
 

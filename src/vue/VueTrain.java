@@ -64,10 +64,10 @@ public class VueTrain extends JPanel implements Observer {
             //Init contraintes
             GridBagConstraints c = new GridBagConstraints();
             c.fill=GridBagConstraints.BOTH;
-            c.anchor=GridBagConstraints.NORTH;
+            c.anchor=GridBagConstraints.NORTHWEST;
             c.gridx=0;
             c.gridy=0;
-            c.weighty=0.75;
+            c.weighty=1;
             c.weightx=1;
 
             this.add(affichagePerso(),c);
@@ -91,7 +91,9 @@ public class VueTrain extends JPanel implements Observer {
             }
             //Insertion de bandits
             for (Bandit b : scene.getArrayBandits()){
+                //ImageIcon icon = new ImageIcon("Bandito_texture/bandit" + b.getTag().charAt(b.getTag().length()- 1) + ".png");
                 JLabel label = new JLabel("      "+b.getTag());
+                //JLabel label = new JLabel(icon);
                 panel.add(label);
             }
             return panel;

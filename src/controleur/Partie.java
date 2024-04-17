@@ -33,6 +33,8 @@ public class Partie extends Observable {
     //MISC
     public static Random rnd = new Random();
 
+    private String log = "...";
+
     //GETTER - SETTER
     public ArrayList<Bandit> getBandits() {
         return bandits;
@@ -58,6 +60,7 @@ public class Partie extends Observable {
     public int getActionsRestantes() {
         return actionsRestantes;
     }
+    public String getLog(){return log;}
 
     //INIT
     public Partie(int nbJ,int nbT,int nbA, int nbW) {
@@ -111,6 +114,16 @@ public class Partie extends Observable {
         if (!isActionStage()) {
             b.putAction(p);
             derouleTourPlanningStage();
+            notifyObservers();
+        }
+        else
+            System.out.println("actionStage");
+    }
+
+    public void annuleAction(Bandit b){
+        if (!isActionStage() && actionsRestantes < NB_ACTION) {
+            modele.Input cancel = b.popAction();
+            actionsRestantes++;
             notifyObservers();
         }
         else

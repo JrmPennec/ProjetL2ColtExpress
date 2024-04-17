@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class VueJeu extends JFrame {
     Jeu jeu;
+    private VuePartie vuePartie;
 
     public VueJeu(Jeu jeu,int width, int height){
         super("Colt Express");
@@ -23,11 +24,13 @@ public class VueJeu extends JFrame {
         this.setContentPane(new VueIntro(jeu));
 
     }
-    public void lancePartie(){
-        this.setContentPane(new VuePartie(jeu.getPartie()));
+    public void lancePartie() {
+        this.vuePartie = new VuePartie(jeu.getPartie());
+        this.setContentPane(this.vuePartie);
         this.revalidate();
         this.repaint();
     }
+
 
     public void lanceScore() {
         this.setContentPane(new VueScore(jeu.getPartie()));

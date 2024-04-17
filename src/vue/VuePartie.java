@@ -90,6 +90,7 @@ public class VuePartie extends JPanel implements Observer {
     public void update() {
 
     }
+
     static public void main(String[] args){
 
         VuePartie test= new VuePartie(new Partie(new Jeu(1280,720),4,4,4,4));
