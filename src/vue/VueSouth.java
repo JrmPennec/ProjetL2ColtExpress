@@ -11,12 +11,9 @@ public class VueSouth extends JPanel {
     public VueSouth(VuePartie vue){
         this.vueParent=vue;
         this.setLayout(new BorderLayout());
+        //Ajout des éléments avec cardinalité (border layout )
         this.add(new ActionButton(),BorderLayout.NORTH);
         this.add(new JLabel("LOGS A FAIRE"),BorderLayout.CENTER);
-
-
-
-
     }
     class ActionButton extends Button {
 

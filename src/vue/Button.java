@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**Classe de base qui relie le bouton a la partie**/
 public abstract class Button extends JButton implements ActionListener {
 
     protected Partie partie;

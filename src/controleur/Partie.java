@@ -61,6 +61,7 @@ public class Partie extends Observable {
 
     //INIT
     public Partie(int nbJ,int nbT,int nbA, int nbW) {
+        //Init des attributs
         this.jeu=null;
         NB_JOUEURS=nbJ;
         NB_TOUR=nbT;
@@ -77,6 +78,7 @@ public class Partie extends Observable {
         compteurJoueur=0;
     }
     public Partie(Jeu jeu,int nbJ,int nbT,int nbA, int nbW) {
+        //Init des attributs
         this.jeu=jeu;
         NB_JOUEURS=nbJ;
         NB_TOUR=nbT;
@@ -94,6 +96,7 @@ public class Partie extends Observable {
         System.out.println("finConstruct");
     }
     private void initBandits() {
+        //création des bandits un par en fonction de nb de joueurs
         for (int i = 0; i < NB_JOUEURS; i++) {
             Bandit b = new Bandit(0, 1, "Bandit0" + (i+1), plateau);
             bandits.add(b);
@@ -104,6 +107,7 @@ public class Partie extends Observable {
     }
     //INTERACTION OBJETS
     public void ajouteAction(Bandit b, Input p){
+        //Ajoute une action a un bandit b si nous sommes en planning phase
         if (!isActionStage()) {
             b.putAction(p);
             derouleTourPlanningStage();
@@ -142,10 +146,12 @@ public class Partie extends Observable {
      */
     public void derouleTourPlanningStage(){
         actionsRestantes--;
+        //Cas plus d'actions
         if (actionsRestantes ==0) {
             compteurJoueur++;
             actionsRestantes = NB_ACTION;
         }
+        //Cas dernier joueur + plus d'actions
         if(compteurJoueur== NB_JOUEURS){
             compteurJoueur = 0;
             setActionStage(true);
@@ -169,6 +175,7 @@ public class Partie extends Observable {
     }
 
     private void declencheFin(){
+        //Cas utilisation de partie sans jeu
         if (jeu==null) {
             System.out.println("Fin de Partie");
             System.exit(0);

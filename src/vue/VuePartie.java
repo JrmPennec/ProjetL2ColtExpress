@@ -60,6 +60,8 @@ public class VuePartie extends JPanel implements Observer {
         c.insets=new Insets(10,30,0,20);
         return c;
     }
+
+    //Affichage North
     private GridBagConstraints getContraintesNorth(){
         GridBagConstraints c = new GridBagConstraints();
         c.gridx=0;
@@ -69,6 +71,8 @@ public class VuePartie extends JPanel implements Observer {
         c.insets=new Insets(0,30,10,20);
         return c;
     }
+
+    //Affichage East
     private GridBagConstraints getContraintesEast(){
         GridBagConstraints c = new GridBagConstraints();
         c.gridx=4;
