@@ -82,7 +82,7 @@ public class VueIntro extends JPanel implements ActionListener, ItemListener {
         if (e.getSource()==comboBoxTours)
             jeu.setNbTours((Integer)comboBoxTours.getSelectedItem());
         if (e.getSource()==comboBoxActions)
-            jeu.setNbActions((Integer)comboBoxJoueurs.getSelectedItem());
+            jeu.setNbActions((Integer)comboBoxActions.getSelectedItem());
         if (e.getSource()==comboBoxWagons)
             jeu.setNbWagons((Integer)comboBoxWagons.getSelectedItem());
 
