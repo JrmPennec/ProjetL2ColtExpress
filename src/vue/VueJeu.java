@@ -13,6 +13,7 @@ public class VueJeu extends JFrame {
         this.jeu=jeu;
         this.setPreferredSize(new Dimension(width, height));
         lanceIntro();
+        //Partie necessaire pour la bonne structuration/fermeture/affichage du programme
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -23,7 +24,6 @@ public class VueJeu extends JFrame {
 
     }
     public void lancePartie(){
-
         this.setContentPane(new VuePartie(jeu.getPartie()));
         this.revalidate();
         this.repaint();

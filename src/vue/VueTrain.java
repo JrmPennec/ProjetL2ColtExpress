@@ -19,6 +19,7 @@ public class VueTrain extends JPanel implements Observer {
         this.partie = vue.getJeu();
         partie.getPlateau().addObserver(this);
         GridLayout gl= new GridLayout();
+        //Calibration du layout
         gl.setColumns(partie.NB_WAGON);
         gl.setRows(2);
         gl.setHgap(4);
@@ -29,6 +30,7 @@ public class VueTrain extends JPanel implements Observer {
     }
 
     private void afficheTrain() {
+        // pour le toit puis pour l'interieur
         for (int i =1; i>=0;i--) {
             for (int j = 0; j < partie.NB_WAGON; j++)
                 this.add(new VueScene(partie.getPlateau().getScene(j, i)));
@@ -39,7 +41,9 @@ public class VueTrain extends JPanel implements Observer {
 
 
     public void update() {
+        //Suppression des éléments
         this.removeAll();
+        //raffichage
         afficheTrain();
         revalidate();
         repaint();
@@ -72,7 +76,8 @@ public class VueTrain extends JPanel implements Observer {
             c.weighty=0.25;
             c.anchor=GridBagConstraints.SOUTHWEST;
             this.add(affichageObjet(),c);
-        }
+
+        }/** affichage des personnages en colonnes, le Marshall est le premier affiché si il est dans la scene**/
         public JPanel affichagePerso(){
             JPanel panel= new JPanel();
             panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
@@ -91,10 +96,11 @@ public class VueTrain extends JPanel implements Observer {
             }
             return panel;
         }
-
+        /**Affichage des objets sur 2 lignes (Max 6 objets) **/
         public JPanel affichageObjet(){
             JPanel panel = new JPanel(new GridLayout(2,3));
             panel.add(new JLabel("Objets :"));
+
             for (Objet o : scene.getTresor())
                 panel.add(new JLabel(o.getTag()));
             return panel;

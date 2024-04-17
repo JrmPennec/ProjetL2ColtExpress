@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class VueScore extends JPanel {
     private Partie partie;
+    //Liste qui permet de ranger les joueurs du meilleur score au moins bon (pas d'egalité prévu pour le moment)
     private ArrayList<Bandit> rankList;
 
     VueScore(Partie partie){
@@ -20,9 +21,11 @@ public class VueScore extends JPanel {
 
     }
     void afficheScore(){
+        //mise en place d'un layout  pour poser les elements en vertical
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        //Affichage du vainqueur
         this.add(new JLabel("VAINQUEUR : "+rankList.get(0).getTag()));
-
+        //Affichage des autres joueurs
         for (int i = 1; i< partie.NB_JOUEURS; i++){
             this.add(new JLabel((i+1)+"EME :"+rankList.get(i).getTag()));
         }

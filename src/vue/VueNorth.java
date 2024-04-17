@@ -121,7 +121,7 @@ public class VueNorth extends JPanel  {
             c.gridy = 2;
             this.add(new tirButton(DIRECTION.BAS), c);
         }
-        //Creation du button et de son interaction
+        //Creation du bouton et de son interaction
         class tirButton extends Button {
             DIRECTION dir;
 
@@ -147,6 +147,7 @@ public class VueNorth extends JPanel  {
 
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                //Création d'une input et envoi au bon joueur
                 Input tir = new Input(dir, ACTION.TIR);
                 partie.ajouteAction(partie.getBandits().get(partie.getCompteurJoueur()), tir);
             }
@@ -174,6 +175,7 @@ public class VueNorth extends JPanel  {
             braqueButton= new BraqueButton();
             //Placement dans le panel
             this.setLayout(new GridLayout(4,1));
+            //Ajout des éléments au panel
             this.add(phase);
             this.add(actionsRestantes);
             this.add(tourJoueur);
@@ -182,7 +184,7 @@ public class VueNorth extends JPanel  {
 
         @Override
         public void update() {
-
+            //Mise a jour du text
             actionsRestantes.setText("Action(s) Restante(s) : " + partie.getActionsRestantes());
             if (partie.isActionStage()) {
                 phase.setText("Action Phase");
