@@ -14,6 +14,7 @@ public class Bandit extends Personnage{
     private ArrayList<Objet> loot ;
 
 
+
     public Bandit(int x, int y, String t, Plateau p){
         super( x,  y,  t, p);
         this.buffer = new LinkedList<>();
@@ -103,9 +104,11 @@ public class Bandit extends Personnage{
                     cible.dropButin();
                     cible.fuit();
                     System.out.println(this.tag + " pew pew en haut !");
+                    logCharacter = this.tag + " pew pew en haut ! "+ cible.getTag() + " s'est pris chère !";;
                     return true;
                 }
                 System.out.println( this.tag + " tire, mais il est schizophrénique et rate sa cible ...");
+                logCharacter = this.tag + " tire, mais il est schizophrénique et rate sa cible ...";
                 break;
             case BAS :
                 if(this.coordY == 1) {
@@ -115,9 +118,11 @@ public class Bandit extends Personnage{
                     cible.dropButin();
                     cible.fuit();
                     System.out.println(this.tag + " pew pew en bas !");
+                    logCharacter = this.tag + " pew pew en bas ! "+ cible.getTag() + " s'est pris chère !"; ;
                     return true;
                 }
                 System.out.println( this.tag + " tire, mais il est schizophrénique et rate sa cible ...");
+                logCharacter = this.tag + " tire, mais il est schizophrénique et rate sa cible ...";
                 break;
             case GAUCHE :
                 for(int i = coordX - 1; i >= 0; i--){
@@ -132,9 +137,11 @@ public class Bandit extends Personnage{
                     cible.dropButin();
                     cible.fuit();
                     System.out.println("modele.Bandit " + this.tag + "  pew pew à gauche !");
+                    logCharacter = this.tag + " pew pew à gauche ! " + cible.getTag() + " s'est pris chère !";
                     return true;
                 }
                 System.out.println( this.tag + " tire ! Mais il est schizophrénique et rate sa cible ...");
+                logCharacter = this.tag + " tire ! Mais il est schizophrénique et rate sa cible ...";
                 break;
             case DROITE :
                 for(int i = coordX + 1; i <= partie.NB_WAGON - 1; i++){
@@ -149,6 +156,7 @@ public class Bandit extends Personnage{
                     cible.dropButin();
                     cible.fuit();
                     System.out.println(this.tag + "  pew pew à droite !");
+                    logCharacter = this.tag + " pew pew à droite ! " + cible.getTag() + " s'est pris chère !";;
                     return true;
                 }
                 System.out.println( this.tag + " tire, mais il est schizophrénique et rate sa cible ...");

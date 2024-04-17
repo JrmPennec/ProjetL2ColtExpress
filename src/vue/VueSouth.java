@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 public class VueSouth extends JPanel {
     VuePartie vueParent;
 
+    JLabel logLine = new JLabel();
+
 
     public VueSouth(VuePartie vue){
         this.vueParent=vue;
@@ -14,8 +16,8 @@ public class VueSouth extends JPanel {
         //Ajout des éléments avec cardinalité (border layout )
         this.add(new ActionButton(),BorderLayout.WEST);
         this.add(new CancelButton(),BorderLayout.EAST);
-        //this.add(new JLabel("LOGS A FAIRE"),BorderLayout.CENTER);
-        this.logUpdate();
+        this.add(logLine,BorderLayout.NORTH);
+        this.logLine.setText(vueParent.getJeu().getLog());
     }
     class ActionButton extends Button {
 
@@ -36,7 +38,8 @@ public class VueSouth extends JPanel {
     }
 
     public void logUpdate(){
-        this.add(new JLabel(vueParent.getJeu().getLog()),BorderLayout.NORTH);
+        if(!vueParent.getJeu().isActionStage()) this.logLine.setText("Phase de préparation !");
+        this.logLine.setText(vueParent.getJeu().getLog());
     }
 
     class CancelButton extends Button {

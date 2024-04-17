@@ -33,7 +33,7 @@ public class Partie extends Observable {
     //MISC
     public static Random rnd = new Random();
 
-    private String log = "...";
+    private String log = "Début de partie !!";
 
     //GETTER - SETTER
     public ArrayList<Bandit> getBandits() {
@@ -131,6 +131,20 @@ public class Partie extends Observable {
     }
     //DEROULEMENT PARTIE
 
+    public void emptyLog(){
+        this.log = "...";
+        for(Bandit gamer : bandits) gamer.logCharacter = "";
+        if (this.marshall != null) this.marshall.logCharacter = "";
+    }
+
+    public void updateLog(){
+        for(Bandit gamer : bandits){
+            if (gamer.logCharacter.isEmpty()) continue;
+            this.log = gamer.logCharacter;
+        }
+        if (this.marshall != null && !this.marshall.logCharacter.isEmpty()) this.log = this.marshall.logCharacter;
+    }
+
 
     public void actionPhase(){ //Dépile 1 fois chaque joueur.
         if (isActionStage()) {
@@ -138,7 +152,9 @@ public class Partie extends Observable {
             if (this.marshall != null) this.marshall.expulse();
             for (Bandit gamer : bandits) {
                 try {
+                    emptyLog();
                     gamer.executionStack();
+                    updateLog();
                     //1 action dépilé, on quitte la fonction.
                     continue;
                 } catch (Error e) {
@@ -149,6 +165,7 @@ public class Partie extends Observable {
 
             }
             if (this.marshall != null) this.marshall.faitAction();
+            updateLog();
             derouleTourActionStage();
             notifyObservers();
         }

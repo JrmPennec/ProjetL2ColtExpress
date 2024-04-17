@@ -18,10 +18,13 @@ public class Marshall extends Personnage{
         ArrayList<Bandit> cibleSet = this.plateau.getScene(this.coordX, this.coordY).getArrayBandits();
         if(cibleSet.isEmpty()) return; //Aucun bandit à taper
         System.out.println("Le marshall " +this.tag + " fait fuir des bandits");
+        logCharacter = "Le marshall " +this.tag + " fait fuir ";
         for(Bandit cible : cibleSet){
             cible.dropButin();
             cible.fuit();
+            logCharacter += cible.getTag() + ", ";
         }
+        logCharacter += " !";
         return;
     }
 
@@ -44,6 +47,7 @@ public class Marshall extends Personnage{
         if(closestX < 0) deplace(modele.DIRECTION.GAUCHE);
         //Si il y a aucun bandit en bas, se déplace à droite par défaut
         if(closestX > 0) deplace(modele.DIRECTION.DROITE);
+        logCharacter = "";
         expulse(); //Expulse post-déplacement
         System.out.println(coordX + " " + coordY);
         return;
