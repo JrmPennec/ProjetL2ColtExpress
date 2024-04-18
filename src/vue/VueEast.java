@@ -16,6 +16,7 @@ public class VueEast extends JPanel implements Observer {
         GridLayout gl = new GridLayout(4,1);
         gl.setVgap(5);
         this.setLayout(gl);
+        vueParent.getJeu().addObserver(this);
 
 
         affichageEast();

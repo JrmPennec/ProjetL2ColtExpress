@@ -162,12 +162,12 @@ public class Partie extends Observable {
                     System.out.println(gamer.getTag() + " a un stack vide");
                     continue;
                 }
-
             }
             if (this.marshall != null) this.marshall.faitAction();
             updateLog();
             derouleTourActionStage();
             notifyObservers();
+
         }
     }
 
