@@ -28,6 +28,9 @@ public class Partie extends Observable {
     private int compteurTours;
     private int actionsRestantes;
     private int compteurJoueur;
+
+    private int compteurJoueurAction;
+
     private boolean actionStage;
 
     //MISC
@@ -142,7 +145,7 @@ public class Partie extends Observable {
             if (gamer.logCharacter.isEmpty()) continue;
             this.log = gamer.logCharacter;
         }
-        if (this.marshall != null && !this.marshall.logCharacter.isEmpty()) this.log = this.marshall.logCharacter;
+        if (this.marshall != null && !this.marshall.logCharacter.isEmpty()) this.log += this.marshall.logCharacter;
     }
 
 
@@ -151,11 +154,13 @@ public class Partie extends Observable {
             notifyObservers();
             if (this.marshall != null) this.marshall.expulse();
             for (Bandit gamer : bandits) {
+                if(gamer instanceof BanditAI){ //Si c'est une IA, mets à jour en pleine action son buffer
+                    ((BanditAI)gamer).AI_putAction();
+                }
                 try {
                     emptyLog();
                     gamer.executionStack();
                     updateLog();
-                    //1 action dépilé, on quitte la fonction.
                     continue;
                 } catch (Error e) {
                     //Le stack est vide, on passe au joueur suivant.
@@ -171,6 +176,37 @@ public class Partie extends Observable {
         }
     }
 
+    public void actionPhase_slow(){ //Dépile 1 fois chaque joueur.
+        if (isActionStage()) {
+            notifyObservers();
+            if (this.marshall != null) this.marshall.expulse();
+            Bandit gamer = this.getBandit(this.compteurJoueurAction);
+            if(gamer instanceof BanditAI){ //Si c'est une IA, mets à jour en pleine action son buffer
+                ((BanditAI)gamer).AI_putAction();
+            }
+            try {
+                emptyLog();
+                gamer.executionStack();
+                updateLog();
+                this.compteurJoueurAction++;
+            } catch (Error e) {
+                System.out.println(gamer.getTag() + " a un stack vide");
+                return;
+            }
+
+            //Une fois tous les joueurs ont dépilés 1 fois;
+            //On bouge le marshall et regarde si c'est la fin de la phase d'action
+            if(this.compteurJoueurAction != NB_JOUEURS) return;
+            this.compteurJoueurAction = 0;
+            if (this.marshall != null) this.marshall.faitAction();
+            updateLog();
+            derouleTourActionStage();
+            notifyObservers();
+        }
+    }
+
+
+
     /**Décremente action restantes et gere l'incrementation pour le
      * compteJoueur/Passage action phase
      */
@@ -179,11 +215,14 @@ public class Partie extends Observable {
         //Cas plus d'actions
         if (actionsRestantes ==0) {
             compteurJoueur++;
+            //Saute les joueurs IA
+            while(compteurJoueur != NB_JOUEURS && this.getBandit(compteurJoueur) instanceof BanditAI) compteurJoueur++;
             actionsRestantes = NB_ACTION;
         }
         //Cas dernier joueur + plus d'actions
         if(compteurJoueur== NB_JOUEURS){
             compteurJoueur = 0;
+            compteurJoueurAction = 0;
             setActionStage(true);
         }
         notifyObservers();
