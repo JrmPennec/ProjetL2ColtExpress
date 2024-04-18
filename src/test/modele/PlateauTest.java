@@ -20,13 +20,14 @@ class PlateauTest {
 
     @Test
     void getScene() {
-        assertThrows(Error.class,()->p.getScene(5,1));
+        assertThrows(Exception.class,()->p.getScene(5,1));
 
     }
 
     @Test
     void deplacePerso() {
         Bandit b = p.getScene(0,1).getBandits().get("b00");
+
         p.deplacePerso(b,0,0);
         assertTrue(p.getScene(0,1).getBandits().isEmpty());
         assertEquals(p.getScene(0,0).getBandits().get("b00"),b);

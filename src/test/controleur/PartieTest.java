@@ -1,4 +1,4 @@
-package test.modele;
+package test.controleur;
 
 import controleur.Partie;
 import modele.*;
