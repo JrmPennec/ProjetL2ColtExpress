@@ -63,7 +63,8 @@ public class Bandit extends Personnage{
                 break;
             case BRAQUE : {
                 this.braqueButin();
-            } break;
+                break;
+            }
             case TIR : this.tir(input.direction); break;
             default : return;
 
@@ -78,6 +79,7 @@ public class Bandit extends Personnage{
             premierLoot.estPris(this);
             loot.add(premierLoot);
             System.out.println(this.tag + " braque et trouve " + premierLoot.tag);
+            logCharacter = this.tag + " braque ! "+ premierLoot.getTag() + " est trouvé avec une valeur de " + premierLoot.getValeur() + " !";;
             return;
         }
     }
@@ -92,6 +94,7 @@ public class Bandit extends Personnage{
         System.out.println( this.tag + " a eu peur et s'en va");
         if(this.coordY == 0) {deplace(DIRECTION.HAUT); return;}
         if(this.coordY == 1) {deplace(DIRECTION.BAS); return;}
+        this.logCharacter = ""; //Annule le log créer par les déplacements
     }
 
     public boolean tir(DIRECTION dir){
@@ -160,6 +163,7 @@ public class Bandit extends Personnage{
                     return true;
                 }
                 System.out.println( this.tag + " tire, mais il est schizophrénique et rate sa cible ...");
+                logCharacter = this.tag + " tire ! Mais il est schizophrénique et rate sa cible ...";
                 break;
             case NEUTRAL : default :
                 System.out.println("Erreur : Tir() direction=neutral est impossible, skip la phase");

@@ -19,6 +19,8 @@ public class VueSouth extends JPanel {
         this.add(logLine,BorderLayout.NORTH);
         this.logLine.setText(vueParent.getJeu().getLog());
     }
+
+    //Au choix : Un boutton d'action "Rapide", ou "Joueur par Joueur"
     class ActionButton extends Button {
 
         public ActionButton() {
@@ -29,7 +31,8 @@ public class VueSouth extends JPanel {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if (partie.isActionStage()) {
-                partie.actionPhase();
+                //partie.actionPhase();
+                partie.actionPhase_slow();
             }
             logUpdate();
         }
@@ -38,7 +41,7 @@ public class VueSouth extends JPanel {
     }
 
     public void logUpdate(){
-        if(!vueParent.getJeu().isActionStage()) this.logLine.setText("Phase de préparation !");
+        //if(!vueParent.getJeu().isActionStage()) {this.logLine.setText("Phase de préparation !"); return;}
         this.logLine.setText(vueParent.getJeu().getLog());
     }
 
