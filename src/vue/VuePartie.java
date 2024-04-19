@@ -93,7 +93,7 @@ public class VuePartie extends JPanel implements Observer {
 
     static public void main(String[] args){
 
-        VuePartie test= new VuePartie(new Partie(new Jeu(1280,720),4,4,4,4));
+        VuePartie test= new VuePartie(new Partie(new Jeu(1280,720),4,4,4,4,0));
         //Bandit b =test.jeu.getBandits().get(0);
 
         //est.jeu.ajouteAction(b,new Input(DIRECTION.DROITE, ACTION.DEPLACE));

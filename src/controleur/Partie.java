@@ -18,6 +18,7 @@ public class Partie extends Observable {
      public final int NB_TOUR ;
      public final int NB_ACTION ;
      public final int NB_WAGON ;
+     public final int NB_AI;
     
     //OBJETS / MODELE
     private ArrayList<Bandit> bandits;
@@ -73,6 +74,7 @@ public class Partie extends Observable {
         NB_TOUR=nbT;
         NB_ACTION=nbA;
         NB_WAGON=nbW;
+        NB_AI = 0;
         System.out.println("JoueursPartie :"+NB_JOUEURS+ " Tours = "+NB_TOUR+" Actions = "+NB_ACTION+ "Wagons = "+NB_WAGON);
         compteurTours=0;
         bandits = new ArrayList<>();
@@ -83,14 +85,15 @@ public class Partie extends Observable {
         actionsRestantes =NB_ACTION;
         compteurJoueur=0;
     }
-    public Partie(Jeu jeu,int nbJ,int nbT,int nbA, int nbW) {
+    public Partie(Jeu jeu,int nbJ,int nbT,int nbA, int nbW, int nbAi) {
         //Init des attributs
         this.jeu=jeu;
         NB_JOUEURS=nbJ;
         NB_TOUR=nbT;
         NB_ACTION=nbA;
         NB_WAGON=nbW;
-        System.out.println("JoueursPartie :"+NB_JOUEURS+ " Tours = "+NB_TOUR+" Actions = "+NB_ACTION+ "Wagons = "+NB_WAGON);
+        NB_AI = nbAi;
+        System.out.println("JoueursPartie :"+NB_JOUEURS+ " Tours = "+NB_TOUR+" Actions = "+NB_ACTION+ " Wagons = "+NB_WAGON + " AI = " + nbAi);
         compteurTours=0;
         bandits = new ArrayList<>();
         plateau = new Plateau(this);
@@ -103,10 +106,13 @@ public class Partie extends Observable {
     }
     private void initBandits() {
         //création des bandits un par en fonction de nb de joueurs
-        for (int i = 0; i < NB_JOUEURS; i++) {
+        for (int i = 0; i < NB_JOUEURS - NB_AI; i++) {
             Bandit b = new Bandit(0, 1, "Bandit0" + (i+1), plateau);
             bandits.add(b);
-
+        }
+        for(int i = 0; i < NB_AI; i++){
+            BanditAI b = new BanditAI(0, 1, "Tricheur", plateau);
+            bandits.add(b);
         }
         assert(bandits.size()==NB_JOUEURS);
         assert(plateau.getScene(0,1).getBandits().size()==NB_JOUEURS);

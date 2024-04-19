@@ -6,6 +6,7 @@ public class Jeu {
     private VueJeu vue;
     private Partie partie;
     private int nbJoueurs;
+    private int nbAi;
     private int nbTours;
     private int nbActions;
     private int nbWagons;
@@ -22,6 +23,8 @@ public class Jeu {
     public void setNbJoueurs(int nbJoueurs) {
         this.nbJoueurs = nbJoueurs;
     }
+    public int getNbAi(){return nbAi;}
+    public void setNbAi(int n){this.nbAi = n;}
     public int getNbTours() {
         return nbTours;
     }
@@ -48,12 +51,12 @@ public class Jeu {
         nbTours=4;
         nbActions=1;
         nbWagons=2;
-
+        nbAi = 0;
 
     }
     public void lancerPartie(){
-        System.out.println("Joueurs :"+nbJoueurs+ " Tours = "+nbTours+" Actions = "+nbActions+ "Wagons = "+nbWagons);
-        partie = new Partie(this,nbJoueurs,nbTours,nbActions,nbWagons);
+        System.out.println("Joueurs :"+nbJoueurs+ " Tours = "+nbTours+" Actions = "+nbActions+ " Wagons = "+nbWagons + " IA = " +nbAi);
+        partie = new Partie(this,nbJoueurs,nbTours,nbActions,nbWagons, nbAi);
         vue.lancePartie();
     }
     public void finPartie(){

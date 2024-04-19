@@ -7,9 +7,9 @@ import static java.lang.Math.pow;
 
 //Remarque : J1 ne peut jamais être une IA
 public class BanditAI extends modele.Bandit{
-    private ArrayList<int[]> marshall_tracked;
-    private ArrayList<int[]> loot_tracked;
-    private ArrayList<int[]> player_tracked;
+    private ArrayList<int[]> marshall_tracked = new ArrayList<>(0);
+    private ArrayList<int[]> loot_tracked = new ArrayList<>(0);
+    private ArrayList<int[]> player_tracked = new ArrayList<>(0);
 
 
     public BanditAI(int x, int y, String t, Plateau p){
@@ -29,6 +29,9 @@ public class BanditAI extends modele.Bandit{
     }
 
     public void AI_putAction(){ //Note : l'IA triche, elle empile en phase d'action et s'adapte
+        player_tracked.clear();
+        loot_tracked.clear();
+        marshall_tracked.clear();
         for(modele.Bandit target : this.partie.getBandits()){
             int[] coord = {target.getCoordX(), target.getCoordY()};
             if(coord[0] == this.coordX && coord[1] == this.coordY) continue; //Ignore lui-même et les bandits dans la même scène
@@ -53,11 +56,13 @@ public class BanditAI extends modele.Bandit{
         int index_closestMarshall = getClosestTo(this.coordX, this.coordY, marshall_tracked);
 
             //Sabotage (Tentative)
-            if(player_tracked.get(index_closestBandit)[1] == 1 && marshall_tracked.get(index_closestMarshall)[0] ==  player_tracked.get(index_closestBandit)[0]
-                && this.coordY == 1){
-                DIRECTION dir = (player_tracked.get(index_closestBandit)[0] > this.coordX) ? DIRECTION.DROITE : DIRECTION.GAUCHE;
-                this.putAction(new Input(dir, ACTION.TIR));
-                return;
+            if(!player_tracked.isEmpty() && player_tracked.get(index_closestBandit)[1] == 1 && marshall_tracked.get(index_closestMarshall)[0] ==  player_tracked.get(index_closestBandit)[0]
+                    && this.coordY == 1){
+                if(controleur.Partie.rnd.nextInt() % 10 <= 5) {//50% de rien faire, et de passer à la suite
+                    DIRECTION dir = (player_tracked.get(index_closestBandit)[0] > this.coordX) ? DIRECTION.DROITE : DIRECTION.GAUCHE;
+                    this.putAction(new Input(dir, ACTION.TIR));
+                    return;
+                }
             }
             //Fuit le marshall
             if(Math.abs(marshall_tracked.get(index_closestMarshall)[0] - this.coordX) == 1 && this.coordY == 0){
@@ -65,21 +70,23 @@ public class BanditAI extends modele.Bandit{
                 return;
             }
 
-            // THIS IS MINE
-            if(Math.abs(player_tracked.get(index_closestBandit)[0] - loot_tracked.get(index_closestObjet)[0]  ) <= 1
-                    && player_tracked.get(index_closestBandit)[1] == this.coordY){
-                DIRECTION dir = (player_tracked.get(index_closestBandit)[0] > this.coordX) ? DIRECTION.DROITE : DIRECTION.GAUCHE;
-                this.putAction(new Input(dir, ACTION.TIR));
-                return;
+            // TOUCHE PAS À MON TRUC
+            if(!player_tracked.isEmpty() && (player_tracked.get(index_closestBandit)[0] ==  loot_tracked.get(index_closestObjet)[0]) && player_tracked.get(index_closestBandit)[1] == this.coordY){
+                if(controleur.Partie.rnd.nextInt() % 10 <= 8) {//20% de rien faire, et de passer à la suite
+                        DIRECTION dir = (player_tracked.get(index_closestBandit)[0] > this.coordX) ? DIRECTION.DROITE : DIRECTION.GAUCHE;
+                        this.putAction(new Input(dir, ACTION.TIR));
+                        return;
+                    }
             }
 
             //Se déplace vers le trésor le plus proche tout en évitant le marshall
-            if(loot_tracked.get(index_closestObjet)[0] != this.coordX &&  loot_tracked.get(index_closestObjet)[1] != this.coordY ){
+            if(loot_tracked.get(index_closestObjet)[0] != this.coordX ||  loot_tracked.get(index_closestObjet)[1] != this.coordY ){
                 DIRECTION dir;
                 ACTION action;
                 if(this.coordY != loot_tracked.get(index_closestObjet)[1] && //Aucune Marshall qui peut embêter et si on est pas au même niveau.
                         (this.coordY == 0 || Math.sqrt(Math.pow( this.coordX - marshall_tracked.get(index_closestMarshall)[0],2) +
                         Math.pow( this.coordY - marshall_tracked.get(index_closestMarshall)[1],2)) > 1.5)){
+                    System.out.println("Shmovin!");
                     dir = (this.coordY == 1) ? DIRECTION.BAS : DIRECTION.HAUT;
                     action = ACTION.DEPLACE;
                     this.putAction(new Input(dir, action));
@@ -87,7 +94,7 @@ public class BanditAI extends modele.Bandit{
                 }
                 if(this.coordX == loot_tracked.get(index_closestObjet)[0]){ //Si on a juste besoin, et qu'on arrive pas à descendre : PEW PEW PEW
                     if(controleur.Partie.rnd.nextInt() % 10 < 3) dir = (this.coordY == 0 ) ? DIRECTION.HAUT : DIRECTION.BAS;
-                    else dir = (player_tracked.get(index_closestBandit)[0] > this.coordX) ? DIRECTION.DROITE : DIRECTION.GAUCHE;
+                    else dir = ((controleur.Partie.rnd.nextInt() % 10 < 5)) ? DIRECTION.DROITE : DIRECTION.GAUCHE; //Tir comme un malade à droite ou à gauche
                     action = ACTION.TIR;
                     this.putAction(new Input(dir, action));
                     return;
@@ -98,7 +105,6 @@ public class BanditAI extends modele.Bandit{
                 this.putAction(new Input(dir, action));
                 return;
             }
-
             //Braque si un trésor dans la scène, et qu'il est dans une position "sécurisé".
             this.putAction(new Input(DIRECTION.NEUTRAL, ACTION.BRAQUE));
 

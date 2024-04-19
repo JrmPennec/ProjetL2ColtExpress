@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 public class VueIntro extends JPanel implements ActionListener, ItemListener {
     Jeu jeu;
@@ -15,6 +16,7 @@ public class VueIntro extends JPanel implements ActionListener, ItemListener {
     JComboBox<Integer> comboBoxTours;
     JComboBox<Integer> comboBoxActions;
     JComboBox<Integer> comboBoxWagons;
+    JComboBox<Integer> comboBoxAI;
     JButton play;
 
     VueIntro(Jeu jeu){
@@ -30,6 +32,7 @@ public class VueIntro extends JPanel implements ActionListener, ItemListener {
         this.add(initComboBoxTours());
         this.add(initComboBoxActions());
         this.add(initComboBoxWagons());
+        this.add(initComboBoxAI());
     }
     JPanel initComboBoxJoueurs() {
         JPanel pan = new JPanel();
@@ -40,6 +43,18 @@ public class VueIntro extends JPanel implements ActionListener, ItemListener {
         comboBoxJoueurs.addItemListener(this);
         pan.add(new JLabel("Nombre de joueurs : "));
         pan.add(comboBoxJoueurs);
+        return pan;
+    }
+
+    JPanel initComboBoxAI() {
+        JPanel pan = new JPanel();
+        //Création du tableau des valeurs autorisées
+        Integer[] joueurs = {0, 1};
+        comboBoxAI = new JComboBox<>(joueurs);
+        //Liaison au item listener de VueIntro
+        comboBoxAI.addItemListener(this);
+        pan.add(new JLabel("Nombre d'IA : "));
+        pan.add(comboBoxAI);
         return pan;
     }
 
@@ -91,6 +106,9 @@ public class VueIntro extends JPanel implements ActionListener, ItemListener {
     public void itemStateChanged(ItemEvent e) {
         if (e.getSource()==comboBoxJoueurs) {
             jeu.setNbJoueurs((Integer) comboBoxJoueurs.getSelectedItem());
+        }
+        if(e.getSource() == comboBoxAI) {
+            jeu.setNbAi((Integer) comboBoxAI.getSelectedItem());
         }
         if (e.getSource()==comboBoxTours)
             jeu.setNbTours((Integer)comboBoxTours.getSelectedItem());
