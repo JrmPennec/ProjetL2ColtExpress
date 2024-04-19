@@ -86,7 +86,6 @@ public class BanditAI extends modele.Bandit{
                 if(this.coordY != loot_tracked.get(index_closestObjet)[1] && //Aucune Marshall qui peut embêter et si on est pas au même niveau.
                         (this.coordY == 0 || Math.sqrt(Math.pow( this.coordX - marshall_tracked.get(index_closestMarshall)[0],2) +
                         Math.pow( this.coordY - marshall_tracked.get(index_closestMarshall)[1],2)) > 1.5)){
-                    System.out.println("Shmovin!");
                     dir = (this.coordY == 1) ? DIRECTION.BAS : DIRECTION.HAUT;
                     action = ACTION.DEPLACE;
                     this.putAction(new Input(dir, action));
