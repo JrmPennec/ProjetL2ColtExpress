@@ -5,6 +5,7 @@ import controleur.Partie;
 import modele.Bandit;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class VueScore extends JPanel {
@@ -14,6 +15,7 @@ public class VueScore extends JPanel {
 
     VueScore(Partie partie){
         super();
+        this.setAlignmentX(CENTER_ALIGNMENT);
         this.partie =partie ;
         this.rankList = new ArrayList<>();
         calculRankList();
@@ -24,10 +26,21 @@ public class VueScore extends JPanel {
         //mise en place d'un layout  pour poser les elements en vertical
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         //Affichage du vainqueur
-        this.add(new JLabel("VAINQUEUR : "+rankList.get(0).getTag()));
+        JLabel titre = new JLabel ("SCORE : ",SwingConstants.CENTER);
+        titre.setFont(new Font("defaultFont",Font.ITALIC,18));
+        titre.setAlignmentX(CENTER_ALIGNMENT);
+        this.add(titre);
+        JLabel winner= new JLabel("VAINQUEUR : "+rankList.get(0).getTag());
+        winner.setFont(new Font("defaultFont", Font.BOLD,14));
+        winner.setMaximumSize(new Dimension(200,40));
+        winner.setAlignmentX(CENTER_ALIGNMENT);
+        this.add(winner);
         //Affichage des autres joueurs
         for (int i = 1; i< partie.NB_JOUEURS; i++){
-            this.add(new JLabel((i+1)+"EME :"+rankList.get(i).getTag()));
+           JLabel joueur= new JLabel((i+1)+"EME : "+rankList.get(i).getTag());
+            joueur.setMaximumSize(new Dimension(200,40));
+            joueur.setAlignmentX(CENTER_ALIGNMENT);
+            this.add(joueur);
         }
     }
      void calculRankList(){

@@ -14,9 +14,11 @@ public class VueSouth extends JPanel {
         this.vueParent=vue;
         this.setLayout(new BorderLayout());
         //Ajout des éléments avec cardinalité (border layout )
-        this.add(new ActionButton(),BorderLayout.WEST);
-        this.add(new CancelButton(),BorderLayout.EAST);
-        this.add(logLine,BorderLayout.NORTH);
+        JPanel buttonPan = new JPanel(new FlowLayout());
+        buttonPan.add(new ActionButton());
+        buttonPan.add(new CancelButton());
+        this.add(buttonPan,BorderLayout.NORTH);
+        this.add(logLine,BorderLayout.SOUTH);
         this.logLine.setText(vueParent.getJeu().getLog());
     }
 

@@ -26,8 +26,17 @@ public class VueIntro extends JPanel implements ActionListener, ItemListener {
         //Création du bouton
         play = new JButton("JOUER");
         play.addActionListener(this);
+        play.setAlignmentX(Component.CENTER_ALIGNMENT);
+        Box glue = Box.createVerticalBox();
+        glue.setMaximumSize(new Dimension(200,50));
         //Ajout des éléments du panel
+        JLabel titre= new JLabel("COLT EXPRESS ",SwingConstants.CENTER);
+        titre.setFont(new Font("defaultFont",Font.BOLD,20));
+        titre.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titre.setMaximumSize(new Dimension(200,50));
+        this.add(titre);
         this.add(play);
+        this.add(glue);
         this.add(initComboBoxJoueurs());
         this.add(initComboBoxTours());
         this.add(initComboBoxActions());
@@ -36,6 +45,7 @@ public class VueIntro extends JPanel implements ActionListener, ItemListener {
     }
     JPanel initComboBoxJoueurs() {
         JPanel pan = new JPanel();
+        pan.setMaximumSize(new Dimension(200,50));
         //Création du tableau des valeurs autorisées
         Integer[] joueurs = {2, 3, 4, 5, 6};
         comboBoxJoueurs = new JComboBox<>(joueurs);
@@ -48,6 +58,7 @@ public class VueIntro extends JPanel implements ActionListener, ItemListener {
 
     JPanel initComboBoxAI() {
         JPanel pan = new JPanel();
+        pan.setMaximumSize(new Dimension(200,50));
         //Création du tableau des valeurs autorisées
         Integer[] joueurs = {0, 1};
         comboBoxAI = new JComboBox<>(joueurs);
@@ -60,6 +71,7 @@ public class VueIntro extends JPanel implements ActionListener, ItemListener {
 
      JPanel initComboBoxTours(){
         JPanel pan= new JPanel();
+         pan.setMaximumSize(new Dimension(200,50));
          //Création du tableau des valeurs autorisées
         Integer[] tours={4,6,8,10};
         comboBoxTours=new JComboBox<>(tours);
@@ -72,6 +84,7 @@ public class VueIntro extends JPanel implements ActionListener, ItemListener {
     }
     JPanel initComboBoxActions(){
         JPanel pan= new JPanel();
+        pan.setMaximumSize(new Dimension(200,50));
         //Création du tableau des valeurs autorisées
         Integer[] actions={1,2,3,4};
         comboBoxActions= new JComboBox<>(actions);
@@ -83,15 +96,16 @@ public class VueIntro extends JPanel implements ActionListener, ItemListener {
     }
 
     JPanel initComboBoxWagons() {
-    JPanel pan = new JPanel();
+        JPanel pan = new JPanel();
+        pan.setMaximumSize(new Dimension(200, 50));
         //Création du tableau des valeurs autorisées
-    Integer[] wagons={2,4,6};
-    comboBoxWagons= new JComboBox<>(wagons);
+        Integer[] wagons = {2, 4, 6};
+        comboBoxWagons = new JComboBox<>(wagons);
         //Liaison au item listener de VueIntro
-    comboBoxWagons.addItemListener(this);
-    pan.add(new JLabel("Nombre de wagons : "));
-    pan.add(comboBoxWagons);
-    return pan;
+        comboBoxWagons.addItemListener(this);
+        pan.add(new JLabel("Nombre de wagons : "));
+        pan.add(comboBoxWagons);
+        return pan;
 }
 
     @Override
