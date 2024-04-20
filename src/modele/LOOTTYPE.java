@@ -1,6 +1,6 @@
 package modele;
 
-public enum LootType {
+public enum LOOTTYPE {
     BOURSE,
     BIJOUX,
     MAGOT
