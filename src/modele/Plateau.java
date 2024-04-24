@@ -56,17 +56,17 @@ public class Plateau extends Observable {
             train.get(y).add(new Scene(estToit, false, false));
             for(int chance = 0; chance < (abs(Partie.rnd.nextInt()) % 101 > 75 ? 2 + (abs(Partie.rnd.nextInt()) % 101 < 30 ? 1 : 0) : 1); chance++) {
                 if (abs(Partie.rnd.nextInt()) % 101 > 70) {
-                    modele.Objet newTreasure = new modele.Objet(i, y, "bijoux-" + abs(Partie.rnd.nextInt()) % 3000, this, LootType.BIJOUX);
+                    modele.Objet newTreasure = new modele.Objet(i, y, "bijoux-" + abs(Partie.rnd.nextInt()) % 3000, this, LOOTTYPE.BIJOUX);
                     continue;
                 } else {
-                    modele.Objet newTreasure = new modele.Objet(i, y, "bourse-"  +abs(Partie.rnd.nextInt()) % 3000, this, LootType.BOURSE);
+                    modele.Objet newTreasure = new modele.Objet(i, y, "bourse-"  +abs(Partie.rnd.nextInt()) % 3000, this, LOOTTYPE.BOURSE);
                 }
             }
         }
         //Cas locomotive
         train.get(y).add(new Scene(estToit, true, false));
         if(y == 1) return;
-        modele.Objet newTreasure = new modele.Objet(train.get(y).size() - 1, 0, "Maggot", this, LootType.MAGOT);
+        modele.Objet newTreasure = new modele.Objet(train.get(y).size() - 1, 0, "Maggot", this, LOOTTYPE.MAGOT);
 
 
     }

@@ -6,10 +6,10 @@ import controleur.Partie;
 public class Objet extends Entite{
 
     private modele.Bandit proprietaire;
-    private LootType type;
+    private LOOTTYPE type;
     private final int valeur;
 
-    public Objet(int x,int y, String tag, Plateau p, LootType type){
+    public Objet(int x,int y, String tag, Plateau p, LOOTTYPE type){
         super(x,y,tag,p);
         plateau.getScene(x,y).putObjet(this);
         this.proprietaire = null;

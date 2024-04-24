@@ -126,7 +126,7 @@ class PartieTest {
         }
     }
     @Test
-    void derouleActionStage(){
+    void derouleTourActionStage(){
         partie.setActionStage(true);
         for (int i=0;i<3;i++) {
             partie.derouleTourActionStage();

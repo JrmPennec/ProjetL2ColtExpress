@@ -109,9 +109,9 @@ class BanditTest {
         Scene scene1 = testGame.getPlateau().getScene(testBandit.getCoordX(), testBandit.getCoordY());
         Scene scene2 = testGame.getPlateau().getScene(testBandit.getCoordX() + 2, 0);
 
-        modele.Objet loot1 = new modele.Objet(testBandit.getCoordX(), testBandit.getCoordY(), "MeShimmers" ,testGame.getPlateau(), LootType.BIJOUX);
-        modele.Objet loot2 = new modele.Objet(testBandit.getCoordX() + 2, 0, "MeLoot'", testGame.getPlateau(), LootType.MAGOT);
-        modele.Objet loot3 = new modele.Objet(testBandit.getCoordX() + 2, 0, "MeShiny", testGame.getPlateau(), LootType.BIJOUX);
+        modele.Objet loot1 = new modele.Objet(testBandit.getCoordX(), testBandit.getCoordY(), "MeShimmers" ,testGame.getPlateau(), LOOTTYPE.BIJOUX);
+        modele.Objet loot2 = new modele.Objet(testBandit.getCoordX() + 2, 0, "MeLoot'", testGame.getPlateau(), LOOTTYPE.MAGOT);
+        modele.Objet loot3 = new modele.Objet(testBandit.getCoordX() + 2, 0, "MeShiny", testGame.getPlateau(), LOOTTYPE.BIJOUX);
 
         //Check inventaire
         assertEquals(0, testBandit.getTotalValeur());

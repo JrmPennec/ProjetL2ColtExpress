@@ -40,6 +40,14 @@ public class Scene extends Observable {
         return marshall;
     }
     public  ArrayList<modele.Objet> getTresor(){ return tresor;}
+    public HashMap<String,Bandit> getBandits(){return bandits;}
+    public ArrayList<Bandit> getArrayBandits(){
+        ArrayList<Bandit> banditList = new ArrayList<>(0);
+        for(Map.Entry<String, Bandit> subject : this.bandits.entrySet()){
+            banditList.add((Bandit)subject.getValue());
+        }
+        return banditList;
+    }
 
     public void retireObjet(Objet obj){
         for(Objet i : this.tresor){
@@ -57,15 +65,7 @@ public class Scene extends Observable {
         notifyObservers();
     }
 
-    public HashMap<String,Bandit> getBandits(){return bandits;}
 
-    public ArrayList<Bandit> getArrayBandits(){
-        ArrayList<Bandit> banditList = new ArrayList<>(0);
-        for(Map.Entry<String, Bandit> subject : this.bandits.entrySet()){
-             banditList.add((Bandit)subject.getValue());
-        }
-        return banditList;
-    }
 
     public void putPerso(Personnage p){
         if (p instanceof Marshall)
@@ -75,10 +75,10 @@ public class Scene extends Observable {
         else
             throw  new IllegalArgumentException("Argument invalide");
     }
-    public Bandit removeBandit(String tag){
+    private Bandit removeBandit(String tag){
         return bandits.remove(tag);
     }
-    public Marshall removeMarshall(){
+    private Marshall removeMarshall(){
         Marshall m =marshall;
         marshall = null;
         return m;

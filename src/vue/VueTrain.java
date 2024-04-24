@@ -50,7 +50,7 @@ public class VueTrain extends JPanel implements Observer {
     }
 
 
-    public static class VueScene extends JPanel {
+    public static class VueScene extends JPanel implements Observer {
         Scene scene;
 
 
@@ -59,25 +59,30 @@ public class VueTrain extends JPanel implements Observer {
             //Initialisation du layout
             this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             this.scene = s;
+            s.addObserver(this);
             this.setLayout(new GridBagLayout());
-            this.setPreferredSize(new Dimension(200,130));
+            this.setPreferredSize(new Dimension(200, 130));
             //Init contraintes
+            addPanels();
+        }
+        void addPanels() {
             GridBagConstraints c = new GridBagConstraints();
-            c.fill=GridBagConstraints.BOTH;
-            c.anchor=GridBagConstraints.NORTHWEST;
-            c.gridx=0;
-            c.gridy=0;
-            c.weighty=1;
-            c.weightx=1;
+            c.fill = GridBagConstraints.BOTH;
+            c.anchor = GridBagConstraints.NORTHWEST;
+            c.gridx = 0;
+            c.gridy = 0;
+            c.weighty = 1;
+            c.weightx = 1;
 
-            this.add(affichagePerso(),c);
+            this.add(affichagePerso(), c);
             //Modification des contraintes pour le panel d'objets
-            c.gridy=1;
-            c.weighty=0.25;
-            c.anchor=GridBagConstraints.SOUTHWEST;
-            this.add(affichageObjet(),c);
+            c.gridy = 1;
+            c.weighty = 0.25;
+            c.anchor = GridBagConstraints.SOUTHWEST;
+            this.add(affichageObjet(), c);
+        }
 
-        }/** affichage des personnages en colonnes, le Marshall est le premier affiché si il est dans la scene**/
+        /** affichage des personnages en colonnes, le Marshall est le premier affiché si il est dans la scene**/
         public JPanel affichagePerso(){
             JPanel panel= new JPanel();
             panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
@@ -106,6 +111,15 @@ public class VueTrain extends JPanel implements Observer {
             for (Objet o : scene.getTresor())
                 panel.add(new JLabel(o.getTag()));
             return panel;
+        }
+
+        @Override
+        public void update() {
+            removeAll();
+            addPanels();
+            revalidate();
+            repaint();
+
         }
         /*//Premier affichage
         public JLabel affichagePerso1() {
